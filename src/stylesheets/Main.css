@@ -1,0 +1,6 @@
+.body {
+  width: 80vw;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
