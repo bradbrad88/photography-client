@@ -1,8 +1,8 @@
 import React from "react";
-import "../stylesheets/NavBar.css";
+import "../../stylesheets/NavBar.css";
 import { Link } from "react-router-dom";
 
-const NavItem = (props) => {
+const NavItem = props => {
   return (
     <Link className="nav-item" to={props.href}>
       {props.title}

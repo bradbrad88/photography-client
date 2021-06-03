@@ -1,6 +1,7 @@
 import React from "react";
 import NavItem from "./NavItem";
-import "../stylesheets/NavBar.css";
+import Profile from "./Profile";
+import "../../stylesheets/NavBar.css";
 
 const NavBar = () => {
   return (
@@ -9,8 +10,8 @@ const NavBar = () => {
       <div className="nav-bar">
         <NavItem title="Gallery" href="/gallery" />
         <NavItem title="Blog" href="/blog" />
-        <NavItem title="Contact" href="/help" />
       </div>
+      <Profile />
     </div>
   );
 };

@@ -41,3 +41,19 @@ body {
   margin: 0;
   cursor: pointer;
 }
+
+button.btn-gallery-refresh {
+  background-color: rgb(105, 196, 3);
+  border: none;
+  color: #fff;
+  padding: 10px 50px;
+  font-family: inherit;
+  font-size: 16px;
+  display: block;
+  margin-top: 10px;
+}
+
+.gallery.error {
+  font-size: 20px;
+  padding: 10px 0px;
+}

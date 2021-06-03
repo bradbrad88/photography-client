@@ -1,10 +1,9 @@
-import React, { useState, useReducer } from "react";
+import React, { useReducer } from "react";
 import DragAndDrop from "./DragAndDrop";
 import "../../stylesheets/DragAndDrop.css";
 import ImageUploadCard from "./ImageUploadCard";
 
 const ImageUpload = () => {
-  const currentTime = new Date().toLocaleString();
   let ws = null;
   const reducer = (state, action) => {
     let index;

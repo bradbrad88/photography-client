@@ -100,7 +100,7 @@
 }
 
 .upload-item.complete {
-  border-color: rgb(126, 223, 0);
+  border-color: rgb(146, 236, 28);
 }
 
 .status {
@@ -116,5 +116,5 @@
   color: aqua;
 }
 .status.complete {
-  color: rgb(161, 248, 79);
+  color: rgb(162, 245, 53);
 }

@@ -12,7 +12,9 @@ const ImageUploadCard = ({ image, dispatch }) => {
             status.complete ? "complete" : ""
           }`}
         >
-          {index + 1}: {status.step}
+          {`${index + 1}: ${status.step}${
+            status.progress > 0 ? ` ${status.progress.toFixed(0)}%` : ""
+          }`}
         </div>
       );
     });
@@ -31,7 +33,7 @@ const ImageUploadCard = ({ image, dispatch }) => {
           <button onClick={deleteButtonHandler}>X</button>
         )}
       </div>
-      <div className="upload-text">{image.data.file.name}</div>
+      {/* <div className="upload-text">{image.data.file.name}</div> */}
     </div>
   );
 };

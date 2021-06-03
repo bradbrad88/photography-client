@@ -19,6 +19,7 @@ body {
   text-align: left;
   padding: 0;
   margin: 0;
+  cursor: default;
 }
 
 .nav-bar {
@@ -34,4 +35,44 @@ body {
   color: rgb(73, 73, 73);
   text-decoration: none;
   margin-left: 30px;
+}
+
+.profile {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  right: 0;
+  top: 0;
+}
+
+img.profile {
+  background-color: rgb(44, 44, 44);
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  top: 0px;
+  border-radius: 10px;
+}
+
+.logout {
+  position: relative;
+  height: 30px;
+}
+
+button.logout {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  height: 30px;
+  color: #fff;
+  cursor: pointer;
+  width: 100px;
+  border-radius: 10px;
+  border: none;
+  background-color: rgb(190, 62, 15);
+}
+
+.profile .details {
+  font-size: 20px;
 }
