@@ -1,9 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { useLocation } from "react-router-dom";
+import UserContext from "../contexts/UserContext";
+
 import "../../stylesheets/ImageGallery.css";
 
-const ImageCard = ({ image }) => {
+const ImageCard = ({ image, selected, onSelect }) => {
   const [spans, setSpans] = useState(0);
   const imageRef = useRef();
+  const userContext = useContext(UserContext);
+  const location = useLocation();
   useEffect(() => {
     if (imageRef.current) {
       imageRef.current.addEventListener("load", getSpans);
@@ -37,13 +42,24 @@ const ImageCard = ({ image }) => {
     if (!imageRef.current) return;
     imageRef.current.style.visibility = "visible";
   };
+
+  const editMode = () => {
+    const editMode = location.pathname === "/gallery/edit";
+    return editMode;
+  };
+
+  const clickHandler = () => {
+    onSelect(image.image_id);
+  };
+
   return (
-    <div style={{ gridRowEnd: `span ${spans}` }}>
+    <div style={{ gridRowEnd: `span ${spans}`, position: "relative" }}>
       <img
         ref={imageRef}
-        className="image-card"
+        className={`image-card ${selected && editMode() ? "active" : ""}`}
         src={image.url}
         alt={image.image_desc}
+        onClick={clickHandler}
       />
     </div>
   );

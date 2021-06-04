@@ -57,3 +57,31 @@ button.btn-gallery-refresh {
   font-size: 20px;
   padding: 10px 0px;
 }
+
+.gallery-select {
+  position: absolute;
+  color: #fff;
+  right: 10px;
+  top: 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: rgba(245, 90, 29, 0.678);
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.image-card.active {
+  border: rgb(221, 172, 12);
+  border-style: solid;
+  border-width: 4px;
+}
+button.gallery {
+  padding: 10px 40px;
+  border: none;
+  color: #fff;
+  background-color: rgb(8, 57, 163);
+  margin-right: 20px;
+  border-radius: 5px;
+}
