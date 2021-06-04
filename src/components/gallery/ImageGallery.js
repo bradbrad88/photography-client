@@ -57,6 +57,12 @@ const ImageGallery = () => {
     console.log(mapValues);
   };
 
+  const onGroupSelect = () => {
+    if (selected.length === gallery.length) return setSelected([]);
+    const selectAll = gallery.map(img => img.image_id);
+    setSelected(selectAll);
+  };
+
   const onSelect = image_id => {
     if (location.pathname !== "/gallery/edit") return;
     if (!isSelected(image_id)) return setSelected([...selected, image_id]);
@@ -100,7 +106,11 @@ const ImageGallery = () => {
         </button>
       )}
       {userContext.authenticated && editMode() && (
-        <EditFeatures onDelete={onDelete} onEmphasize={onEmphasize} />
+        <EditFeatures
+          onDelete={onDelete}
+          onEmphasize={onEmphasize}
+          onGroupSelect={onGroupSelect}
+        />
       )}
       <div className="image-gallery">{images}</div>
     </div>
