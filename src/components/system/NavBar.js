@@ -10,6 +10,7 @@ const NavBar = () => {
       <div className="nav-bar">
         <NavItem title="Gallery" href="/gallery" />
         <NavItem title="Blog" href="/blog" />
+        <NavItem title="Login" href="/login" />
       </div>
       <Profile />
     </div>

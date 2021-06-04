@@ -10,11 +10,11 @@ const Logout = () => {
     googleStore.onSignout();
   };
   return (
-    <div className={"logout"}>
+    <>
       <button className={"logout"} onClick={onClick}>
         Logout
       </button>
-    </div>
+    </>
   );
 };
 export default Logout;

@@ -4,7 +4,7 @@ const Context = React.createContext();
 
 export class GoogleStore extends React.Component {
   static contextType = UserStore;
-  state = { googleProfile: null, googleTokenId: null };
+  // state = { googleProfile: null, googleTokenId: null };
 
   componentDidMount() {
     this.getAuth();
@@ -22,7 +22,8 @@ export class GoogleStore extends React.Component {
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
           this.auth.isSignedIn.listen(this.signedInListen);
-          this.googleProfileState();
+          if (this.auth.isSignedIn.get()) this.loginGoogleUser();
+          // this.googleProfileState();
         })
         .catch(error => {
           console.log(error);
@@ -30,48 +31,46 @@ export class GoogleStore extends React.Component {
     });
   }
 
-  googleProfileState = () => {
-    this.setState({
-      googleProfile: this.auth?.currentUser.get().getBasicProfile(),
-      googleTokenId: this.auth?.currentUser.get().getAuthResponse().id_token,
-    });
-    if (this.state.googleTokenId) return this.loginGoogleUser();
-  };
+  // googleProfileState = () => {
+  //   // this.setState({
+  //   //   googleProfile: this.auth?.currentUser.get().getBasicProfile(),
+  //   //   googleTokenId: this.auth?.currentUser.get().getAuthResponse().id_token,
+  //   // });
+  //   // if (this.state.googleTokenId) this.loginGoogleUser();
+  // };
   loginGoogleUser = async () => {
     try {
       const options = {
         method: "POST",
-        body: JSON.stringify({ token: this.state.googleTokenId }),
+        body: JSON.stringify({
+          token: this.auth?.currentUser.get().getAuthResponse().id_token,
+        }),
         headers: {
           "Content-Type": "application/json",
         },
       };
       const res = await fetch("http://localhost:5000/auth/google", options);
       const data = await res.json();
-      console.log("right here", data);
       this.context.onUserLogin(data);
-
       // refreshTokenSetup(googleResponse);
     } catch (error) {
       console.error(error.message);
     }
   };
 
-  onSignin = props => {
+  onSignin = () => {
+    if (this.auth.isSignedIn.get()) this.auth.signOut();
     this.auth.signIn();
   };
 
   onSignout = () => {
-    console.log("yep");
     this.auth.signOut();
-    this.context.onUserLogout();
   };
 
   render() {
     return (
       <Context.Provider
         value={{
-          ...this.state,
           onSignin: this.onSignin,
           onSignout: this.onSignout,
         }}
@@ -81,8 +80,14 @@ export class GoogleStore extends React.Component {
     );
   }
   signedInListen = isSignedIn => {
-    this.googleProfileState();
-    if (this.state.googleTokenId) this.loginGoogleUser();
+    if (isSignedIn) {
+      this.loginGoogleUser();
+      return;
+    }
+    this.context.onUserLogout();
+    // console.log("listening");
+    // this.googleProfileState();
+    // if (this.state.googleTokenId) this.loginGoogleUser();
   };
 }
 

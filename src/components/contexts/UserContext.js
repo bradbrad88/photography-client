@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-
+import React from "react";
+import { useHistory } from "react-router-dom";
 const Context = React.createContext();
 
 export class UserStore extends React.Component {
@@ -8,6 +8,7 @@ export class UserStore extends React.Component {
     error: null,
     profile: null,
   };
+
   async componentDidMount() {
     // await fetch("http://localhost:5000/auth", {
     //   headers: { authorization: this.state.authenticated },

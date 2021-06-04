@@ -1,28 +1,31 @@
 import React, { useState, useContext } from "react";
 import ImageCard from "./ImageCard";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import "../../stylesheets/ImageGallery.css";
 
 const ImageGallery = () => {
   const [gallery, setGallery] = useState(null);
   const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
   const userContext = useContext(UserContext);
+  const history = useHistory();
   const getGallery = async () => {
     try {
-      const response = await fetch("http://localhost:5000/gallery");
+      const options = {
+        headers: {
+          authorization: userContext.authenticated,
+        },
+      };
+      const response = await fetch("http://localhost:5000/gallery", options);
       const data = await response.json();
       if (data.error) {
-        setError(data.error);
-        return;
+        return setError(data.error);
       }
       setError(null);
-      const orderedList = data.sort((a, b) => {
-        return a.display_order - b.display_order;
-      });
+      const orderedList = data.sort((a, b) => a.display_order - b.display_order);
       setGallery(orderedList);
     } catch (err) {
-      console.error("request error: ", err.message);
       setError(err.message);
     }
   };
@@ -40,16 +43,20 @@ const ImageGallery = () => {
       </div>
     );
   if (!gallery) return <div>Loading</div>;
+  const onEditGallery = event => {
+    event.preventDefault();
+    if (userContext.authenticated) history.push("/gallery/edit");
+  };
 
   const images = gallery.map(img => {
     return <ImageCard image={img} key={img.image_id} />;
   });
   return (
     <div className="gallery">
-      {userContext.profile && (
-        <Link to="/gallery/edit">
-          <button id="btn-edit-gallery">Edit Gallery</button>
-        </Link>
+      {userContext.authenticated && (
+        <button className="btn-edit-gallery" onClick={onEditGallery}>
+          Edit Gallery
+        </button>
       )}
       <div className="image-gallery">{images}</div>
     </div>
