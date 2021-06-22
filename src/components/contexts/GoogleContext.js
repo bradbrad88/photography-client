@@ -4,13 +4,9 @@ const Context = React.createContext();
 
 export class GoogleStore extends React.Component {
   static contextType = UserStore;
-  // state = { googleProfile: null, googleTokenId: null };
 
   componentDidMount() {
     this.getAuth();
-    // const auth = await window.gapi.auth2.getAuthInstance();
-    // this.setState({ googleAuthInstance: auth });
-    // if (auth) auth.isSignedIn.listen(this.signedInListen);
   }
   async getAuth() {
     window.gapi.load("client:auth2", () => {
@@ -23,7 +19,6 @@ export class GoogleStore extends React.Component {
           this.auth = window.gapi.auth2.getAuthInstance();
           this.auth.isSignedIn.listen(this.signedInListen);
           if (this.auth.isSignedIn.get()) this.loginGoogleUser();
-          // this.googleProfileState();
         })
         .catch(error => {
           console.log(error);
@@ -31,13 +26,6 @@ export class GoogleStore extends React.Component {
     });
   }
 
-  // googleProfileState = () => {
-  //   // this.setState({
-  //   //   googleProfile: this.auth?.currentUser.get().getBasicProfile(),
-  //   //   googleTokenId: this.auth?.currentUser.get().getAuthResponse().id_token,
-  //   // });
-  //   // if (this.state.googleTokenId) this.loginGoogleUser();
-  // };
   loginGoogleUser = async () => {
     try {
       const options = {
@@ -52,7 +40,6 @@ export class GoogleStore extends React.Component {
       const res = await fetch("http://localhost:5000/auth/google", options);
       const data = await res.json();
       this.context.onUserLogin(data);
-      // refreshTokenSetup(googleResponse);
     } catch (error) {
       console.error(error.message);
     }
@@ -85,9 +72,6 @@ export class GoogleStore extends React.Component {
       return;
     }
     this.context.onUserLogout();
-    // console.log("listening");
-    // this.googleProfileState();
-    // if (this.state.googleTokenId) this.loginGoogleUser();
   };
 }
 

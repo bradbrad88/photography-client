@@ -1,88 +1,77 @@
 import React, { useState, useContext } from "react";
-
-import { useHistory, useLocation } from "react-router-dom";
 import ImageCard from "./ImageCard";
-import EditFeatures from "./EditFeatures";
-import UserContext from "../contexts/UserContext";
-import { fetchGallery } from "../../utils/fetchGallery";
+import { fetchGallery } from "../../utils/gallery";
 import "../../stylesheets/ImageGallery.css";
 
-const ImageGallery = () => {
-  const [gallery, setGallery] = useState(null);
+const ImageGallery = ({ images }) => {
+  const [savedGallery, setSavedGallery] = useState(null);
   const [error, setError] = useState(null);
-  const [selected, setSelected] = useState([]);
-  const userContext = useContext(UserContext);
-  const history = useHistory();
-  const location = useLocation();
 
   const getGallery = async () => {
-    const gallery = await fetchGallery(userContext.authenticated);
+    const gallery = await fetchGallery();
     if (gallery.error) return setError(gallery.error);
-    setGallery(gallery.data);
+    setSavedGallery(gallery.data);
   };
 
-  if (location.pathname !== "/gallery/edit" && selected.length > 0) setSelected([]);
+  if (!savedGallery && !error) getGallery();
 
-  if (!gallery && !error) getGallery();
+  // const [suggestedGallery, setSuggestedGallery] = useState(null);
+  // const [selected, setSelected] = useState([]);
+  // const userContext = useContext(UserContext);
+  // if (location.pathname !== "/gallery/edit" && selected.length > 0) setSelected([]);
+  // const history = useHistory();
+  // const location = useLocation();
+  // const onEditGallery = event => {
+  //   event.preventDefault();
+  //   if (userContext.authenticated) history.push("/gallery/edit");
+  // };
+  // const editMode = () => {
+  //   return location.pathname === "/gallery/edit";
+  // };
+  // const onDelete = async () => {
+  //   try {
+  //     const options = {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         authorization: userContext.authenticated,
+  //       },
+  //       body: JSON.stringify(selected),
+  //       method: "POST",
+  //     };
+  //     const result = await fetch("http://localhost:5000/gallery/delete", options);
+  //     const data = await result.json();
+  //     setSavedGallery(data);
+  //     setSelected([]);
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
+  // };
+  // const onEmphasize = () => {
+  //   const mapValues = `(${selected.map(item => item)})`;
+  //   console.log(mapValues);
+  // };
+  // const onGroupSelect = () => {
+  //   if (selected.length === savedGallery.length) return setSelected([]);
+  //   const selectAll = savedGallery.map(img => img.image_id);
+  //   setSelected(selectAll);
+  // };
+  // const onSelect = image_id => {
+  //   if (location.pathname !== "/gallery/edit") return;
+  //   if (!isSelected(image_id)) return setSelected([...selected, image_id]);
+  //   const newSelection = selected.filter(el => el !== image_id);
+  //   setSelected(newSelection);
+  // };
+  // const isSelected = key => {
+  //   return selected.includes(key);
+  // };
+  // const handleDragStart = image => {
+  //   // setDragItem(image);
+  // };
+  // const handleDragEnter = image => {};
+  // const handleDragEnd = image => {};
 
-  const onEditGallery = event => {
-    event.preventDefault();
-    if (userContext.authenticated) history.push("/gallery/edit");
-  };
-
-  const editMode = () => {
-    return location.pathname === "/gallery/edit";
-  };
-
-  const onDelete = async () => {
-    try {
-      const options = {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: userContext.authenticated,
-        },
-        body: JSON.stringify(selected),
-        method: "POST",
-      };
-      const result = await fetch("http://localhost:5000/gallery/delete", options);
-      const data = await result.json();
-      setGallery(data);
-      setSelected([]);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-  const onEmphasize = () => {
-    const mapValues = `(${selected.map(item => item)})`;
-    console.log(mapValues);
-  };
-
-  const onGroupSelect = () => {
-    if (selected.length === gallery.length) return setSelected([]);
-    const selectAll = gallery.map(img => img.image_id);
-    setSelected(selectAll);
-  };
-
-  const onSelect = image_id => {
-    if (location.pathname !== "/gallery/edit") return;
-    if (!isSelected(image_id)) return setSelected([...selected, image_id]);
-    const newSelection = selected.filter(el => el !== image_id);
-    setSelected(newSelection);
-  };
-
-  const isSelected = key => {
-    return selected.includes(key);
-  };
-
-  const images = gallery?.map(img => {
-    return (
-      <ImageCard
-        image={img}
-        key={img.image_id}
-        onSelect={onSelect}
-        selected={isSelected(img.image_id)}
-      />
-    );
+  const imageCards = images?.map(image => {
+    return <ImageCard image={image} key={image.image_id} />;
   });
 
   if (error)
@@ -96,23 +85,10 @@ const ImageGallery = () => {
         </button>
       </div>
     );
-  // if (!gallery) return <div className="gallery">Loading</div>;
 
   return (
     <div className="gallery">
-      {userContext.authenticated && !editMode() && (
-        <button className="btn-edit-gallery" onClick={onEditGallery}>
-          Edit Gallery
-        </button>
-      )}
-      {userContext.authenticated && editMode() && (
-        <EditFeatures
-          onDelete={onDelete}
-          onEmphasize={onEmphasize}
-          onGroupSelect={onGroupSelect}
-        />
-      )}
-      <div className="image-gallery">{images}</div>
+      <div className="image-gallery">{imageCards}</div>
     </div>
   );
 };

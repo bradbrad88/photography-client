@@ -1,12 +1,42 @@
-import React from "react";
+import React, { useRef } from "react";
 import "../../stylesheets/NavBar.css";
 import { Link } from "react-router-dom";
 
 const NavItem = props => {
+  const ref = useRef();
+
+  const onMouseEnter = () => {
+    // if (!props.popUp) return;
+    const el = ref.current;
+    const right = el.offsetLeft + el.offsetWidth;
+    const top = el.offsetTop + el.offsetHeight;
+    const popUpList = {
+      menu: props.menu,
+      right: right,
+      top: top,
+    };
+    props.popUp(popUpList);
+  };
+  const onMouseLeave = () => {
+    if (!props.popUp) return;
+    props.handleMouseLeave();
+  };
+  // const onMouseOver = () => {
+  //   if (!props.handleMouseOver) return;
+  //   props.handleMouseOver();
+  // };
   return (
-    <Link className="nav-item" to={props.href}>
-      {props.title}
-    </Link>
+    <div className={"nav-container"} ref={ref}>
+      <Link
+        className={"nav-item"}
+        to={props.href}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        // onMouseMove={onMouseOver}
+      >
+        {props.title}
+      </Link>
+    </div>
   );
 };
 

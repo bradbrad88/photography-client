@@ -1,14 +1,15 @@
-import React from "react";
-import "../../stylesheets/DragAndDrop.css";
+import React, { useContext } from "react";
+import GalleryEditContext from "../contexts/GalleryEditContext";
+import "../../stylesheets/GalleryEdit.css";
 
-const ImageUploadCard = ({ image, dispatch }) => {
+const ImageUploadCard = ({ image }) => {
+  const editContext = useContext(GalleryEditContext);
   const renderStatus = () => {
-    // console.log(image);
-    return image.status.map((status, index) => {
+    return image.status?.map((status, index) => {
       return (
         <div
           key={status.step}
-          className={`status ${status.inProgress ? "in-progress" : ""} ${
+          className={`status-item ${status.inProgress ? "in-progress" : ""} ${
             status.complete ? "complete" : ""
           }`}
         >
@@ -19,21 +20,30 @@ const ImageUploadCard = ({ image, dispatch }) => {
       );
     });
   };
-  const deleteButtonHandler = () => {
-    dispatch({ type: "DELETE_UPLOAD", key: image.key });
+
+  const url = () => {
+    if (image.url) return image.url;
   };
+
+  const onClick = () => {
+    editContext.toggleSelectedBank(image.image_id);
+  };
+
+  const onDragStart = () => {};
+
   return (
-    <div>
-      <div
-        className={`upload-item ${image.complete ? "complete" : ""}`}
-        style={{ backgroundImage: `url(${image.objectUrl})` }}
-      >
+    <div
+      className={`upload-item ${image.complete ? "complete" : ""} ${
+        image.selected ? "selected" : ""
+      }`}
+      style={{ backgroundImage: `url(${url()})` }}
+      draggable
+      onClick={onClick}
+      onDragStart={() => editContext.toggleSelectedBank(image.image_id, true)}
+    >
+      <div className={`status ${image.complete ? "complete" : ""}`}>
         {renderStatus()}
-        {!image.uploading && !image.complete && (
-          <button onClick={deleteButtonHandler}>X</button>
-        )}
       </div>
-      {/* <div className="upload-text">{image.data.file.name}</div> */}
     </div>
   );
 };

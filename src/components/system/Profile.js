@@ -10,7 +10,7 @@ const Profile = () => {
     userContext.profile && (
       <div className={"profile"}>
         {`Logged in as ${userContext.profile.givenName} ${userContext.profile.familyName}`}
-        <img className="profile" src={userContext.profile.imageUrl} />
+        <img className="profile-image" src={userContext.profile.imageUrl} />
         <Logout />
       </div>
     )

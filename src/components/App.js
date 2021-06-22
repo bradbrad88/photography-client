@@ -1,12 +1,14 @@
 import React from "react";
-import NavBar from "./system/NavBar";
-import Login from "./auth/Login";
-import ImageGallery from "./gallery/ImageGallery";
-import GalleryEdit from "./gallery/GalleryEdit";
-import Blog from "./blog/Blog";
+import { BrowserRouter, Route } from "react-router-dom";
+
 import { UserStore } from "./contexts/UserContext";
 import { GoogleStore } from "./contexts/GoogleContext";
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import NavBar from "./system/NavBar";
+import Auth from "./auth/Auth";
+import Login from "./auth/Login";
+import Gallery from "./gallery/Gallery";
+import GalleryEdit from "./gallery/ImageGalleryEdit";
+import Blog from "./blog/Blog";
 import "../stylesheets/Main.css";
 
 const App = () => {
@@ -14,14 +16,12 @@ const App = () => {
     <BrowserRouter>
       <UserStore>
         <GoogleStore>
-          <div className="body">
-            <NavBar />
-            <Route path="/" exact component={ImageGallery} />
-            <Route path="/gallery/edit" exact component={GalleryEdit} />
-            <Route path="/gallery" component={ImageGallery} />
-            <Route path="/blog" component={Blog} />
-            <Route path="/login" component={Login} />
-          </div>
+          <NavBar />
+          <Route path="/edit" component={Auth} />
+          <Route path="/" exact component={Gallery} />
+          <Route path="/edit/gallery" exact component={GalleryEdit} />
+          <Route path="/blog" component={Blog} />
+          <Route path="/login" component={Login} />
         </GoogleStore>
       </UserStore>
     </BrowserRouter>

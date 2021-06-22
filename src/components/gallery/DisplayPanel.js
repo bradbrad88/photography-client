@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import EditContext from "../contexts/GalleryEditContext";
 import "../../stylesheets/ImageGallery.css";
 
-const EditFeatures = props => {
-  // const onDelete = () => {};
-  // const onEmphasize = () => {};
+const DisplayPanel = props => {
+  const editContext = useContext(EditContext);
   return (
-    <div>
+    <div className={"display-panel"}>
       <button className={"gallery delete"} onClick={props.onDelete}>
         Delete
       </button>
@@ -15,7 +15,10 @@ const EditFeatures = props => {
       <button className={"gallery emphasize"} onClick={props.onGroupSelect}>
         Select all
       </button>
+      <button className={"gallery save"} onClick={editContext.saveDisplay}>
+        Save
+      </button>
     </div>
   );
 };
-export default EditFeatures;
+export default DisplayPanel;

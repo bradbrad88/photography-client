@@ -1,6 +1,9 @@
-.body {
-  width: 80vw;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+@import url("https://fonts.googleapis.com/css2?family=Antonio:wght@100&display=swap");
+
+body {
+  font-family: "Antonio", sans-serif;
+}
+
+body {
+  margin-top: 140px;
 }
