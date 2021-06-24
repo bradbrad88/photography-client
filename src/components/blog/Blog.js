@@ -1,7 +1,8 @@
 import React from "react";
+import Editor from "./Editor";
 
 const Blog = () => {
-  return <div>Blog</div>;
+  return <Editor />;
 };
 
 export default Blog;
