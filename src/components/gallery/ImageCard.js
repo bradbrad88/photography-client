@@ -1,24 +1,29 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import EditContext from "../contexts/GalleryEditContext";
 import "../../stylesheets/ImageGallery.css";
 import "../../stylesheets/GalleryEdit.css";
 
 const ImageCard = ({ image }) => {
   const [spans, setSpans] = useState(0);
+  const editContext = useContext(EditContext);
   const imageRef = useRef();
 
   useEffect(() => {
     if (imageRef.current) {
+      getSpans();
       imageRef.current.addEventListener("load", getSpans);
       imageRef.current.addEventListener("load", blurring);
       imageRef.current.addEventListener("load", displayImage);
+      imageRef.current.addEventListener("resize", getSpans);
       window.addEventListener("resize", getSpans);
     }
-  }, []);
+  }, [image.emphasize]);
 
   const getSpans = () => {
     if (!imageRef.current) return;
     const height = imageRef.current.clientHeight;
     const span = Math.ceil(height + 20);
+    if (span === spans) return;
     setSpans(span);
   };
 
@@ -44,14 +49,26 @@ const ImageCard = ({ image }) => {
     imageRef.current.style.visibility = "visible";
   };
 
+  const onClick = e => {
+    e.stopPropagation();
+    if (!editContext) return;
+    editContext.toggleSelectedDisplay(image.image_id);
+  };
+  const onDoubleClick = () => {};
+
   return (
     <>
       <img
-        className={`image-card`}
-        style={{ gridRowEnd: `span ${spans}` }}
+        className={`image-card ${image.selected ? "selected" : ""}`}
+        style={{
+          gridRowEnd: `span ${spans}`,
+          gridColumnEnd: `span ${image.emphasize}`,
+        }}
         src={image.url}
         alt={image.image_desc}
         ref={imageRef}
+        onClick={onClick}
+        onDoubleClick={onDoubleClick}
       />
     </>
   );

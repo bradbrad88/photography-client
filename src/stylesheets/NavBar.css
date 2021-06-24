@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   top: 0;
-  border-bottom: thin solid rgb(231, 231, 231);
+  /* border-bottom: thin solid rgb(231, 231, 231); */
   padding: 50px 50px 0;
   z-index: 10;
 }

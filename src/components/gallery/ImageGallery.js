@@ -3,7 +3,7 @@ import ImageCard from "./ImageCard";
 import { fetchGallery } from "../../utils/gallery";
 import "../../stylesheets/ImageGallery.css";
 
-const ImageGallery = ({ images }) => {
+const ImageGallery = ({ images, options }) => {
   const [savedGallery, setSavedGallery] = useState(null);
   const [error, setError] = useState(null);
 
@@ -73,7 +73,7 @@ const ImageGallery = ({ images }) => {
   const imageCards = images?.map(image => {
     return <ImageCard image={image} key={image.image_id} />;
   });
-
+  console.log("options", options);
   if (error)
     return (
       <div className={"gallery error"}>
@@ -88,7 +88,14 @@ const ImageGallery = ({ images }) => {
 
   return (
     <div className="gallery">
-      <div className="image-gallery">{imageCards}</div>
+      <div
+        className="image-gallery"
+        style={{
+          gridTemplateColumns: `repeat(${options.gallery_columns}, minmax(350px, 1fr))`,
+        }}
+      >
+        {imageCards}
+      </div>
     </div>
   );
 };

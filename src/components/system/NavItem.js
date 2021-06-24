@@ -6,7 +6,6 @@ const NavItem = props => {
   const ref = useRef();
 
   const onMouseEnter = () => {
-    // if (!props.popUp) return;
     const el = ref.current;
     const right = el.offsetLeft + el.offsetWidth;
     const top = el.offsetTop + el.offsetHeight;
@@ -21,10 +20,7 @@ const NavItem = props => {
     if (!props.popUp) return;
     props.handleMouseLeave();
   };
-  // const onMouseOver = () => {
-  //   if (!props.handleMouseOver) return;
-  //   props.handleMouseOver();
-  // };
+
   return (
     <div className={"nav-container"} ref={ref}>
       <Link
@@ -32,7 +28,6 @@ const NavItem = props => {
         to={props.href}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        // onMouseMove={onMouseOver}
       >
         {props.title}
       </Link>

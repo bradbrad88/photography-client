@@ -8,10 +8,11 @@ export const fetchGallery = async () => {
     const response = await fetch("http://localhost:5000/gallery", options);
     const result = await response.json();
     if (result.error) return { error: result.error };
-    const orderedList = result.data.sort(
+    const orderedList = result.data.imageGallery.sort(
       (a, b) => a.display_order - b.display_order
     );
-    return { data: orderedList };
+    console.log("orderedList", orderedList);
+    return { data: orderedList, options: result.data.options };
   } catch (error) {
     return { error: error.message };
   }

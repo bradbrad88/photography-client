@@ -4,16 +4,41 @@ import "../../stylesheets/ImageGallery.css";
 
 const DisplayPanel = props => {
   const editContext = useContext(EditContext);
+  const selectedImages = editContext.imageDisplay.filter(image => image.selected);
+  const onEmphasizeUp = e => {
+    e.stopPropagation();
+    editContext.emphasize(1);
+  };
+
+  const onEmphasizeDown = e => {
+    e.stopPropagation();
+    editContext.emphasize(-1);
+  };
   return (
     <div className={"display-panel"}>
-      <button className={"gallery delete"} onClick={props.onDelete}>
-        Delete
+      <p>
+        {selectedImages.length} image{selectedImages.length === 1 ? "" : "s"}{" "}
+        selected
+      </p>
+      <button
+        className={"gallery delete"}
+        onClick={editContext.removeSelectedDisplay}
+      >
+        Remove
       </button>
-      <button className={"gallery emphasize"} onClick={props.onEmphasize}>
-        Emphasize
-      </button>
-      <button className={"gallery emphasize"} onClick={props.onGroupSelect}>
-        Select all
+      <div>
+        <button className={"gallery emphasize"} onClick={onEmphasizeDown}>
+          ←
+        </button>
+        <span>Emphasize</span>
+        <button className={"gallery emphasize"} onClick={onEmphasizeUp}>
+          →
+        </button>
+      </div>
+      <button className={"gallery select"} onClick={editContext.selectAllDisplay}>
+        {selectedImages.length === editContext.imageDisplay.length
+          ? "De-select"
+          : "Select all"}
       </button>
       <button className={"gallery save"} onClick={editContext.saveDisplay}>
         Save

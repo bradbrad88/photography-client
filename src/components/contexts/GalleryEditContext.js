@@ -14,6 +14,7 @@ export class GalleryEditStore extends React.Component {
   state = {
     imageBank: [],
     imageDisplay: [],
+    options: { gallery_columns: 3 },
   };
 
   componentDidMount() {
@@ -113,6 +114,27 @@ export class GalleryEditStore extends React.Component {
     }));
   };
 
+  deselectAllDisplay = () => {
+    this.setState(prevState => ({
+      imageDisplay: prevState.imageDisplay.map(image => ({
+        ...image,
+        selected: false,
+      })),
+    }));
+  };
+
+  selectAllDisplay = () => {
+    const toggle =
+      this.state.imageDisplay.length ===
+      this.state.imageDisplay.filter(image => image.selected).length;
+    this.setState(prevState => ({
+      imageDisplay: prevState.imageDisplay.map(image => ({
+        ...image,
+        selected: !toggle,
+      })),
+    }));
+  };
+
   selectedImages = () => {
     return this.state.imageBank.filter(image => image.selected);
   };
@@ -125,7 +147,9 @@ export class GalleryEditStore extends React.Component {
         image =>
           !selectedImages.some(selImage => selImage.image_id === image.image_id)
       ),
-      imageDisplay: prevState.imageDisplay.concat(selectedImages),
+      imageDisplay: prevState.imageDisplay.concat(
+        selectedImages.map(image => ({ ...image, selected: false }))
+      ),
     }));
   };
 
@@ -146,6 +170,36 @@ export class GalleryEditStore extends React.Component {
 
   activeImages = () => {
     return this.state.imageDisplay.map(image => image.image_id);
+  };
+
+  removeSelectedDisplay = () => {
+    this.setState(prevState => ({
+      imageBank: prevState.imageBank.concat(
+        prevState.imageDisplay
+          .filter(image => image.selected)
+          .map(image => ({ ...image, selected: false }))
+      ),
+      imageDisplay: prevState.imageDisplay.filter(image => !image.selected),
+    }));
+  };
+
+  emphasize = arg => {
+    const min = 1;
+    const max = this.state.options.gallery_columns;
+    this.setState(prevState => ({
+      imageDisplay: prevState.imageDisplay.map(image =>
+        image.selected
+          ? {
+              ...image,
+              emphasize: (() => {
+                if (image.emphasize + arg > max) return max;
+                if (image.emphasize + arg < min) return min;
+                return image.emphasize + arg;
+              })(),
+            }
+          : { ...image }
+      ),
+    }));
   };
 
   saveDisplay = async () => {
@@ -178,9 +232,11 @@ export class GalleryEditStore extends React.Component {
           deleteSelectedBank: this.deleteSelectedBank,
           toggleSelectedDisplay: this.toggleSelectedDisplay,
           selectAllDisplay: this.selectAllDisplay,
-          deleteSelectedDisplay: this.deleteSelectedDisplay,
+          removeSelectedDisplay: this.removeSelectedDisplay,
+          emphasize: this.emphasize,
           addToDisplay: this.addToDisplay,
           saveDisplay: this.saveDisplay,
+          deselectAllDisplay: this.deselectAllDisplay,
         }}
       >
         {this.props.children}

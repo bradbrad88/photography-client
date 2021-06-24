@@ -1,19 +1,21 @@
 .image-gallery {
   position: relative;
-  width: 90vw;
+  width: 80vw;
   left: 50%;
   transform: translateX(-50%);
   box-sizing: border-box;
   display: grid;
   gap: 0px 30px;
-  grid-template-columns: repeat(3, minmax(350px, 1fr));
+  /* grid-template-columns: repeat(3, minmax(350px, 1fr)); */
   grid-auto-rows: 1px;
   margin: 0;
 }
 
 .image-card {
   width: 100%;
+  position: relative;
   height: fit-content;
+  box-sizing: border-box;
   border-radius: 20px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
   overflow: hidden;

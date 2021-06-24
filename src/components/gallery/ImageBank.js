@@ -31,6 +31,7 @@ const ImageBank = () => {
         <button onClick={editContext.selectAllBank}>Select All</button>
         <button onClick={editContext.addToDisplay}>Add to Gallery</button>
         <button onClick={editContext.deleteSelectedBank}>Delete</button>
+        <button onClick={() => console.log(editContext.imageBank)}>Test</button>
       </div>
       <div className={"dropped-files"}>{imageCards()}</div>
     </>
