@@ -67,7 +67,9 @@ export const deleteImages = async (auth, images) => {
     const res = await fetch("http://localhost:5000/gallery/delete", options);
     const { data, error } = await res.json();
     return data;
-  } catch (error) {}
+  } catch (error) {
+    return { error };
+  }
 };
 
 export const saveDisplay = async (auth, displayData) => {

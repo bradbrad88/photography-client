@@ -94,7 +94,6 @@ const NavBar = () => {
         <NavItem
           title="Blog"
           href="/blog"
-          menu={blog()}
           popUp={newPopUp}
           handleMouseLeave={mouseLeave}
           handleMouseOver={mouseEnter}

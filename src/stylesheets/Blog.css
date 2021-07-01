@@ -1,6 +1,3 @@
-:root {
-}
-
 .editor {
   position: relative;
   width: 80vw;
@@ -16,6 +13,9 @@
 input.blog-title {
   width: 500px;
   height: 3rem;
+}
+
+.header > input {
   font-size: x-large;
   border: none;
   outline: 1px solid rgba(0, 0, 0, 0.062);
@@ -28,13 +28,37 @@ input.blog-title {
   font-family: inherit;
 }
 
-input.blog-title:focus {
+.blog {
+  position: relative;
+  width: 600px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: x-large;
+}
+
+.blog p > a {
+  text-decoration: none;
+  color: rgb(146, 146, 146);
+  transition: all ease 0.2s;
+}
+
+.blog p > a:hover {
+  text-decoration: underline;
+  color: rgb(46, 71, 45);
+}
+
+.blog > h1 {
+  font-size: 36px;
+}
+
+.header > input:focus {
   outline: rgba(85, 159, 255, 0.315) solid 1px;
   box-shadow: 0 0 5px rgba(81, 156, 255, 0.589);
   color: rgba(0, 119, 255, 0.699);
 }
 
-input.blog-title:hover {
+.header > input:hover {
   outline: 1px solid rgba(85, 159, 255, 0.315);
   box-shadow: 0 0 5px rgba(81, 156, 255, 0.589);
   color: rgba(0, 119, 255, 0.699);
@@ -49,17 +73,16 @@ input.blog-title:hover::placeholder {
 }
 
 .editor > .header > button {
-  position: absolute;
-  height: 40px;
+  position: relative;
   width: 200px;
   color: rgba(1, 90, 255, 0.74);
-  right: 0;
+  margin-left: auto;
   bottom: 0;
   margin-bottom: 20px;
   margin-right: 20px;
   border: none;
   outline: rgba(0, 89, 255, 0.329) 1px solid;
-  border-radius: 20px;
+  border-radius: 1.5rem;
   background-color: white;
   cursor: pointer;
   transition: all ease 0.3s;
@@ -72,4 +95,131 @@ input.blog-title:hover::placeholder {
 }
 .editor > button:active {
   transform: scale(0.98);
+}
+
+.blog-list {
+  position: relative;
+  width: 80vw;
+  left: 50%;
+  justify-content: space-between;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+  gap: 30px;
+}
+
+.blog-item {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  outline: solid 1px rgba(0, 0, 0, 0.041);
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.089);
+  cursor: pointer;
+  transition: all ease 0.3s;
+  padding: 0;
+  font-family: inherit;
+  overflow: hidden;
+}
+
+.blog-item > .admin {
+  height: 35px;
+  display: flex;
+  margin-top: auto;
+  justify-self: end;
+  width: auto;
+  padding: 0;
+}
+
+.blog-item > img {
+  position: absolute;
+  width: 40%;
+  top: 0;
+  right: 0;
+}
+
+.blog-item:hover {
+  box-shadow: 0 0 8px rgba(0, 132, 255, 0.37);
+}
+
+.blog-item > .admin > button {
+  flex-grow: 1;
+  width: 1fr;
+  background-color: rgba(0, 0, 0, 0.027);
+  outline: 1px solid rgba(0, 0, 0, 0.062);
+  border: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+.blog-item > .admin > button > .icon {
+  transition: all ease 0.3s;
+}
+
+.blog-item > .admin > button:hover > .icon.edit {
+  fill: rgb(204, 190, 0) !important;
+}
+
+.blog-item > .admin > button:hover > .icon.active {
+  fill: rgb(109, 214, 255) !important;
+}
+
+.blog-item > .admin > button:hover > .icon.delete {
+  fill: rgb(255, 143, 109) !important;
+}
+
+.blog-item.new-blog {
+  display: flex;
+}
+
+.blog-item.hidden {
+  color: rgba(0, 0, 0, 0.103);
+}
+
+.blog-item > .content {
+  display: flex;
+  flex-direction: row;
+  padding-left: 20px;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.blog-item > .content > .text {
+  width: 50%;
+}
+.blog-item.new-blog > p {
+  align-self: center;
+  padding-top: 20px;
+  font-size: 30px;
+}
+
+.blog-item.new-blog > svg {
+  align-self: center;
+}
+
+.blog-item.new-blog > button > .icon.add {
+  height: 100px;
+}
+
+.blog-item > .content > .image {
+  flex-grow: 1;
+  width: auto;
+  height: auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.blog-item.new-blog > .icon {
+  transition: all ease 0.3s;
+}
+
+.blog-item.new-blog:hover > .icon {
+  fill: rgb(156, 243, 255);
+}
+
+.editor > .header > .blog-description {
+  display: inline-block;
+  flex-grow: 1;
+  margin: 0 20px 20px 20px;
 }
