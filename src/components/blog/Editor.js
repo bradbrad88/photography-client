@@ -5,6 +5,7 @@ import { Editor as DraftEditor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import UserContext from "../contexts/UserContext";
+import ImagePicker from "./ImagePicker";
 import {
   addBlogImage,
   submitBlog,
@@ -12,6 +13,7 @@ import {
   editBlog,
   setImageUrls,
 } from "../../utils/blog";
+import { image as imageIcon } from "../../assets/svgButtons";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../../stylesheets/Editor.css";
 
@@ -23,7 +25,9 @@ const Editor = () => {
   const [content, setContent] = useState(null);
   const [title, setTitle] = useState(null);
   const [image, setImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState();
   const [description, setDescription] = useState("");
+  const [showImagePicker, setShowImagePicker] = useState(false);
   const userContext = useContext(UserContext);
 
   useEffect(() => {
@@ -40,9 +44,11 @@ const Editor = () => {
       );
       setEditorState(EditorState.createWithContent(contentState));
     }
+    console.log("blog", blog);
     setBlogId(blog.blog_id);
     setTitle(blog.title);
     setImage(blog.image);
+    setImageUrl(blog.thumbnail);
     setDescription(blog.blog_desc);
   };
 
@@ -104,13 +110,12 @@ const Editor = () => {
       console.log("url.pathname", url.pathname.substring(1));
       imgList.push({ key: url.pathname.substring(1), url: imgs[i].src });
     }
+    if (imgList.length < 1) return;
     const result = await setImageUrls(
       userContext.authenticated,
       blogId ? blogId : id,
       imgList
     );
-    console.log("worked:", result);
-    console.log("imgs", imgList);
   };
 
   const onEditBlog = async blog => {
@@ -130,35 +135,67 @@ const Editor = () => {
       description,
     };
   };
-  return (
-    <div className={"editor"}>
-      <div className={"header"}>
-        <input
-          className={"blog-title"}
-          placeholder={"Insert title here..."}
-          onChange={titleChange}
-          value={title}
-        />
-        <input
-          className={"blog-description"}
-          placeholder={"Insert description here..."}
-          onChange={descriptionChange}
-          value={description}
-        />
-        <button onClick={onSubmit}>{params.id ? "Save" : "Submit"}</button>
-        {/* <button onClick={onTest}>test</button> */}
-      </div>
 
-      <DraftEditor
-        wrapperClassName={"RichEditor-root"}
-        editorClassName={"RichEditor-editor"}
-        // toolbarClassName={"RichEditor-toolbar"}
-        editorState={editorState}
-        onEditorStateChange={setEditorState}
-        toolbar={toolbar}
-        placeholder={"Type bitch..."}
-      />
-    </div>
+  const imagePicker = e => {
+    e.stopPropagation();
+    setShowImagePicker(true);
+  };
+
+  const onImageSelect = img => {
+    console.log("image", img);
+    setImage(img.image_id);
+    setImageUrl(img.url);
+    setShowImagePicker(false);
+  };
+
+  const cancelImagePicker = () => {
+    console.log("click");
+    setShowImagePicker(false);
+  };
+
+  return (
+    <>
+      {showImagePicker && (
+        <ImagePicker onSelection={onImageSelect} clickAway={cancelImagePicker} />
+      )}
+      <div className={"editor"}>
+        <div className={"header"} style={{ backgroundImage: `url(${imageUrl})` }}>
+          <div className={"row"}>
+            <input
+              className={"blog-title"}
+              placeholder={"Insert title here..."}
+              onChange={titleChange}
+              value={title}
+            />
+            <button className={"image-selector"} onClick={imagePicker}>
+              {imageIcon()}
+            </button>
+            <button onClick={onSubmit}>{params.id ? "Save" : "Submit"}</button>
+          </div>
+          <div className={"row"}>
+            <textarea
+              className={"blog-description"}
+              placeholder={"Insert description here..."}
+              multiple
+              onChange={descriptionChange}
+              value={description}
+            />
+          </div>
+
+          {/* <button onClick={onTest}>test</button> */}
+        </div>
+
+        <DraftEditor
+          wrapperClassName={"RichEditor-root"}
+          editorClassName={"RichEditor-editor"}
+          // toolbarClassName={"RichEditor-toolbar"}
+          editorState={editorState}
+          onEditorStateChange={setEditorState}
+          toolbar={toolbar}
+          placeholder={"Type bitch..."}
+        />
+      </div>
+    </>
   );
 };
 

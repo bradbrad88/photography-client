@@ -1,18 +1,30 @@
-.header {
+.main-header {
+  display: flex;
+  flex-direction: row;
   font-size: 25px;
   display: flex;
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
-  /* border-bottom: thin solid rgb(231, 231, 231); */
-  padding: 50px 50px 0;
+  height: 100px;
   z-index: 10;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-bottom: rgba(235, 235, 235, 0.658) 2px solid;
+  transition: all ease 0.5s;
+  justify-content: center;
 }
+
+.main-header.minimized {
+  background-color: rgba(0, 0, 0, 0.582);
+  border-bottom-color: rgb(58, 58, 58);
+  height: 45px;
+}
+
 .pop-up-menu {
   position: fixed;
-  /* height: 200px; */
   z-index: 11;
+  margin-top: 3px;
   border-style: none;
   border-color: black;
   border-width: 2px;
@@ -23,6 +35,7 @@
   padding: 10px;
   font-size: 10px;
   z-index: 1;
+  border-radius: 3px;
 }
 .pop-up-menu.fading {
   transition: opacity ease 1s;
@@ -30,39 +43,46 @@
 }
 
 .title {
-  display: inline;
-  text-align: left;
   padding: 0;
   margin: 0;
   cursor: default;
+  margin-top: auto;
+  margin-left: 20px;
+  margin-right: auto;
+  transition: all ease 0.5s;
+}
+
+.main-header.minimized > .title {
+  color: rgba(224, 224, 224, 0.521);
+  font-size: 30px;
 }
 
 .nav-bar {
   text-align: right;
   flex-wrap: wrap;
-  flex-grow: 1;
   margin-top: auto;
-  margin-bottom: 3px;
+  margin-left: auto;
 }
 
 .nav-container {
   display: inline-block;
   width: 4rem;
-  /* border-style: solid; */
-  /* padding-left: 30px; */
   padding-right: 10px;
   z-index: 10;
 }
 
 .nav-item {
   font-size: 25px;
-  color: rgb(73, 73, 73);
+  color: rgb(41, 41, 41);
   text-decoration: none;
   z-index: 10;
   transition: font-size ease 0.6s, color ease 0.6s;
-  /* margin-left: 30px; */
-  /* border-style: solid; */
 }
+
+.main-header.minimized > .nav-bar > .nav-container > .nav-item {
+  color: rgba(255, 255, 255, 0.733);
+}
+
 .nav-item:hover {
   font-size: 28px;
   color: blueviolet;
@@ -81,20 +101,32 @@
   color: blueviolet;
 }
 .profile {
-  position: fixed;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
+  text-align: center;
   flex-direction: row;
-  right: 0;
-  top: 0;
+  /* right: 0; */
+  /* top: 0; */
   gap: 5px;
   font-size: 20px;
-  margin: 10px;
+  margin-bottom: auto;
+  /* margin-bottom: 10px; */
+  /* margin-top: 10px; */
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.089);
   padding: 10px;
   border-style: solid;
-  border-color: rgba(226, 0, 0, 0.171);
+  border-color: rgba(0, 0, 0, 0.171);
   border-width: 1px;
-  border-radius: 10px;
+  border-radius: 0px;
+  border-top: none;
+  transition: all ease 0.5s;
+}
+
+.main-header.minimized > .profile {
+  visibility: hidden;
+  opacity: 0;
 }
 
 .profile-image {

@@ -48,6 +48,7 @@ export class GalleryEditStore extends React.Component {
               status: update.status,
               complete: update.complete,
               url: update.url,
+              error: update.error,
             }
           : image
       ),
@@ -61,7 +62,6 @@ export class GalleryEditStore extends React.Component {
         return { ...image, image_id: image_id };
       })
     );
-    console.log(newImages);
     const newImageBank = this.state.imageBank.concat(newImages);
     this.setState({ imageBank: newImageBank });
   };
@@ -221,6 +221,7 @@ export class GalleryEditStore extends React.Component {
     }
   };
   render() {
+    console.log("image bank", this.state.imageBank);
     return (
       <Context.Provider
         value={{

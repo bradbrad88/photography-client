@@ -173,6 +173,11 @@
   border-width: 1px;
   cursor: pointer;
 }
+
+.upload-item.error {
+  border: red solid 2px;
+}
+
 .upload-item.complete:hover {
   transform: scale(1.05);
 }
@@ -251,12 +256,19 @@
   transition: opacity ease 3s;
 }
 
+.status.error {
+}
+
 .status-item {
   color: #fff;
   background-color: rgba(0, 0, 0, 0.6);
   vertical-align: middle;
   padding: 5px;
   text-transform: capitalize;
+}
+
+.status-item.error {
+  background-color: rgba(255, 0, 0, 0.589);
 }
 
 .status-item.in-progress {

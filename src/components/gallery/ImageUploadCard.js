@@ -9,9 +9,9 @@ const ImageUploadCard = ({ image }) => {
       return (
         <div
           key={status.step}
-          className={`status-item ${status.inProgress ? "in-progress" : ""} ${
-            status.complete ? "complete" : ""
-          }`}
+          className={`status-item ${
+            status.inProgress && !status.error ? "in-progress" : ""
+          } ${status.complete ? "complete" : ""} ${status.error ? "error" : ""}`}
         >
           {`${index + 1}: ${status.step}${
             status.progress > 0 ? ` ${status.progress.toFixed(0)}%` : ""
@@ -35,7 +35,7 @@ const ImageUploadCard = ({ image }) => {
     <div
       className={`upload-item ${image.complete ? "complete" : ""} ${
         image.selected ? "selected" : ""
-      }`}
+      } ${image.error ? "error" : ""}`}
       style={{ backgroundImage: `url(${url()})` }}
       draggable
       onClick={onClick}

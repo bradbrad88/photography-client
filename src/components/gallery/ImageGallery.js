@@ -73,7 +73,7 @@ const ImageGallery = ({ images, options }) => {
   const imageCards = images?.map(image => {
     return <ImageCard image={image} key={image.image_id} />;
   });
-  console.log("options", options);
+
   if (error)
     return (
       <div className={"gallery error"}>

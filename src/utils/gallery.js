@@ -11,7 +11,6 @@ export const fetchGallery = async () => {
     const orderedList = result.data.imageGallery.sort(
       (a, b) => a.display_order - b.display_order
     );
-    console.log("orderedList", orderedList);
     return { data: orderedList, options: result.data.options };
   } catch (error) {
     return { error: error.message };
@@ -33,6 +32,15 @@ export const fetchInactiveImages = async auth => {
   } catch (error) {
     console.log("error in fetch inactive images", error);
   }
+};
+
+export const fetchAllImageThumbnails = async () => {
+  try {
+    const response = await fetch("http://localhost:5000/gallery/all_thumbnails");
+    const result = await response.json();
+    console.log("result", result);
+    return result.data;
+  } catch (error) {}
 };
 
 export const addImage = async (auth, image) => {

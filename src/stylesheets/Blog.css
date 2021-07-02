@@ -6,35 +6,111 @@
 }
 
 .editor > .header {
+  display: flex;
   position: relative;
-  padding: 0;
+  padding: 10px;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.editor > .header > .row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
 input.blog-title {
-  width: 500px;
+  /* width: 500px; */
   height: 3rem;
+  flex-grow: 1;
 }
 
-.header > input {
-  font-size: x-large;
+.header > .row > .image-selector {
+  /* width: 50px; */
+  /* height: 3.5rem; */
+  /* outline: 1px solid rgba(0, 0, 0, 0.048); */
+  /* border-radius: 5px; */
+  /* cursor: pointer; */
+
+  /* align-content: center; */
+}
+
+.editor > .header > .row > button {
+  position: relative;
+  width: 200px;
+  color: rgba(1, 90, 255, 0.74);
+  /* margin-left: auto; */
+  bottom: 0;
+  /* margin-bottom: 20px;
+  margin-right: 20px; */
+  border: none;
+  outline: rgba(0, 89, 255, 0.329) 1px solid;
+  border-radius: 1.5rem;
+  background-color: white;
+  cursor: pointer;
+  transition: all ease 0.3s;
+  font-size: 20px;
+  font-family: inherit;
+  overflow: hidden;
+}
+
+.editor > .header > .row > button:hover {
+  box-shadow: 0 0 5px rgba(221, 236, 255, 0.966);
+}
+.editor > .header > .row > button:active {
+  transform: scale(0.98);
+}
+
+button.image-selector {
+  margin-left: auto;
+}
+
+.header > .row > input,
+.header > .row > textarea {
   border: none;
   outline: 1px solid rgba(0, 0, 0, 0.062);
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   padding: 5px;
   border-radius: 5px;
   transition: all ease 0.5s;
   color: rgba(0, 0, 0, 0.699);
   font-weight: bold;
   font-family: inherit;
+  background-color: rgba(255, 255, 255, 0.822);
+}
+
+.header > .row > input {
+  font-size: x-large;
+}
+
+.header > .row > textarea {
+  font-size: large;
 }
 
 .blog {
   position: relative;
-  width: 600px;
+  width: 700px;
   left: 50%;
   transform: translateX(-50%);
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: x-large;
+}
+
+.blog > .header-image {
+  position: relative;
+  max-width: 100%;
+  max-height: 600px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.blog > .header-title {
+  text-align: center;
 }
 
 .blog p > a {
@@ -48,17 +124,18 @@ input.blog-title {
   color: rgb(46, 71, 45);
 }
 
-.blog > h1 {
-  font-size: 36px;
+.blog > .header-title > h1 {
+  font-size: 50px;
 }
-
-.header > input:focus {
+.header input:focus,
+.header textarea:focus {
   outline: rgba(85, 159, 255, 0.315) solid 1px;
   box-shadow: 0 0 5px rgba(81, 156, 255, 0.589);
   color: rgba(0, 119, 255, 0.699);
 }
 
-.header > input:hover {
+.header input:hover,
+.header textarea:hover {
   outline: 1px solid rgba(85, 159, 255, 0.315);
   box-shadow: 0 0 5px rgba(81, 156, 255, 0.589);
   color: rgba(0, 119, 255, 0.699);
@@ -70,31 +147,6 @@ input.blog-title::placeholder {
 
 input.blog-title:hover::placeholder {
   color: rgba(10, 145, 255, 0.301);
-}
-
-.editor > .header > button {
-  position: relative;
-  width: 200px;
-  color: rgba(1, 90, 255, 0.74);
-  margin-left: auto;
-  bottom: 0;
-  margin-bottom: 20px;
-  margin-right: 20px;
-  border: none;
-  outline: rgba(0, 89, 255, 0.329) 1px solid;
-  border-radius: 1.5rem;
-  background-color: white;
-  cursor: pointer;
-  transition: all ease 0.3s;
-  font-size: 20px;
-  font-family: inherit;
-}
-
-.editor > button:hover {
-  box-shadow: 0 0 5px rgba(8, 115, 255, 0.315);
-}
-.editor > button:active {
-  transform: scale(0.98);
 }
 
 .blog-list {
@@ -218,8 +270,50 @@ input.blog-title:hover::placeholder {
   fill: rgb(156, 243, 255);
 }
 
-.editor > .header > .blog-description {
-  display: inline-block;
+.editor > .header > .row > .blog-description {
   flex-grow: 1;
-  margin: 0 20px 20px 20px;
+  height: 7rem;
+
+  /* margin: 0 20px 20px 20px; */
+}
+
+.image-picker-background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.699);
+  z-index: 100;
+}
+
+.image-picker-container {
+  margin: 200px;
+  background-color: rgba(255, 255, 255, 0.904);
+  height: max-content;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  overflow-y: scroll;
+}
+
+.image-picker-card {
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.075);
+  border-radius: 5px;
+}
+
+.image-picker-card:hover {
+  transform: scale(1.02);
+}
+
+.image-selector > .image.icon {
+  width: 100%;
 }

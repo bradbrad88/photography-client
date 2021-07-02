@@ -7,6 +7,7 @@ import "../../stylesheets/NavBar.css";
 
 const NavBar = () => {
   const [opacity, setOpacity] = useState(100);
+  const [minimized, setMinimized] = useState();
   const [fading, setFading] = useState(false);
   const [popUpList, setPopUpList] = useState();
   const [timer, setTimer] = useState();
@@ -21,11 +22,16 @@ const NavBar = () => {
     const scroll = e.target.scrollingElement;
     const getOpacity = () => {
       if (!ref.current) return opacity;
+      console.log("scroll", scroll);
       const result = 100 - (scroll.scrollTop / ref.current.clientHeight) * 100;
       if (result < 0) return 0;
       return result;
     };
-    setOpacity(getOpacity());
+    const getMinimized = () => {
+      return scroll.scrollTop > 0;
+    };
+    setMinimized(getMinimized());
+    // setOpacity(getOpacity());
   };
 
   const resetTimer = () => {
@@ -75,13 +81,14 @@ const NavBar = () => {
   return (
     <div
       ref={ref}
-      className="header"
-      style={{
-        opacity: `${opacity}%`,
-        visibility: `${opacity === 0 ? "hidden" : "visible"}`,
-      }}
+      className={`main-header ${minimized ? "minimized" : ""}`}
+      // style={{
+      //   opacity: `${opacity}%`,
+      //   visibility: `${opacity === 0 ? "hidden" : "visible"}`,
+      // }}
     >
       <h1 className="title">Far Out Photography</h1>
+      <Profile />
       <div className="nav-bar">
         <NavItem
           title="Gallery"
@@ -106,7 +113,7 @@ const NavBar = () => {
           handleMouseLeave={mouseLeave}
         />
       </div>
-      <Profile />
+
       {visible && userContext.authenticated && (
         <PopUpMenu
           data={popUpList}

@@ -17,7 +17,10 @@ const Blog = props => {
   if (!blog) return <div>Loading</div>;
   return (
     <div className={"blog"}>
-      <h1>{blog.title}</h1>
+      <img className={"header-image"} src={blog.highres} />
+      <div className={"header-title"}>
+        <h1>{blog.title}</h1>
+      </div>
       <div dangerouslySetInnerHTML={{ __html: blog.html }}></div>
     </div>
   );
