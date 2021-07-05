@@ -35,3 +35,7 @@ body {
 
   justify-content: space-between;
 }
+
+body.noscroll {
+  overflow: hidden;
+}

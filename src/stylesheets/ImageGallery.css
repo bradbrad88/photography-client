@@ -8,6 +8,7 @@
   gap: 0px 30px;
   grid-auto-rows: 1px;
   margin: 0;
+  overflow-y: hidden;
 }
 
 .image-card {
@@ -76,4 +77,44 @@ button.btn-gallery-refresh {
   border: rgb(117, 43, 255);
   border-style: solid;
   border-width: 7px;
+}
+
+.fullscreen-background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.897);
+  z-index: 30;
+}
+
+.image-viewer {
+  display: flex;
+  width: 90%;
+  height: 90%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: white solid 2px;
+  background-color: black;
+}
+
+.image-viewer > img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.comment-container {
+  background-color: white;
+  border: grey;
+  flex-grow: 1;
+}
+
+.new-comment {
+  width: 100%;
+  background-color: white;
+  flex-grow: 1;
+  border: solid 1px black;
 }

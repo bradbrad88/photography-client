@@ -3,7 +3,7 @@ import EditContext from "../contexts/GalleryEditContext";
 import "../../stylesheets/ImageGallery.css";
 import "../../stylesheets/GalleryEdit.css";
 
-const ImageCard = ({ image }) => {
+const ImageCard = ({ image, handleClick }) => {
   const [spans, setSpans] = useState(0);
   const editContext = useContext(EditContext);
   const imageRef = useRef();
@@ -51,6 +51,10 @@ const ImageCard = ({ image }) => {
 
   const onClick = e => {
     e.stopPropagation();
+    if (handleClick) {
+      handleClick(image);
+      return;
+    }
     if (!editContext) return;
     editContext.toggleSelectedDisplay(image.image_id);
   };
