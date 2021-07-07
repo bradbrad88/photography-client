@@ -4,21 +4,22 @@ const Context = React.createContext();
 
 export class UserStore extends React.Component {
   state = {
-    authenticated: localStorage.getItem("token"),
-    error: null,
+    token: localStorage.getItem("token"),
+    isAdmin: localStorage.getItem("isAdmin"),
     profile: null,
   };
 
   async componentDidMount() {
     // await fetch("http://localhost:5000/auth", {
-    //   headers: { authorization: this.state.authenticated },
+    //   headers: { authorization: this.state.token },
     // });
   }
 
   onUserLogin = user => {
     if (user.error) return this.setState({ error: user.error });
     localStorage.setItem("token", user.token);
-    this.setState({ authenticated: user.token, profile: user.profile });
+    localStorage.setItem("isAdmin", user.profile.admin);
+    this.setState({ token: user.token, profile: user.profile });
   };
   onUserLogout = () => {
     this.setState({ authenticated: null, error: null, profile: null });

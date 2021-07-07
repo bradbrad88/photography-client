@@ -18,7 +18,7 @@ const GalleryEdit = () => {
     try {
       const options = {
         headers: {
-          authorization: userContext.authenticated,
+          authorization: userContext.token,
           "Content-Type": "application/json",
         },
       };

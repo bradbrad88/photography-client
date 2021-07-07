@@ -53,7 +53,7 @@ const Editor = () => {
   };
 
   const uploadCallback = async image => {
-    const res = await addBlogImage(userContext.authenticated, image);
+    const res = await addBlogImage(userContext.token, image);
     console.log("res", res);
     return { data: { link: res.url } };
   };
@@ -92,7 +92,7 @@ const Editor = () => {
     await newBlog(blog);
   };
   const newBlog = async blog => {
-    const res = await submitBlog(userContext.authenticated, blog);
+    const res = await submitBlog(userContext.token, blog);
     if (res.error) console.log(res.error);
     const id = res.data.id;
     setBlogId(id);
@@ -112,14 +112,14 @@ const Editor = () => {
     }
     if (imgList.length < 1) return;
     const result = await setImageUrls(
-      userContext.authenticated,
+      userContext.token,
       blogId ? blogId : id,
       imgList
     );
   };
 
   const onEditBlog = async blog => {
-    const res = await editBlog(userContext.authenticated, blog);
+    const res = await editBlog(userContext.token, blog);
     imageHandler(blog.html);
     if (res?.data) history.push("/blog");
   };

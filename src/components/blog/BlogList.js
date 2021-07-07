@@ -10,17 +10,25 @@ import "../../stylesheets/Blog.css";
 const BlogList = () => {
   const userContext = useContext(UserContext);
   const [blogs, setBlogs] = useState([]);
+  const [error, setError] = useState();
   const history = useHistory();
   useEffect(() => {
     getBlogs();
   }, []);
 
   const getBlogs = async () => {
-    const res = await fetchBlogs(userContext?.authenticated);
-    setBlogs(res);
+    const res = await fetchBlogs(userContext?.isAdmin ? userContext.token : null);
+    console.log("bloglist", res);
+    if (res) return setBlogs(res);
+    setError("Unable to fetch blogs from the server");
   };
 
   const blogList = () => {
+    if (error)
+      return (
+        <div className={"bloglist error"}>Unable to fetch blogs from the server</div>
+      );
+
     return blogs.map(blog => {
       return <BlogCard key={blog.blog_id} blog={blog} getBlogs={getBlogs} />;
     });
@@ -31,7 +39,7 @@ const BlogList = () => {
   };
 
   const newBlogCard = () => {
-    if (!userContext.authenticated) return;
+    if (!userContext.isAdmin) return;
     return (
       <div className={"blog-item new-blog"} onClick={createNewBlog}>
         <p>Create New Blog</p>

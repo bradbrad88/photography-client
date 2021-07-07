@@ -41,7 +41,7 @@ export const fetchBlogs = async auth => {
       options
     );
 
-    const { data } = await result.json();
+    const { data, error } = await result.json();
     console.log("data", data);
     return data;
   } catch (error) {

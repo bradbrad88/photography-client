@@ -13,7 +13,7 @@ export class GalleryDisplayStore extends React.Component {
     console.log("Gallery Display Store State", this.state.imageList);
   }
   async getImageList() {
-    const gallery = await fetchGallery(this.context.authenticated);
+    const gallery = await fetchGallery();
     return gallery.data;
   }
 

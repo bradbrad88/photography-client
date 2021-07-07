@@ -114,7 +114,7 @@ const NavBar = () => {
         />
       </div>
 
-      {visible && userContext.authenticated && (
+      {visible && userContext.isAdmin && (
         <PopUpMenu
           data={popUpList}
           handleMouseEnter={mouseEnter}

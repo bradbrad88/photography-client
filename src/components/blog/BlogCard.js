@@ -21,7 +21,7 @@ const BlogCard = ({ blog, getBlogs }) => {
   };
   const handleActive = async e => {
     e.stopPropagation();
-    await setActive(userContext.authenticated, blog.blog_id, !blog.active);
+    await setActive(userContext.token, blog.blog_id, !blog.active);
     getBlogs();
   };
   const handleDelete = async e => {
@@ -33,7 +33,7 @@ const BlogCard = ({ blog, getBlogs }) => {
     // );
     // console.log(confirmDelete);
     return;
-    await deleteBlog(userContext.authenticated, blog.blog_id);
+    await deleteBlog(userContext.token, blog.blog_id);
     getBlogs();
   };
 
@@ -56,7 +56,7 @@ const BlogCard = ({ blog, getBlogs }) => {
             style={{ backgroundImage: `url("${blog?.thumbnail}")` }}
           ></div>
         </div>
-        {userContext.authenticated && (
+        {userContext.isAdmin && (
           <div className={"admin"}>
             <button onClick={handleEdit}>{edit}</button>
             <button onClick={handleActive}>{active}</button>

@@ -21,7 +21,7 @@ export class GalleryEditStore extends React.Component {
     this.getImageBank();
     this.getImageDisplay();
     this.ws = new WebSocket(
-      `ws://localhost:3001/gallery?auth=${this.context.authenticated}`
+      `ws://localhost:3001/gallery?auth=${this.context.token}`
     );
     this.ws.onmessage = this.newMessage;
   }
@@ -32,7 +32,7 @@ export class GalleryEditStore extends React.Component {
   }
 
   async getImageBank() {
-    const gallery = await fetchInactiveImages(this.context.authenticated);
+    const gallery = await fetchInactiveImages(this.context.token);
     this.setState({ imageBank: gallery.data });
   }
 
@@ -58,7 +58,7 @@ export class GalleryEditStore extends React.Component {
   newUploads = async images => {
     const newImages = await Promise.all(
       images.map(async image => {
-        const image_id = await addImage(this.context.authenticated, image);
+        const image_id = await addImage(this.context.token, image);
         return { ...image, image_id: image_id };
       })
     );
@@ -99,7 +99,7 @@ export class GalleryEditStore extends React.Component {
       .filter(image => image.selected)
       .map(image => image.image_id);
     console.log("images", images);
-    const newImageBank = await deleteImages(this.context.authenticated, images);
+    const newImageBank = await deleteImages(this.context.token, images);
     this.setState({ imageBank: this.manageNewList(newImageBank) });
   };
 
