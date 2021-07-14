@@ -9,8 +9,8 @@ const Profile = () => {
   return (
     userContext.profile && (
       <div className={"profile"}>
-        {`Logged in as ${userContext.profile.givenName} ${userContext.profile.familyName}`}
-        <img className="profile-image" src={userContext.profile.imageUrl} />
+        {`Logged in as ${userContext.profile.given_name} ${userContext.profile.family_name}`}
+        <img className="profile-image" src={userContext.profile.image_url} />
         <Logout />
       </div>
     )
