@@ -20,8 +20,8 @@ const ImageGallery = ({ images, options }) => {
 
   if (!savedGallery && !error) getGallery();
 
-  const handleClick = id => {
-    setViewImage(id);
+  const handleClick = image => {
+    setViewImage(image);
     document.body.classList.add("noscroll");
   };
 
@@ -47,7 +47,7 @@ const ImageGallery = ({ images, options }) => {
         </button>
       </div>
     );
-  console.log("image", viewImage);
+  console.log("image", viewImage?.image_id);
   return (
     <>
       {viewImage && <Fullscreen image={viewImage} />}

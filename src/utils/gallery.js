@@ -95,3 +95,13 @@ export const saveDisplay = async (auth, displayData) => {
     return data;
   } catch (error) {}
 };
+
+export const fetchComments = async image_id => {
+  try {
+    const res = await fetch(`http://localhost:5000/comment/image/${image_id}`);
+    const { data, error } = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
