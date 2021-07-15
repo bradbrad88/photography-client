@@ -96,11 +96,28 @@ export const saveDisplay = async (auth, displayData) => {
   } catch (error) {}
 };
 
+const mapComments = commentList => {
+  const commentMap = {};
+  commentList.forEach(comment => {
+    commentMap[comment.comment_id] = comment;
+  });
+  commentList.forEach(comment => {
+    if (comment.parent_id) {
+      const parent = commentMap[comment.parent_id];
+      (parent.children = parent.children || []).push(comment);
+    }
+  });
+  return commentList.filter(comment => !comment.parent_id);
+};
+
 export const fetchComments = async image_id => {
   try {
     const res = await fetch(`http://localhost:5000/comment/image/${image_id}`);
     const { data, error } = await res.json();
-    return data;
+    if (error) return { error };
+    if (data) {
+      return mapComments(data);
+    }
   } catch (error) {
     console.error(error);
   }

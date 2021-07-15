@@ -18,7 +18,13 @@ const Fullscreen = ({ image, nextImage, previousImage }) => {
 
   const renderedComments = () => {
     return comments.map(comment => {
-      return <Comment comment={comment} />;
+      return (
+        <Comment
+          comment={comment}
+          setReplyForm={comment.children ? true : false}
+          refreshComments={getComments}
+        />
+      );
     });
   };
 

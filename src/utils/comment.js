@@ -11,6 +11,7 @@ export const postComment = async (auth, comment) => {
     const result = await fetch("http://localhost:5000/comment/new", options);
     const { data, error } = await result.json();
     if (error) console.log("Error posting new comment", error);
+
     return { data };
   } catch (error) {
     console.log("Error posting new comment", error);
