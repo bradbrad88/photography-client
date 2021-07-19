@@ -8,7 +8,7 @@
   gap: 0px 30px;
   grid-auto-rows: 1px;
   margin: 0;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 }
 
 .image-card {
@@ -91,30 +91,69 @@ button.btn-gallery-refresh {
 
 .image-viewer {
   display: flex;
-  width: 90%;
-  height: 90%;
+  width: 95%;
+  height: 95%;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   border: white solid 2px;
   background-color: black;
+  overflow: hidden;
 }
 
-.image-viewer > img {
-  max-width: 100%;
+.image-content > button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.image-content > button > .icon.menu {
+  fill: #fff;
+}
+
+.image-viewer > .image-content {
+  position: relative;
+  flex-grow: 3;
+  padding: 2px;
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
+  /* width: max-content; */
+}
+
+.image-content > img {
   max-height: 100%;
+  max-width: 100%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .comment-container {
-  display: flex;
+  display: none;
   flex-direction: column;
   background-color: white;
   border: grey;
-  flex-grow: 1;
+  flex-grow: 2;
   padding: 10px;
   gap: 5px;
+  width: 0;
+  transition: width ease 0.3s;
+  /* transform: translateX(100%); */
+  /* visibility: hidden; */
   /* background-color: rgb(255, 255, 255); */
+}
+
+.comment-container.visible {
+  display: flex;
+  width: 100%;
 }
 
 .comments {
@@ -239,4 +278,11 @@ button.btn-gallery-refresh {
 
 .comment-name {
   font-weight: 600;
+}
+
+.image-controls {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }

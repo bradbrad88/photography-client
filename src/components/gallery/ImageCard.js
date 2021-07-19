@@ -68,7 +68,7 @@ const ImageCard = ({ image, handleClick }) => {
           gridRowEnd: `span ${spans}`,
           gridColumnEnd: `span ${image.emphasize}`,
         }}
-        src={image.url}
+        src={image.thumbnail}
         alt={image.image_desc}
         ref={imageRef}
         onClick={onClick}
