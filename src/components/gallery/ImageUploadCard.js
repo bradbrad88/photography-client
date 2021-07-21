@@ -21,22 +21,16 @@ const ImageUploadCard = ({ image }) => {
     });
   };
 
-  const url = () => {
-    if (image.url) return image.url;
-  };
-
   const onClick = () => {
     editContext.toggleSelectedBank(image.image_id);
   };
-
-  const onDragStart = () => {};
 
   return (
     <div
       className={`upload-item ${image.complete ? "complete" : ""} ${
         image.selected ? "selected" : ""
       } ${image.error ? "error" : ""}`}
-      style={{ backgroundImage: `url(${url()})` }}
+      style={{ backgroundImage: `url(${image.thumbnail})` }}
       draggable
       onClick={onClick}
       onDragStart={() => editContext.toggleSelectedBank(image.image_id, true)}

@@ -41,7 +41,6 @@ const DragAndDrop = props => {
           file: file,
           status: [],
           uploadTime: Date.now(),
-          objectUrl: URL.createObjectURL(file),
         },
       };
     });

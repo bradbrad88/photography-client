@@ -20,15 +20,19 @@ export class GalleryEditStore extends React.Component {
   componentDidMount() {
     this.getImageBank();
     this.getImageDisplay();
-    this.ws = new WebSocket(
-      `ws://localhost:3001/gallery?auth=${this.context.token}`
-    );
-    this.ws.onmessage = this.newMessage;
   }
 
   async getImageDisplay() {
     const gallery = await fetchGallery();
+    this.wsInit();
     this.setState({ imageDisplay: gallery.data });
+  }
+
+  wsInit() {
+    this.ws = new WebSocket(
+      `ws://localhost:3001/gallery?auth=${this.context.token}`
+    );
+    this.ws.onmessage = this.newMessage;
   }
 
   async getImageBank() {
@@ -47,7 +51,7 @@ export class GalleryEditStore extends React.Component {
               ...image,
               status: update.status,
               complete: update.complete,
-              url: update.url,
+              thumbnail: update.url,
               error: update.error,
             }
           : image
@@ -98,9 +102,17 @@ export class GalleryEditStore extends React.Component {
     const images = this.state.imageBank
       .filter(image => image.selected)
       .map(image => image.image_id);
-    console.log("images", images);
-    const newImageBank = await deleteImages(this.context.token, images);
-    this.setState({ imageBank: this.manageNewList(newImageBank) });
+    if (images.length < 1) return;
+    const success = await deleteImages(this.context.token, images);
+    if (success) this.removeDeletedImages(images);
+  };
+
+  removeDeletedImages = images => {
+    this.setState(prevState => ({
+      imageBank: prevState.imageBank.filter(
+        image => !images.includes(image.image_id)
+      ),
+    }));
   };
 
   toggleSelectedDisplay = image_id => {
@@ -215,7 +227,7 @@ export class GalleryEditStore extends React.Component {
       };
     });
     console.log(displayData);
-    if (await saveDisplay(this.context.authenticated, displayData)) {
+    if (await saveDisplay(this.context.token, displayData)) {
       console.log("Saved");
     } else {
       console.log("really fucked it");

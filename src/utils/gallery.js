@@ -27,10 +27,11 @@ export const fetchInactiveImages = async auth => {
     };
     const response = await fetch("http://localhost:5000/gallery/inactive", options);
     const result = await response.json();
-    if (result.error) return { error: result.error };
+    if (result.error) return { data: [], error: result.error };
     return { data: result.data };
   } catch (error) {
     console.log("error in fetch inactive images", error);
+    return { data: [], error: error.message };
   }
 };
 

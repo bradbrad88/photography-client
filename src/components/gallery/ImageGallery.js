@@ -21,6 +21,7 @@ const ImageGallery = ({ images, options, editMode }) => {
   };
 
   const preloadHighres = async () => {
+    console.log("edit mode?", editMode);
     if (editMode) return;
     images.forEach(image => {
       const img = (new Image().src = image.highres);
