@@ -4,23 +4,33 @@ import Fullscreen from "./Fullscreen";
 import { fetchGallery } from "../../utils/gallery";
 import "../../stylesheets/ImageGallery.css";
 
-const ImageGallery = ({ images, options }) => {
+const ImageGallery = ({ images, options, editMode }) => {
   const [savedGallery, setSavedGallery] = useState(null);
   const [error, setError] = useState(null);
   const [viewImage, setViewImage] = useState();
   useEffect(() => {
     window.addEventListener("click", cancelFullScreen);
+    preloadHighres();
     return () => window.removeEventListener("click", cancelFullScreen);
   }, []);
+
   const getGallery = async () => {
     const gallery = await fetchGallery();
     if (gallery.error) return setError(gallery.error);
     setSavedGallery(gallery.data);
   };
 
+  const preloadHighres = async () => {
+    if (editMode) return;
+    images.forEach(image => {
+      const img = (new Image().src = image.highres);
+    });
+  };
+
   if (!savedGallery && !error) getGallery();
 
   const handleClick = image => {
+    if (editMode) return;
     setViewImage(image);
     document.body.classList.add("noscroll");
   };
@@ -67,7 +77,7 @@ const ImageGallery = ({ images, options }) => {
         </button>
       </div>
     );
-  console.log("image", viewImage?.image_id);
+
   return (
     <>
       {viewImage && (

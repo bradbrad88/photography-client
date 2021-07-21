@@ -58,6 +58,7 @@ const ImageGalleryEditDisplay = () => {
         <ImageGallery
           images={editContext.imageDisplay}
           options={editContext.options}
+          editMode={true}
         />
       </div>
     </>

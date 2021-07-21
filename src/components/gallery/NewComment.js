@@ -5,10 +5,11 @@ import { postComment } from "../../utils/comment";
 const NewComment = ({ image_id, blog_id, reply, updateComments }) => {
   const userContext = useContext(UserContext);
   const [body, setBody] = useState("");
-  console.log("reply", reply);
+
   const onChange = e => {
     setBody(e.target.value);
   };
+
   const onPost = async () => {
     const comment = {
       comment_body: body,
@@ -22,6 +23,7 @@ const NewComment = ({ image_id, blog_id, reply, updateComments }) => {
       setBody("");
     }
   };
+
   return (
     <div className={"new-comment"}>
       <textarea
