@@ -62,7 +62,11 @@ const ImageGallery = ({ images, options, editMode }) => {
 
   const imageCards = images?.map(image => {
     return (
-      <ImageCard image={image} key={image.image_id} handleClick={handleClick} />
+      <ImageCard
+        image={image}
+        key={image.image_id}
+        handleClick={editMode ? null : handleClick}
+      />
     );
   });
 

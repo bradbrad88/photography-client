@@ -14,6 +14,12 @@ const DisplayPanel = props => {
     e.stopPropagation();
     editContext.emphasize(-1);
   };
+
+  const onSelectAll = e => {
+    e.stopPropagation();
+    editContext.selectAllDisplay();
+  };
+
   return (
     <div className={"display-panel"}>
       <p>
@@ -35,7 +41,7 @@ const DisplayPanel = props => {
           →
         </button>
       </div>
-      <button className={"gallery select"} onClick={editContext.selectAllDisplay}>
+      <button className={"gallery select"} onClick={onSelectAll}>
         {selectedImages.length === editContext.imageDisplay.length
           ? "De-select"
           : "Select all"}

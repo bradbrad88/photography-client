@@ -58,6 +58,7 @@ const ImageCard = ({ image, handleClick }) => {
     if (!editContext) return;
     editContext.toggleSelectedDisplay(image.image_id);
   };
+
   const onDoubleClick = () => {};
 
   return (

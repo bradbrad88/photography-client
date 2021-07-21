@@ -127,6 +127,7 @@ export class GalleryEditStore extends React.Component {
     const toggle =
       this.state.imageDisplay.length ===
       this.state.imageDisplay.filter(image => image.selected).length;
+    console.log(toggle);
     this.setState(prevState => ({
       imageDisplay: prevState.imageDisplay.map(image => ({
         ...image,
@@ -220,7 +221,9 @@ export class GalleryEditStore extends React.Component {
       console.log("really fucked it");
     }
   };
+
   render() {
+    console.log("image display", this.state.imageDisplay);
     console.log("image bank", this.state.imageBank);
     return (
       <Context.Provider
