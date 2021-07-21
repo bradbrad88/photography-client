@@ -30,6 +30,26 @@ const ImageGallery = ({ images, options }) => {
     document.body.classList.remove("noscroll");
   };
 
+  const handlePreviousImage = () => {
+    let prevImageIndex;
+    if (images.indexOf(viewImage) === 0) {
+      prevImageIndex = images.length - 1;
+    } else {
+      prevImageIndex = images.indexOf(viewImage) - 1;
+    }
+    setViewImage(images[prevImageIndex]);
+  };
+
+  const handleNextImage = () => {
+    let nextImageIndex;
+    if (images.indexOf(viewImage) === images.length - 1) {
+      nextImageIndex = 0;
+    } else {
+      nextImageIndex = images.indexOf(viewImage) + 1;
+    }
+    setViewImage(images[nextImageIndex]);
+  };
+
   const imageCards = images?.map(image => {
     return (
       <ImageCard image={image} key={image.image_id} handleClick={handleClick} />
@@ -50,7 +70,13 @@ const ImageGallery = ({ images, options }) => {
   console.log("image", viewImage?.image_id);
   return (
     <>
-      {viewImage && <Fullscreen image={viewImage} />}
+      {viewImage && (
+        <Fullscreen
+          image={viewImage}
+          nextImage={handleNextImage}
+          previousImage={handlePreviousImage}
+        />
+      )}
       <div className="gallery">
         <div
           className="image-gallery"
