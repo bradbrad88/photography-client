@@ -90,6 +90,7 @@ const ImageGallery = ({ images, options, editMode }) => {
           image={viewImage}
           nextImage={handleNextImage}
           previousImage={handlePreviousImage}
+          exit={cancelFullScreen}
         />
       )}
       <div className="gallery">

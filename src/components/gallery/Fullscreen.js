@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import Comment from "./Comment";
 import NewComment from "./NewComment";
 import { fetchComments } from "../../utils/gallery";
-import { menu } from "../../assets/svgButtons";
+import { menu, close, arrowLeft, arrowRight } from "../../assets/svgButtons";
 import "../../stylesheets/ImageGallery.css";
 import { Grid } from "react-spinners-css";
-const Fullscreen = ({ image, nextImage, previousImage }) => {
+const Fullscreen = ({ image, nextImage, previousImage, exit }) => {
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState([]);
   const [commentsVisible, setCommentsVisible] = useState(false);
@@ -54,7 +54,12 @@ const Fullscreen = ({ image, nextImage, previousImage }) => {
         {!loading && (
           <>
             <div className={`image-content ${loading ? "loading" : ""}`}>
-              <button onClick={handleMenu}>{menu}</button>
+              <button className={"comments"} onClick={handleMenu}>
+                {menu}
+              </button>
+              <button className={"close"} onClick={exit}>
+                {close}
+              </button>
               <img src={image.highres} />
             </div>
             <div
@@ -68,8 +73,8 @@ const Fullscreen = ({ image, nextImage, previousImage }) => {
           </>
         )}
         <div className={"image-controls"}>
-          <button onClick={previousImage}>{"<"}</button>
-          <button onClick={nextImage}>{">"}</button>
+          <button onClick={previousImage}>{arrowLeft}</button>
+          <button onClick={nextImage}>{arrowRight}</button>
         </div>
       </div>
     </div>

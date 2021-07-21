@@ -104,8 +104,6 @@ button.btn-gallery-refresh {
 
 .image-content > button {
   position: absolute;
-  top: 0;
-  right: 0;
   padding: 10px;
   background-color: rgba(255, 255, 255, 0);
   border: none;
@@ -114,7 +112,21 @@ button.btn-gallery-refresh {
   z-index: 5;
 }
 
+.image-content > button.comments {
+  top: 0;
+  right: 0;
+}
+
+.image-content > button.exit {
+  top: 0;
+  left: 0;
+}
+
 .image-content > button > .icon.menu {
+  fill: #fff;
+}
+
+.image-content > button > .icon.close {
   fill: #fff;
 }
 
@@ -122,9 +134,6 @@ button.btn-gallery-refresh {
   position: relative;
   flex-grow: 3;
   padding: 2px;
-  /* left: 50%; */
-  /* transform: translateX(-50%); */
-  /* width: max-content; */
 }
 
 .image-content > img {
@@ -146,9 +155,6 @@ button.btn-gallery-refresh {
   gap: 5px;
   width: 0;
   transition: width ease 0.3s;
-  /* transform: translateX(100%); */
-  /* visibility: hidden; */
-  /* background-color: rgb(255, 255, 255); */
 }
 
 .comment-container.visible {
@@ -291,8 +297,25 @@ button.btn-gallery-refresh {
 }
 
 .image-controls > button {
-  height: 30px;
-  width: 30px;
+  /* height: 30px;
+  width: 30px; */
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  border-radius: 5px;
+  background-position: center;
+  cursor: pointer;
+}
+
+.image-controls > button > .icon {
+  fill: #fff;
+  transition: all ease 0.4s;
+}
+
+.image-controls > button:hover > .icon {
+  fill: rgb(195, 255, 146);
+  transform: scale(1.5);
+  /* background: #fff; */
+  /* box-shadow: 0 0 5px #fff; */
 }
 
 .image-content.loading {
