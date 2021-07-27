@@ -10,22 +10,33 @@ export class UserStore extends React.Component {
   };
 
   async componentDidMount() {
-    // await fetch("http://localhost:5000/auth", {
-    //   headers: { authorization: this.state.token },
-    // });
+    console.log("userContext state", this.state);
   }
 
   onUserLogin = user => {
     if (user.error) return this.setState({ error: user.error });
     localStorage.setItem("token", user.token);
     localStorage.setItem("isAdmin", user.profile.admin);
-    this.setState({ token: user.token, profile: user.profile });
+    console.log("User", user);
+    this.setState({
+      token: user.token,
+      profile: user.profile,
+      isAdmin: user.profile.admin,
+    });
   };
   onUserLogout = () => {
-    this.setState({ authenticated: null, error: null, profile: null });
+    this.setState({
+      authenticated: null,
+      error: null,
+      profile: null,
+      isAdmin: null,
+      token: null,
+    });
     localStorage.removeItem("token");
+    localStorage.removeItem("isAdmin");
   };
   render() {
+    console.log("UserContext", this.state);
     return (
       <Context.Provider
         value={{

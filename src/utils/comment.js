@@ -15,5 +15,6 @@ export const postComment = async (auth, comment) => {
     return { data };
   } catch (error) {
     console.log("Error posting new comment", error);
+    return { error };
   }
 };
