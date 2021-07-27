@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import UserContext from "../contexts/UserContext";
 import Comment from "./Comment";
 import NewComment from "./NewComment";
+import Login from "../auth/Login";
 import { fetchComments } from "../../utils/gallery";
 import { menu, close, arrowLeft, arrowRight } from "../../assets/svgButtons";
 import "../../stylesheets/ImageGallery.css";
@@ -10,13 +12,13 @@ const Fullscreen = ({ image, nextImage, previousImage, exit }) => {
   const [comments, setComments] = useState([]);
   const [controlVisibility, setControlVisibility] = useState(true);
   const [commentsVisible, setCommentsVisible] = useState(false);
+  const userContext = useContext(UserContext);
   useEffect(() => {
     setLoading(true);
     getImage();
     getComments();
   }, [image]);
   const timer = useRef(null);
-  console.log("rerender");
   const getImage = () => {
     const img = new Image();
     img.src = image.highres;
@@ -41,6 +43,7 @@ const Fullscreen = ({ image, nextImage, previousImage, exit }) => {
     return comments.map(comment => {
       return (
         <Comment
+          key={comment.comment_id}
           comment={comment}
           setReplyForm={comment.children ? true : false}
           refreshComments={getComments}
@@ -50,31 +53,28 @@ const Fullscreen = ({ image, nextImage, previousImage, exit }) => {
   };
 
   const controlVisibilityTimer = () => {
-    getTimer();
     setControlVisibility(false);
   };
 
   const onMouseMove = () => {
-    console.log("Cleared this timer:", timer.current);
     clearTimeout(timer.current);
     setControlVisibility(true);
     timer.current = setTimeout(controlVisibilityTimer, 500);
   };
 
-  const onMouseEnter = e => {
-    console.log("yeppers");
+  const onMenuMouseEnter = e => {
     e.stopPropagation();
-    // console.log(controlTimer);
     clearTimeout(timer.current);
+  };
+
+  const onMouseEnter = e => {
+    e.stopPropagation();
   };
 
   const onMouseMoveButton = e => {
     e.stopPropagation();
   };
 
-  const getTimer = () => {
-    console.log("This timer ran:", timer.current);
-  };
   return (
     <div className={"fullscreen-background"}>
       <div
@@ -83,53 +83,65 @@ const Fullscreen = ({ image, nextImage, previousImage, exit }) => {
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseMove}
       >
-        {loading && <Grid color={"#fff"} size={120} className={"loading-spinner"} />}
-        {!loading && (
-          <>
-            <div className={`image-content ${loading ? "loading" : ""}`}>
-              <button
-                className={`comments ${controlVisibility ? "" : "hidden"}`}
-                onClick={handleMenu}
-                onMouseEnter={onMouseEnter}
-                onMouseMove={onMouseMoveButton}
-              >
-                {menu}
-              </button>
-              <button
-                className={`close ${controlVisibility ? "" : "hidden"}`}
-                onClick={exit}
-                onMouseEnter={onMouseEnter}
-                onMouseMove={onMouseMoveButton}
-              >
-                {close}
-              </button>
-              <img src={image.highres} />
-            </div>
-            <div
-              className={`comment-container ${
-                commentsVisible && !loading ? "visible" : ""
-              }`}
+        <div className={`image-content ${loading ? "loading" : ""}`}>
+          <div className={`image-controls ${controlVisibility ? "" : "hidden"}`}>
+            <button
+              className={`comments`}
+              onClick={handleMenu}
+              onMouseEnter={onMenuMouseEnter}
+              onMouseMove={onMouseMoveButton}
             >
+              {menu}
+            </button>
+            <button
+              className={`close`}
+              onClick={exit}
+              onMouseEnter={onMenuMouseEnter}
+              onMouseMove={onMouseMoveButton}
+            >
+              {close}
+            </button>
+            <button
+              className={"previous"}
+              onClick={previousImage}
+              onMouseEnter={onMouseEnter}
+              onMouseMove={onMouseMove}
+            >
+              {arrowLeft}
+            </button>
+            <button
+              className={"next"}
+              onClick={nextImage}
+              onMouseEnter={onMouseEnter}
+              onMouseMove={onMouseMove}
+            >
+              {arrowRight}
+            </button>
+          </div>
+          {loading ? (
+            <Grid color={"#fff"} size={120} className={"loading-spinner"} />
+          ) : (
+            <img src={image.highres} />
+          )}
+        </div>
+        <div className={`comment-container ${commentsVisible ? "visible" : ""}`}>
+          {loading ? (
+            <Grid color={"#000"} size={120} className={"loading-spinner"} />
+          ) : (
+            <>
               <div className={"comments"}>{renderedComments()}</div>
-              <NewComment image_id={image.image_id} updateComments={getComments} />
-            </div>
-          </>
-        )}
-        <div className={`image-controls ${controlVisibility ? "" : "hidden"}`}>
-          <button
-            onClick={previousImage}
-            onMouseEnter={onMouseEnter}
-            onMouseMove={onMouseMoveButton}
-          >
-            {arrowLeft}
-          </button>
-          <button
-            onClick={nextImage}
-            onMouseEnter={onMouseEnter}
-            onMouseMove={onMouseMoveButton}
-          >
-            {arrowRight}
-          </button>
+              <div className={"user-input-container"}>
+                {userContext.profile ? (
+                  <NewComment
+                    image_id={image.image_id}
+                    updateComments={getComments}
+                  />
+                ) : (
+                  <Login msg={"Login to leave a comment"} />
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

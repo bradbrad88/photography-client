@@ -26,7 +26,10 @@ const App = () => {
           <Route path="/edit/blog/" exact component={Editor} />
           <Route path="/blog/:id" exact component={Blog} />
           <Route path="/edit/blog/:id" exact component={Editor} />
-          <Route path="/login" component={Login} />
+          <Route
+            path="/login"
+            render={() => <Login msg={"Choose your login method"} />}
+          />
         </GoogleStore>
       </UserStore>
     </BrowserRouter>

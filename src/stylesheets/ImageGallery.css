@@ -102,43 +102,6 @@ button.btn-gallery-refresh {
   overflow: hidden;
 }
 
-.image-content > button {
-  position: absolute;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0);
-  border: none;
-  outline: none;
-  cursor: pointer;
-  z-index: 5;
-  transition: opacity ease 0.3s;
-}
-
-.image-content > button.comments {
-  top: 0;
-  right: 0;
-}
-
-.image-content > button.exit {
-  top: 0;
-  left: 0;
-}
-
-.image-content > button > .icon.menu {
-  fill: #fff;
-}
-
-.image-content > button > .icon.close {
-  fill: #fff;
-}
-
-.image-content > button.hidden {
-  opacity: 0;
-}
-
-.image-content > button.close.hidden {
-  opacity: 0;
-}
-
 .image-viewer > .image-content {
   position: relative;
   flex-grow: 3;
@@ -158,6 +121,7 @@ button.btn-gallery-refresh {
 
 .comment-container {
   display: none;
+  position: relative;
   flex-direction: column;
   background-color: white;
   border: grey;
@@ -172,6 +136,9 @@ button.btn-gallery-refresh {
 .comment-container.visible {
   display: flex;
   width: 100%;
+}
+
+.comment-container.loading {
 }
 
 .comments {
@@ -299,14 +266,37 @@ button.btn-gallery-refresh {
 }
 
 .image-controls {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
   gap: 30px;
   position: fixed;
   bottom: 10px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%); */
   transition: all ease 0.3s;
+}
+
+.image-content > .image-controls > button {
+  position: absolute;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  z-index: 2;
+  transition: opacity ease 0.3s;
+}
+
+.image-content > .image-controls > button.comments {
+  top: 0;
+  right: 0;
+  z-index: 3;
+}
+
+.image-content > .image-controls > button.close {
+  top: 0;
+  left: 0;
+  z-index: 3;
 }
 
 .image-controls.hidden {
@@ -328,14 +318,39 @@ button.btn-gallery-refresh {
   transition: all ease 0.4s;
 }
 
+.image-controls > button.previous {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 30%;
+  text-align: left;
+}
+
+.image-controls > button.next {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 30%;
+  text-align: right;
+}
+
+.image-controls > button.icon {
+}
+
 .image-controls > button:hover > .icon {
-  fill: rgb(195, 255, 146);
-  transform: scale(1.5);
+  fill: rgb(0, 174, 255);
+  transform: scale(1.2);
   /* background: #fff; */
   /* box-shadow: 0 0 5px #fff; */
 }
 
 .image-content.loading {
-  opacity: 0;
+  /* opacity: 0; */
   /* visibility: hidden; */
+}
+
+.user-input-container {
+  margin-top: auto;
 }

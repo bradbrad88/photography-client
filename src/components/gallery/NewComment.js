@@ -24,7 +24,7 @@ const NewComment = ({ image_id, blog_id, reply, updateComments }) => {
     }
   };
 
-  return (
+  return userContext.token ? (
     <div className={"new-comment"}>
       <textarea
         value={body}
@@ -38,7 +38,7 @@ const NewComment = ({ image_id, blog_id, reply, updateComments }) => {
       />
       <button onClick={onPost}>{reply ? "Reply" : "Post"}</button>
     </div>
-  );
+  ) : null;
 };
 
 export default NewComment;

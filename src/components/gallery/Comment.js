@@ -8,7 +8,6 @@ const Comment = ({ comment, setReplyForm, refreshComments }) => {
   }, []);
   const fullDate = new Date(0);
   fullDate.setUTCSeconds(comment.date_created);
-  console.log("full date", fullDate.valueOf());
   const time = fullDate.toLocaleTimeString().replace(" ", "");
   const date = fullDate.toLocaleDateString();
 
@@ -27,8 +26,6 @@ const Comment = ({ comment, setReplyForm, refreshComments }) => {
   const handleReplyButton = () => {
     setNewReply(true);
   };
-
-  const updateComments = () => {};
 
   return (
     <div className={"comment"}>
@@ -51,13 +48,6 @@ const Comment = ({ comment, setReplyForm, refreshComments }) => {
             <button onClick={handleReplyButton}>Reply</button>
           </div>
         )}
-        {/* {newReply && (
-          <NewComment
-            reply={{ id: comment.comment_id, name: comment.given_name }}
-            image_id={comment.image_id}
-            updateComments={updateComments}
-          />
-        )} */}
         {comment.children && (
           <div className={"comment-replies"}>{renderReplies()}</div>
         )}

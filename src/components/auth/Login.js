@@ -5,7 +5,7 @@ import GoogleContext from "../contexts/GoogleContext";
 import UserContext from "../contexts/UserContext";
 // import { refreshTokenSetup } from "../../utils/refreshToken";
 import "../../stylesheets/Auth.css";
-const Login = () => {
+const Login = ({ msg }) => {
   const googleContext = useContext(GoogleContext);
   const userContext = useContext(UserContext);
   const history = useHistory();
@@ -20,7 +20,7 @@ const Login = () => {
 
   return (
     <div className="container">
-      <div className="text-container">Choose your login method</div>
+      <div className="text-container">{msg}</div>
       <button className="auth facebook">Login with Facebook</button>
       <button className="auth google" onClick={onLoginGoogle}>
         Login with Google
