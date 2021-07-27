@@ -139,6 +139,7 @@ const Editor = () => {
   const imagePicker = e => {
     e.stopPropagation();
     setShowImagePicker(true);
+    document.body.classList.add("noscroll");
   };
 
   const onImageSelect = img => {
@@ -151,6 +152,7 @@ const Editor = () => {
   const cancelImagePicker = () => {
     console.log("click");
     setShowImagePicker(false);
+    document.body.classList.remove("noscroll");
   };
 
   return (

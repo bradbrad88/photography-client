@@ -288,9 +288,14 @@ input.blog-title:hover::placeholder {
 }
 
 .image-picker-container {
-  margin: 200px;
+  /* margin: 200px; */
+  position: absolute;
   background-color: rgba(255, 255, 255, 0.904);
-  height: max-content;
+  /* height: 50%; */
+  top: 10vh;
+  left: 10vw;
+  right: 10vw;
+  bottom: 10vh;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 10px;
