@@ -92,3 +92,6 @@ button.auth:active {
 .google:focus {
   background: #e74b37;
 }
+.google:disabled {
+  background-color: rgb(163, 163, 163);
+}

@@ -7,6 +7,7 @@ export class UserStore extends React.Component {
     token: localStorage.getItem("token"),
     isAdmin: localStorage.getItem("isAdmin"),
     profile: null,
+    method: null,
   };
 
   async componentDidMount() {
@@ -22,6 +23,7 @@ export class UserStore extends React.Component {
       token: user.token,
       profile: user.profile,
       isAdmin: user.profile.admin,
+      method: user.method,
     });
   };
   onUserLogout = () => {

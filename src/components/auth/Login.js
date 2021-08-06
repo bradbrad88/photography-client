@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import "../../stylesheets/Auth.css";
 
 import GoogleContext from "../contexts/GoogleContext";
 import UserContext from "../contexts/UserContext";
@@ -17,12 +18,15 @@ const Login = ({ msg }) => {
   const onLoginGoogle = () => {
     googleContext.onSignin();
   };
-
   return (
     <div className="container">
       <div className="text-container">{msg}</div>
       <button className="auth facebook">Login with Facebook</button>
-      <button className="auth google" onClick={onLoginGoogle}>
+      <button
+        className="auth google"
+        disabled={googleContext.auth ? false : true}
+        onClick={onLoginGoogle}
+      >
         Login with Google
       </button>
     </div>

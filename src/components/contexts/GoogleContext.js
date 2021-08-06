@@ -46,8 +46,8 @@ export class GoogleStore extends React.Component {
   };
 
   onSignin = () => {
-    if (this.auth.isSignedIn.get()) this.auth.signOut();
-    this.auth.signIn();
+    if (this.auth?.isSignedIn.get()) this.auth.signOut();
+    this.auth?.signIn();
   };
 
   onSignout = () => {
@@ -60,6 +60,7 @@ export class GoogleStore extends React.Component {
         value={{
           onSignin: this.onSignin,
           onSignout: this.onSignout,
+          auth: this.auth,
         }}
       >
         {this.props.children}
