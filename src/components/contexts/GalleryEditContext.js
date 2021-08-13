@@ -7,25 +7,62 @@ import {
   saveDisplay,
 } from "../../utils/gallery";
 import UserStore from "./UserContext";
+import ImageCard from "../gallery/ImageCard";
 const Context = React.createContext();
+
+const originalLayouts = getFromLS("layouts") || [];
 
 export class GalleryEditStore extends React.Component {
   static contextType = UserStore;
   state = {
     imageBank: [],
-    imageDisplay: [],
+    layouts: originalLayouts,
+    imageDisplay: [], // array of ImageCard components to display on GridLayout
     options: { gallery_columns: 3 },
+    imageDrag: [],
+    loading: true,
   };
 
   componentDidMount() {
-    this.getImageBank();
-    this.getImageDisplay();
+    this.loadContext();
+    // this.wsInit();
+    // this.getImageBank(); // edit to get all images
+
+    // // get layouts
+
+    // this.getImageDisplay();
   }
 
   async getImageDisplay() {
-    const gallery = await fetchGallery();
+    console.log("layouts", this.state.layouts);
+    const imageDisplay = this.state.layouts.map(layout => {
+      return this.getImageComponent(layout.i);
+    });
+    this.setState({ imageDisplay });
+  }
+
+  getImageComponent(id) {
+    const image = this.state.imageBank.find(
+      image => image.image_id === parseInt(id)
+    );
+    if (image)
+      return (
+        <ImageCard image={image} key={image.image_id} ref={React.createRef()} />
+      );
+  }
+
+  addImageComponent = id => {
+    const imageCard = this.getImageComponent(id);
+    this.setState(prevState => ({
+      imageDisplay: [...prevState.imageDisplay, imageCard],
+    }));
+  };
+
+  async loadContext() {
     this.wsInit();
-    this.setState({ imageDisplay: gallery.data });
+    await this.getImageBank();
+    this.getImageDisplay();
+    this.setState({ loading: false });
   }
 
   wsInit() {
@@ -57,6 +94,11 @@ export class GalleryEditStore extends React.Component {
           : image
       ),
     }));
+  };
+
+  updateLayouts = layouts => {
+    console.log("layouts", layouts);
+    this.setState({ layouts: layouts });
   };
 
   newUploads = async images => {
@@ -94,6 +136,14 @@ export class GalleryEditStore extends React.Component {
               selected: !toggle,
             }
           : { ...image }
+      ),
+    }));
+  };
+
+  deselectAllBank = () => {
+    this.setState(prevState => ({
+      imageBank: prevState.imageBank.map(image =>
+        image.complete ? { ...image, selected: false } : { ...image }
       ),
     }));
   };
@@ -235,8 +285,8 @@ export class GalleryEditStore extends React.Component {
   };
 
   render() {
-    console.log("image display", this.state.imageDisplay);
-    console.log("image bank", this.state.imageBank);
+    // console.log("image display", this.state.imageDisplay);
+    // console.log("image bank", this.state.imageBank);
     return (
       <Context.Provider
         value={{
@@ -245,6 +295,7 @@ export class GalleryEditStore extends React.Component {
           newUploads: this.newUploads,
           toggleSelectedBank: this.toggleSelectedBank,
           selectAllBank: this.selectAllBank,
+          deselectAllBank: this.deselectAllBank,
           deleteSelectedBank: this.deleteSelectedBank,
           toggleSelectedDisplay: this.toggleSelectedDisplay,
           selectAllDisplay: this.selectAllDisplay,
@@ -253,12 +304,24 @@ export class GalleryEditStore extends React.Component {
           addToDisplay: this.addToDisplay,
           saveDisplay: this.saveDisplay,
           deselectAllDisplay: this.deselectAllDisplay,
+          updateLayouts: this.updateLayouts,
+          addImageComponent: this.addImageComponent,
         }}
       >
         {this.props.children}
       </Context.Provider>
     );
   }
+}
+
+function getFromLS(key) {
+  let ls = {};
+  if (global.localStorage) {
+    try {
+      ls = JSON.parse(global.localStorage.getItem("rgl")) || {};
+    } catch (error) {}
+  }
+  return ls[key];
 }
 
 export default Context;

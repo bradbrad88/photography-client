@@ -25,15 +25,23 @@ const ImageUploadCard = ({ image }) => {
     editContext.toggleSelectedBank(image.image_id);
   };
 
+  const onDragStart = e => {
+    e.dataTransfer.setData("text/plain", "");
+    e.dataTransfer.setData("image-id", image.image_id);
+    editContext.deselectAllBank();
+    // editContext.toggleSelectedBank(image.image_id, true);
+  };
+
   return (
     <div
+      key={image.image_id}
       className={`upload-item ${image.complete ? "complete" : ""} ${
         image.selected ? "selected" : ""
       } ${image.error ? "error" : ""}`}
       style={{ backgroundImage: `url(${image.thumbnail})` }}
       draggable
       onClick={onClick}
-      onDragStart={() => editContext.toggleSelectedBank(image.image_id, true)}
+      onDragStart={onDragStart}
     >
       <div className={`status ${image.complete ? "complete" : ""}`}>
         {renderStatus()}

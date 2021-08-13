@@ -1,30 +1,36 @@
 .image-gallery {
-  position: relative;
-  width: 80vw;
+  /* position: relative; */
+  /* width: 80vw; */
+  width: 1500px;
   left: 50%;
   transform: translateX(-50%);
-  box-sizing: border-box;
-  display: grid;
-  gap: 0px 30px;
-  grid-auto-rows: 1px;
+  /* box-sizing: border-box; */
+  /* display: grid; */
+  /* gap: 0px 30px; */
+  /* grid-auto-rows: 1px; */
   margin: 0;
+  margin-bottom: 300px;
+  /* border: rgba(0, 0, 0, 0.082) solid 1px; */
+  /* border-radius: 8px; */
+  /* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1); */
+  /* min-height: 200px; */
   /* overflow-y: hidden; */
 }
 
+.image-gallery.edit-mode {
+  border: 2px dashed rgba(0, 0, 0, 0.082);
+}
+
 .image-card {
-  width: 100%;
-  position: relative;
-  height: fit-content;
-  box-sizing: border-box;
-  border-radius: 20px;
+  /* width: 100%; */
+  /* position: relative; */
+  /* height: fit-content; */
+  /* box-sizing: border-box; */
+  border-radius: 10px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   cursor: pointer;
-  transition: transform ease 0.5s;
-}
-
-.image-card:hover {
-  transform: scale(1.02);
+  transition: all ease 0.5s;
 }
 
 .btn-edit-gallery {

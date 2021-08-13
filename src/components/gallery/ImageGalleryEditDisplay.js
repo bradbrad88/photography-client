@@ -1,68 +1,72 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
+import GridLayout from "react-grid-layout";
 import EditContext from "../contexts/GalleryEditContext";
 import ImageGallery from "./ImageGallery";
+import ImageCard from "./ImageCard";
 import DisplayPanel from "./DisplayPanel";
+import { Grid } from "react-spinners-css";
 import "../../stylesheets/GalleryEdit.css";
+import "../../../node_modules/react-grid-layout/css/styles.css";
+import "../../../node_modules/react-resizable/css/styles.css";
+import { edit } from "../../assets/svgButtons";
 
 const ImageGalleryEditDisplay = () => {
   const editContext = useContext(EditContext);
-  const [hover, setHover] = useState(false);
-  useEffect(() => {
-    window.addEventListener("click", onClick);
-    return () => window.removeEventListener("click", onClick);
-  }, []);
-  const onDragOver = e => {
+
+  const onLayoutChange = layout => {
+    console.log("LAYOUT CHANGE");
+    if (layout.length < 1) return;
+    saveToLS("layouts", layout);
+  };
+
+  const getImage = id => {
+    const image = editContext.imageBank.find(image => image.image_id === id);
+    return <ImageCard image={image} key={image.image_id} ref={React.createRef()} />;
+  };
+
+  const cleanLayout = (currentLayout, newLayoutItem) => {
+    const newLayout = currentLayout.filter(layout => layout.i !== "new");
+    return [...newLayout, newLayoutItem];
+  };
+
+  const onDrop = (layout, layoutItem, e) => {
     e.preventDefault();
-    e.dataTransfer.dropEffect = "move";
-    setHover(true);
+    if (!layoutItem) return;
+    const image_id = e.dataTransfer.getData("image-id");
+    if (image_id === "") return;
+    if (layout.filter(layout => layout.i === image_id).length > 0) return;
+    const newImage = getImage(parseInt(image_id));
+    const newImageLayout = { ...layoutItem, i: image_id };
+    const newLayout = cleanLayout(layout, newImageLayout); // try without cleaning layout - GridLayout may handle this
+    editContext.addImageComponent(image_id);
+    editContext.updateLayouts(newLayout);
   };
 
-  const onClick = e => {
-    editContext.deselectAllDisplay();
-  };
-
-  const onDrop = e => {
-    e.preventDefault();
-    e.stopPropagation();
-    editContext.addToDisplay();
-    setHover(false);
-  };
-
-  const onDragLeave = e => {
-    setHover(false);
-  };
-
-  // const onClick = e => {
-  //   editContext.deselectAllDisplay();
-  // };
-
-  // const imageCards = () => {
-  //   console.log("edit context", editContext.imageDisplay);
-
-  //   return editContext.imageDisplay.map(image => {
-  //     console.log("image", image);
-  //     return <ImageCard image={image} key={image.image_id} />;
-  //   });
-  // };
-
-  return (
-    <>
-      <DisplayPanel />
-      <div
-        className={`gallery edit display ${hover ? "hover" : ""}`}
-        onDragLeave={onDragLeave}
-        onDragOver={onDragOver}
-        onDrop={onDrop}
-        onClick={editContext.deselectAllDisplay}
-      >
-        <ImageGallery
-          images={editContext.imageDisplay}
-          options={editContext.options}
-          editMode={true}
-        />
-      </div>
-    </>
+  return !editContext.loading ? (
+    <GridLayout
+      className={"image-gallery edit-mode"}
+      cols={12}
+      width={1500}
+      rowHeight={20}
+      layout={editContext.layouts}
+      autoSize={true}
+      onLayoutChange={onLayoutChange}
+      isDroppable={true}
+      onDrop={onDrop}
+      margin={[20, 20]}
+      droppingItem={{ i: "new", h: 5, w: 3 }}
+    >
+      {editContext.imageDisplay}
+    </GridLayout>
+  ) : (
+    <Grid color={"#000"} size={120} className={"loading-spinner"} />
   );
 };
+
+function saveToLS(key, value) {
+  if (global.localStorage) {
+    global.localStorage.setItem("rgl", JSON.stringify({ [key]: value }));
+  }
+}
 
 export default ImageGalleryEditDisplay;
