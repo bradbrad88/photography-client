@@ -35,12 +35,19 @@ export const fetchInactiveImages = async auth => {
   }
 };
 
-export const fetchAllImageThumbnails = async () => {
+export const fetchAll = async auth => {
   try {
-    const response = await fetch("http://localhost:5000/gallery/all_thumbnails");
-    const result = await response.json();
-    console.log("result", result);
-    return result.data;
+    const options = {
+      headers: {
+        authorization: auth,
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch("http://localhost:5000/gallery/all", options);
+    const { data, error } = await response.json();
+    console.log("result", data);
+    if (error) return console.log(error);
+    return data;
   } catch (error) {}
 };
 

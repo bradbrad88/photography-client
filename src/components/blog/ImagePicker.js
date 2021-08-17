@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ImagePickerCard from "./ImagePickerCard";
-import { fetchAllImageThumbnails } from "../../utils/gallery";
+import { fetchAll } from "../../utils/gallery";
 
 const ImagePicker = ({ onSelection, clickAway }) => {
   const [imageList, setImageList] = useState([]);
@@ -11,7 +11,7 @@ const ImagePicker = ({ onSelection, clickAway }) => {
   }, []);
 
   const getAllImageThumbnails = async () => {
-    const images = await fetchAllImageThumbnails();
+    const images = await fetchAll();
     setImageList(images);
   };
   console.log("imagelist", imageList);

@@ -1,22 +1,16 @@
 import React from "react";
-import {
-  fetchInactiveImages,
-  addImage,
-  deleteImages,
-  fetchGallery,
-  saveDisplay,
-} from "../../utils/gallery";
+import { fetchAll, addImage, deleteImages, saveDisplay } from "../../utils/gallery";
 import UserStore from "./UserContext";
 import ImageCard from "../gallery/ImageCard";
 const Context = React.createContext();
 
-const originalLayouts = getFromLS("layouts") || [];
+const lsLayout = getFromLS("layouts") || [];
 
 export class GalleryEditStore extends React.Component {
   static contextType = UserStore;
   state = {
     imageBank: [],
-    layouts: originalLayouts,
+    layouts: lsLayout,
     imageDisplay: [], // array of ImageCard components to display on GridLayout
     options: { gallery_columns: 3 },
     imageDrag: [],
@@ -24,18 +18,45 @@ export class GalleryEditStore extends React.Component {
   };
 
   componentDidMount() {
-    this.loadContext();
-    // this.wsInit();
-    // this.getImageBank(); // edit to get all images
-
-    // // get layouts
-
-    // this.getImageDisplay();
+    this.init();
+    console.log(this.state.layouts);
   }
 
-  async getImageDisplay() {
-    console.log("layouts", this.state.layouts);
-    const imageDisplay = this.state.layouts.map(layout => {
+  async init() {
+    this.wsInit();
+    const gallery = await this.getImageBank();
+    let layout = [...this.state.layouts];
+    if (layout.length < 1) {
+      layout = this.getSavedLayouts();
+      this.setState({ layouts: layout });
+    }
+    this.getImageDisplay(layout);
+    this.setState({ loading: false });
+  }
+
+  // getting from imageBank state, not fetched through api
+  // provides a way to discard changes made locally to image layout
+  getSavedLayouts() {
+    const layout = this.state.imageBank
+      .filter(image => image.i)
+      .map(image => ({
+        i: image.i.toString(),
+        x: image.x,
+        y: image.y,
+        w: image.w,
+        h: image.h,
+      }));
+    return layout;
+  }
+
+  async getImageBank() {
+    const gallery = await fetchAll(this.context.token);
+    this.setState({ imageBank: gallery });
+    return gallery;
+  }
+
+  async getImageDisplay(layout) {
+    const imageDisplay = layout.map(layout => {
       return this.getImageComponent(layout.i);
     });
     this.setState({ imageDisplay });
@@ -58,23 +79,11 @@ export class GalleryEditStore extends React.Component {
     }));
   };
 
-  async loadContext() {
-    this.wsInit();
-    await this.getImageBank();
-    this.getImageDisplay();
-    this.setState({ loading: false });
-  }
-
   wsInit() {
     this.ws = new WebSocket(
       `ws://localhost:3001/gallery?auth=${this.context.token}`
     );
     this.ws.onmessage = this.newMessage;
-  }
-
-  async getImageBank() {
-    const gallery = await fetchInactiveImages(this.context.token);
-    this.setState({ imageBank: gallery.data });
   }
 
   newMessage = message => {
@@ -94,11 +103,6 @@ export class GalleryEditStore extends React.Component {
           : image
       ),
     }));
-  };
-
-  updateLayouts = layouts => {
-    console.log("layouts", layouts);
-    this.setState({ layouts: layouts });
   };
 
   newUploads = async images => {
@@ -235,58 +239,70 @@ export class GalleryEditStore extends React.Component {
     return this.state.imageDisplay.map(image => image.image_id);
   };
 
-  removeSelectedDisplay = () => {
-    this.setState(prevState => ({
-      imageBank: prevState.imageBank.concat(
-        prevState.imageDisplay
-          .filter(image => image.selected)
-          .map(image => ({ ...image, selected: false }))
-      ),
-      imageDisplay: prevState.imageDisplay.filter(image => !image.selected),
-    }));
+  removeFromDisplay = id => {
+    console.log("id", id);
+    const newLayout = this.state.layouts.filter(
+      layout => layout.i !== id.toString()
+    );
+    this.getImageDisplay(newLayout);
+    this.setState({ layouts: newLayout });
+    this.removeLayoutProperties(id);
+    // this.setState(prevState => ({
+    //   imageBank: prevState.imageBank.concat(
+    //     prevState.imageDisplay
+    //       .filter(image => image.selected)
+    //       .map(image => ({ ...image, selected: false }))
+    //   ),
+    //   imageDisplay: prevState.imageDisplay.filter(image => !image.selected),
+    // }));
   };
 
-  emphasize = arg => {
-    const min = 1;
-    const max = this.state.options.gallery_columns;
+  removeLayoutProperties = id => {
+    const strippedImage = {
+      ...this.state.imageBank.filter(image => image.i === id)[0],
+      i: null,
+      x: null,
+      y: null,
+      w: null,
+      h: null,
+    };
     this.setState(prevState => ({
-      imageDisplay: prevState.imageDisplay.map(image =>
-        image.selected
-          ? {
-              ...image,
-              emphasize: (() => {
-                if (image.emphasize + arg > max) return max;
-                if (image.emphasize + arg < min) return min;
-                return image.emphasize + arg;
-              })(),
-            }
-          : { ...image }
-      ),
+      imageBank: prevState.imageBank
+        .filter(image => image.i !== id)
+        .concat(strippedImage),
     }));
   };
 
   saveDisplay = async () => {
-    const displayData = this.state.imageDisplay.map((image, idx) => {
-      console.log("image", image);
-      const displayOrder = image.display_order ? image.display_order : idx + 1;
-      const emphasize = image.emphasize ? image.emphasize : 1;
-      return {
-        image_id: image.image_id,
-        emphasize: emphasize,
-        display_order: displayOrder,
-      };
-    });
-    console.log(displayData);
-    if (await saveDisplay(this.context.token, displayData)) {
-      console.log("Saved");
-    } else {
-      console.log("really fucked it");
-    }
+    const idToInteger = this.state.layouts
+      .filter(layout => layout.i !== "new")
+      .map(layout => ({
+        i: parseInt(layout.i),
+        x: layout.x,
+        y: layout.y,
+        w: layout.w,
+        h: layout.h,
+        img_pos: layout.img_pos ? layout.img_pos : null,
+      }));
+    console.log("id to integer", idToInteger);
+    const success = await saveDisplay(this.context.token, idToInteger);
+    if (success) localStorage.removeItem("rgl");
+  };
+
+  setLayoutState = layout => {
+    this.setState({ layouts: layout });
+  };
+
+  resetLayout = () => {
+    const originalLayout = this.getSavedLayouts();
+    this.getImageDisplay(originalLayout);
+    this.setState({ layouts: originalLayout });
   };
 
   render() {
     // console.log("image display", this.state.imageDisplay);
     // console.log("image bank", this.state.imageBank);
+    console.log("layouts", this.state.layouts);
     return (
       <Context.Provider
         value={{
@@ -299,13 +315,13 @@ export class GalleryEditStore extends React.Component {
           deleteSelectedBank: this.deleteSelectedBank,
           toggleSelectedDisplay: this.toggleSelectedDisplay,
           selectAllDisplay: this.selectAllDisplay,
-          removeSelectedDisplay: this.removeSelectedDisplay,
-          emphasize: this.emphasize,
+          removeFromDisplay: this.removeFromDisplay,
           addToDisplay: this.addToDisplay,
           saveDisplay: this.saveDisplay,
           deselectAllDisplay: this.deselectAllDisplay,
-          updateLayouts: this.updateLayouts,
           addImageComponent: this.addImageComponent,
+          setLayoutState: this.setLayoutState,
+          resetLayout: this.resetLayout,
         }}
       >
         {this.props.children}

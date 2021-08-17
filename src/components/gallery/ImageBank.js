@@ -5,6 +5,7 @@ const ImageBank = () => {
   const editContext = useContext(GalleryEditContext);
   const imageCards = () => {
     return editContext.imageBank
+      .filter(image => !image.i)
       .sort((a, b) => {
         return b.date_uploaded - a.date_uploaded;
       })
@@ -31,7 +32,8 @@ const ImageBank = () => {
         <button onClick={editContext.selectAllBank}>Select All</button>
         <button onClick={editContext.addToDisplay}>Add to Gallery</button>
         <button onClick={editContext.deleteSelectedBank}>Delete</button>
-        <button onClick={() => console.log(editContext.imageBank)}>Test</button>
+        <button onClick={editContext.saveDisplay}>Save</button>
+        <button onClick={editContext.resetLayout}>Reset</button>
       </div>
       <div className={"dropped-files"}>{imageCards()}</div>
     </>

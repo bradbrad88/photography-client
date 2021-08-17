@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import EditContext from "../contexts/GalleryEditContext";
 import "../../stylesheets/ImageGallery.css";
 import "../../stylesheets/GalleryEdit.css";
+import { edit } from "../../assets/svgButtons";
 
 const ImageCard = React.forwardRef(
   ({ style, className, image, handleClick, children, ...restOfProps }, ref) => {
@@ -63,6 +64,10 @@ const ImageCard = React.forwardRef(
       editContext.toggleSelectedDisplay(image.image_id);
     };
 
+    const onRemoveClick = () => {
+      editContext.removeFromDisplay(image.image_id);
+    };
+
     return (
       <div
         ref={ref}
@@ -72,12 +77,18 @@ const ImageCard = React.forwardRef(
           backgroundImage: `url(${image.thumbnail})`,
           backgroundAttachment: "fixed",
           backgroundSize: "cover",
+          display: "flex",
+          alignItems: "center",
+          color: "#fff",
+          fontSize: "100px",
         }}
         className={`${className} image-card`}
         // draggable={true}
         onClick={onClick}
         {...restOfProps}
       >
+        <button onClick={onRemoveClick}>X</button>
+        {image.image_id}
         {/* <img
           className={`image-card ${image.selected ? "selected" : ""}`}
           style={{

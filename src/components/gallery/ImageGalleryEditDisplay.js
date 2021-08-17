@@ -12,11 +12,14 @@ import { edit } from "../../assets/svgButtons";
 
 const ImageGalleryEditDisplay = () => {
   const editContext = useContext(EditContext);
+  const [dragging, setDragging] = useState(false);
 
-  const onLayoutChange = layout => {
-    console.log("LAYOUT CHANGE");
+  const onLayoutChange = (layout, x) => {
+    console.log("LAYOUT CHANGE", x);
     if (layout.length < 1) return;
     saveToLS("layouts", layout);
+    if (dragging) return;
+    editContext.setLayoutState(layout);
   };
 
   const getImage = id => {
@@ -25,12 +28,13 @@ const ImageGalleryEditDisplay = () => {
   };
 
   const cleanLayout = (currentLayout, newLayoutItem) => {
-    const newLayout = currentLayout.filter(layout => layout.i !== "new");
-    return [...newLayout, newLayoutItem];
+    // const newLayout = currentLayout.filter(layout => layout.i !== "new");
+    return [...currentLayout, newLayoutItem];
   };
 
   const onDrop = (layout, layoutItem, e) => {
     e.preventDefault();
+    console.log("ON DROP");
     if (!layoutItem) return;
     const image_id = e.dataTransfer.getData("image-id");
     if (image_id === "") return;
@@ -39,7 +43,15 @@ const ImageGalleryEditDisplay = () => {
     const newImageLayout = { ...layoutItem, i: image_id };
     const newLayout = cleanLayout(layout, newImageLayout); // try without cleaning layout - GridLayout may handle this
     editContext.addImageComponent(image_id);
-    editContext.updateLayouts(newLayout);
+    editContext.setLayoutState(newLayout);
+  };
+
+  const onDragStart = () => {
+    setDragging(true);
+  };
+
+  const onDragStop = (layout, oldItemm) => {
+    setDragging(false);
   };
 
   return !editContext.loading ? (
@@ -55,6 +67,8 @@ const ImageGalleryEditDisplay = () => {
       onDrop={onDrop}
       margin={[20, 20]}
       droppingItem={{ i: "new", h: 5, w: 3 }}
+      onDragStart={onDragStart}
+      onDragStop={onDragStop}
     >
       {editContext.imageDisplay}
     </GridLayout>
