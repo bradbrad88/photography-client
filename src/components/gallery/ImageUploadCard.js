@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import GalleryEditContext from "../contexts/GalleryEditContext";
 import "../../stylesheets/GalleryEdit.css";
 
 const ImageUploadCard = ({ image }) => {
   const editContext = useContext(GalleryEditContext);
+
   const renderStatus = () => {
     return image.status?.map((status, index) => {
       return (
@@ -29,7 +30,12 @@ const ImageUploadCard = ({ image }) => {
     e.dataTransfer.setData("text/plain", "");
     e.dataTransfer.setData("image-id", image.image_id);
     editContext.deselectAllBank();
+    editContext.setDragging(true);
     // editContext.toggleSelectedBank(image.image_id, true);
+  };
+
+  const onDragEnd = e => {
+    editContext.setDragging(false);
   };
 
   return (
@@ -42,6 +48,8 @@ const ImageUploadCard = ({ image }) => {
       draggable
       onClick={onClick}
       onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      ondra
     >
       <div className={`status ${image.complete ? "complete" : ""}`}>
         {renderStatus()}

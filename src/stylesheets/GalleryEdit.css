@@ -166,6 +166,7 @@
   fill: rgba(255, 255, 255, 0.3);
   background-repeat: no-repeat;
   background-size: cover;
+  /* background-position: 20% 00%; */
   transition: box-shadow ease 0.3s, transform ease 0.5s;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.26);
 }
@@ -303,4 +304,79 @@
   font-size: 20px;
   padding: 0 10px 0;
   margin: 0;
+}
+
+.image-card > .tools > .remove {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(255, 50, 0, 0.384);
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  transition: all ease 0.3s;
+  cursor: pointer;
+}
+
+.image-card > .tools > .remove:hover {
+  background-color: rgba(255, 50, 0, 0.784);
+}
+
+.image-card > .tools > .position {
+  display: flex;
+  gap: 10px;
+}
+
+.image-card > .tools > .position > button {
+  width: 24px;
+  height: 24px;
+  padding: 0%;
+  outline: none;
+  background-color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all ease 0.3s;
+}
+
+.image-card > .tools > .position > button:hover {
+  box-shadow: 0 0 5px rgb(255, 225, 127);
+}
+
+.image-card > .tools > .position > button > .icon {
+  transition: all ease 0.3s;
+}
+
+.image-card > .tools > .position > button:hover > .icon {
+  fill: rgb(255, 214, 30);
+}
+
+.image-card > .tools > .position > button:active {
+  background-color: rgb(255, 252, 204);
+}
+
+.image-card > .tools > .position.vertical {
+  flex-direction: column;
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.image-card > .tools > .position.horizontal {
+  flex-direction: row;
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.image-card > .tools {
+  opacity: 0;
+  transition: opacity ease 0.3s;
+}
+
+.image-card:hover > .tools {
+  opacity: 1;
 }

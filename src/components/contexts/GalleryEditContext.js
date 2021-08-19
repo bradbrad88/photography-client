@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { fetchAll, addImage, deleteImages, saveDisplay } from "../../utils/gallery";
 import UserStore from "./UserContext";
 import ImageCard from "../gallery/ImageCard";
@@ -11,10 +11,11 @@ export class GalleryEditStore extends React.Component {
   state = {
     imageBank: [],
     layouts: lsLayout,
-    imageDisplay: [], // array of ImageCard components to display on GridLayout
+    // imageDisplay: [], // array of ImageCard components to display on GridLayout
     options: { gallery_columns: 3 },
-    imageDrag: [],
+    dragging: false,
     loading: true,
+    error: null,
   };
 
   componentDidMount() {
@@ -51,16 +52,21 @@ export class GalleryEditStore extends React.Component {
 
   async getImageBank() {
     const gallery = await fetchAll(this.context.token);
-    this.setState({ imageBank: gallery });
-    return gallery;
+    console.log(gallery);
+    if (gallery.error) return this.setState({ error: gallery.error });
+    this.setState({ imageBank: gallery.data });
+    return gallery.data;
   }
 
-  async getImageDisplay(layout) {
-    const imageDisplay = layout.map(layout => {
-      return this.getImageComponent(layout.i);
-    });
-    this.setState({ imageDisplay });
-  }
+  getImageDisplay = () => {
+    return this.state.layouts
+      .filter(layout => layout.i !== "new")
+      .map(layout => {
+        return this.getImageComponent(layout.i);
+      })
+      .filter(img => img);
+    // this.setState({ imageDisplay });
+  };
 
   getImageComponent(id) {
     const image = this.state.imageBank.find(
@@ -99,6 +105,7 @@ export class GalleryEditStore extends React.Component {
               complete: update.complete,
               thumbnail: update.url,
               error: update.error,
+              aspect_ratio: update.aspect_ratio,
             }
           : image
       ),
@@ -170,14 +177,14 @@ export class GalleryEditStore extends React.Component {
   };
 
   toggleSelectedDisplay = image_id => {
-    if (!image_id) return;
-    this.setState(prevState => ({
-      imageDisplay: prevState.imageDisplay.map(image =>
-        image.image_id === image_id
-          ? { ...image, selected: !image.selected }
-          : { ...image }
-      ),
-    }));
+    // if (!image_id) return;
+    // this.setState(prevState => ({
+    //   imageDisplay: prevState.imageDisplay.map(image =>
+    //     image.image_id === image_id
+    //       ? { ...image, selected: !image.selected }
+    //       : { ...image }
+    //   ),
+    // }));
   };
 
   deselectAllDisplay = () => {
@@ -246,7 +253,8 @@ export class GalleryEditStore extends React.Component {
     );
     this.getImageDisplay(newLayout);
     this.setState({ layouts: newLayout });
-    this.removeLayoutProperties(id);
+    // this.removeLayoutProperties(id);
+
     // this.setState(prevState => ({
     //   imageBank: prevState.imageBank.concat(
     //     prevState.imageDisplay
@@ -255,22 +263,6 @@ export class GalleryEditStore extends React.Component {
     //   ),
     //   imageDisplay: prevState.imageDisplay.filter(image => !image.selected),
     // }));
-  };
-
-  removeLayoutProperties = id => {
-    const strippedImage = {
-      ...this.state.imageBank.filter(image => image.i === id)[0],
-      i: null,
-      x: null,
-      y: null,
-      w: null,
-      h: null,
-    };
-    this.setState(prevState => ({
-      imageBank: prevState.imageBank
-        .filter(image => image.i !== id)
-        .concat(strippedImage),
-    }));
   };
 
   saveDisplay = async () => {
@@ -282,11 +274,19 @@ export class GalleryEditStore extends React.Component {
         y: layout.y,
         w: layout.w,
         h: layout.h,
-        img_pos: layout.img_pos ? layout.img_pos : null,
       }));
+    this.mapImagePositionToLayout(idToInteger);
     console.log("id to integer", idToInteger);
     const success = await saveDisplay(this.context.token, idToInteger);
     if (success) localStorage.removeItem("rgl");
+  };
+
+  // used immediately before committing to db
+  mapImagePositionToLayout = displayObject => {
+    displayObject.forEach(display => {
+      const image = this.state.imageBank.find(image => image.image_id === display.i);
+      display.position = JSON.stringify(image.position);
+    });
   };
 
   setLayoutState = layout => {
@@ -299,10 +299,24 @@ export class GalleryEditStore extends React.Component {
     this.setState({ layouts: originalLayout });
   };
 
+  setImagePosition = (id, pos) => {
+    this.setState(prevState => ({
+      imageBank: prevState.imageBank.map(image => {
+        return image.image_id === id
+          ? { ...image, position: { ...image.position, ...pos } }
+          : image;
+      }),
+    }));
+    this.getImageDisplay(this.state.layouts);
+  };
+
+  setDragging = bool => {
+    this.setState({ dragging: bool });
+  };
+
   render() {
-    // console.log("image display", this.state.imageDisplay);
-    // console.log("image bank", this.state.imageBank);
-    console.log("layouts", this.state.layouts);
+    // console.log("layouts", this.state.layouts);
+    // console.log("imageBank", this.state.imageBank);
     return (
       <Context.Provider
         value={{
@@ -322,6 +336,9 @@ export class GalleryEditStore extends React.Component {
           addImageComponent: this.addImageComponent,
           setLayoutState: this.setLayoutState,
           resetLayout: this.resetLayout,
+          setDragging: this.setDragging,
+          setImagePosition: this.setImagePosition,
+          imageDisplay: this.getImageDisplay,
         }}
       >
         {this.props.children}

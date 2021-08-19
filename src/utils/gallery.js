@@ -44,11 +44,16 @@ export const fetchAll = async auth => {
       },
     };
     const response = await fetch("http://localhost:5000/gallery/all", options);
+    console.log("response", response);
     const { data, error } = await response.json();
     console.log("result", data);
-    if (error) return console.log(error);
-    return data;
-  } catch (error) {}
+    if (error) {
+      console.log(error);
+    }
+    return { data, error };
+  } catch (error) {
+    return { error: { message: error.message } };
+  }
 };
 
 export const addImage = async (auth, image) => {

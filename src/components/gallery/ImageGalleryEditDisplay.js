@@ -16,9 +16,9 @@ const ImageGalleryEditDisplay = () => {
 
   const onLayoutChange = (layout, x) => {
     console.log("LAYOUT CHANGE", x);
-    if (layout.length < 1) return;
+    // if (layout.length < 1) return;
     saveToLS("layouts", layout);
-    if (dragging) return;
+    if (editContext.dragging) return;
     editContext.setLayoutState(layout);
   };
 
@@ -42,8 +42,9 @@ const ImageGalleryEditDisplay = () => {
     const newImage = getImage(parseInt(image_id));
     const newImageLayout = { ...layoutItem, i: image_id };
     const newLayout = cleanLayout(layout, newImageLayout); // try without cleaning layout - GridLayout may handle this
-    editContext.addImageComponent(image_id);
+    // editContext.addImageComponent(image_id);
     editContext.setLayoutState(newLayout);
+    editContext.setDragging(false);
   };
 
   const onDragStart = () => {
@@ -53,7 +54,13 @@ const ImageGalleryEditDisplay = () => {
   const onDragStop = (layout, oldItemm) => {
     setDragging(false);
   };
-
+  if (editContext.error)
+    return (
+      <div>
+        <p>Something went wrong, please try again soon!</p>
+      </div>
+    );
+  // console.log(editContext.imageDisplay());
   return !editContext.loading ? (
     <GridLayout
       className={"image-gallery edit-mode"}
@@ -70,7 +77,7 @@ const ImageGalleryEditDisplay = () => {
       onDragStart={onDragStart}
       onDragStop={onDragStop}
     >
-      {editContext.imageDisplay}
+      {editContext.imageDisplay()}
     </GridLayout>
   ) : (
     <Grid color={"#000"} size={120} className={"loading-spinner"} />

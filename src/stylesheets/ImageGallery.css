@@ -9,11 +9,11 @@
   /* gap: 0px 30px; */
   /* grid-auto-rows: 1px; */
   margin: 0;
-  margin-bottom: 300px;
+  margin-bottom: 330px;
   /* border: rgba(0, 0, 0, 0.082) solid 1px; */
   /* border-radius: 8px; */
   /* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1); */
-  /* min-height: 200px; */
+  min-height: 200px;
   /* overflow-y: hidden; */
 }
 
@@ -31,6 +31,7 @@
   overflow: hidden;
   cursor: pointer;
   transition: all ease 0.5s;
+  /* filter: blur(30px); */
 }
 
 .btn-edit-gallery {

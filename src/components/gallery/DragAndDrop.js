@@ -26,33 +26,32 @@ const DragAndDrop = props => {
   };
 
   const handleDrop = e => {
-    e.preventDefault();
-    e.stopPropagation();
-    let files = [...e.dataTransfer.files];
-    files = files.map(file => {
-      return {
-        image_id: null,
-        date_uploaded: Date.now(),
-        url: null,
-        image_desc: "",
-        complete: false,
-        upload: {
-          key: uuidv4(),
-          file: file,
-          status: [],
-          uploadTime: Date.now(),
-        },
-      };
-    });
-
-    files = files.filter(file => {
-      return (
-        file.upload.file.type === "image/jpeg" ||
-        file.upload.file.type === "image/png"
-      );
-    });
-    editContext.newUploads(files);
-    setInDropZone(false);
+    // e.preventDefault();
+    // e.stopPropagation();
+    // let files = [...e.dataTransfer.files];
+    // files = files.map(file => {
+    //   return {
+    //     image_id: null,
+    //     date_uploaded: Date.now(),
+    //     url: null,
+    //     image_desc: "",
+    //     complete: false,
+    //     upload: {
+    //       key: uuidv4(),
+    //       file: file,
+    //       status: [],
+    //       uploadTime: Date.now(),
+    //     },
+    //   };
+    // });
+    // files = files.filter(file => {
+    //   return (
+    //     file.upload.file.type === "image/jpeg" ||
+    //     file.upload.file.type === "image/png"
+    //   );
+    // });
+    // editContext.newUploads(files);
+    // setInDropZone(false);
   };
 
   return (
