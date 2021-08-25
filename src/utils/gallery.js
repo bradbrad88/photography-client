@@ -6,34 +6,31 @@ export const fetchGallery = async () => {
       },
     };
     const response = await fetch("http://localhost:5000/gallery", options);
-    const result = await response.json();
-    if (result.error) return { error: result.error };
-    const orderedList = result.data.imageGallery.sort(
-      (a, b) => a.display_order - b.display_order
-    );
-    return { data: orderedList, options: result.data.options };
+    const { data, error } = await response.json();
+    if (error) return { error };
+    return { data };
   } catch (error) {
-    return { error: error.message };
+    return { error };
   }
 };
 
-export const fetchInactiveImages = async auth => {
-  try {
-    const options = {
-      headers: {
-        authorization: auth,
-        "Content-Type": "application/json",
-      },
-    };
-    const response = await fetch("http://localhost:5000/gallery/inactive", options);
-    const result = await response.json();
-    if (result.error) return { data: [], error: result.error };
-    return { data: result.data };
-  } catch (error) {
-    console.log("error in fetch inactive images", error);
-    return { data: [], error: error.message };
-  }
-};
+// export const fetchInactiveImages = async auth => {
+//   try {
+//     const options = {
+//       headers: {
+//         authorization: auth,
+//         "Content-Type": "application/json",
+//       },
+//     };
+//     const response = await fetch("http://localhost:5000/gallery/inactive", options);
+//     const result = await response.json();
+//     if (result.error) return { data: [], error: result.error };
+//     return { data: result.data };
+//   } catch (error) {
+//     console.log("error in fetch inactive images", error);
+//     return { data: [], error: error.message };
+//   }
+// };
 
 export const fetchAll = async auth => {
   try {

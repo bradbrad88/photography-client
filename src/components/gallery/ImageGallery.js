@@ -1,24 +1,34 @@
 import React, { useState, useEffect } from "react";
+import GridLayout from "react-grid-layout";
 import ImageCard from "./ImageCard";
 import Fullscreen from "./Fullscreen";
-import { fetchGallery } from "../../utils/gallery";
+// import { fetchGallery } from "../../utils/gallery";
 import "../../stylesheets/ImageGallery.css";
 
-const ImageGallery = ({ images, options, editMode }) => {
-  const [savedGallery, setSavedGallery] = useState(null);
+const ImageGallery = ({ images, editMode }) => {
+  // const [savedGallery, setSavedGallery] = useState(null);
   const [error, setError] = useState(null);
   const [viewImage, setViewImage] = useState();
   useEffect(() => {
+    // getGallery();
     window.addEventListener("click", cancelFullScreen);
     preloadHighres();
     return () => window.removeEventListener("click", cancelFullScreen);
   }, []);
 
-  const getGallery = async () => {
-    const gallery = await fetchGallery();
-    if (gallery.error) return setError(gallery.error);
-    setSavedGallery(gallery.data);
-  };
+  // const getGallery = async () => {
+  //   const gallery = await fetchGallery();
+  //   if (gallery.error) return setError(gallery.error);
+  //   setSavedGallery(gallery.data);
+  // };
+
+  const layout = images.map(image => ({
+    i: image.image_id.toString(),
+    x: image.x,
+    y: image.y,
+    w: image.w,
+    h: image.h,
+  }));
 
   const preloadHighres = async () => {
     console.log("edit mode?", editMode);
@@ -28,9 +38,10 @@ const ImageGallery = ({ images, options, editMode }) => {
     });
   };
 
-  if (!savedGallery && !error) getGallery();
+  // if (!savedGallery && !error) getGallery();
 
   const handleClick = image => {
+    console.log("handle click", editMode);
     if (editMode) return;
     setViewImage(image);
     document.body.classList.add("noscroll");
@@ -71,17 +82,19 @@ const ImageGallery = ({ images, options, editMode }) => {
     );
   });
 
+  // console.log("gosh", savedGallery);
+
   if (error)
     return (
       <div className={"gallery error"}>
         Unable to load image gallery
         <br />
         {error}
-        <button className={"btn-gallery-refresh"} onClick={getGallery}>
-          Refresh
-        </button>
+        <button className={"btn-gallery-refresh"}>Refresh</button>
       </div>
     );
+
+  console.log("layout", layout);
 
   return (
     <>
@@ -93,16 +106,18 @@ const ImageGallery = ({ images, options, editMode }) => {
           exit={cancelFullScreen}
         />
       )}
-      <div className="gallery">
-        <div
-          className="image-gallery"
-          style={{
-            gridTemplateColumns: `repeat(${options.gallery_columns}, minmax(350px, 1fr))`,
-          }}
-        >
-          {imageCards}
-        </div>
-      </div>
+      <GridLayout
+        width={1500}
+        layout={layout}
+        cols={12}
+        rowHeight={20}
+        isDraggable={false}
+        isResizable={false}
+        margin={[20, 20]}
+        className={"image-gallery"}
+      >
+        {imageCards}
+      </GridLayout>
     </>
   );
 };

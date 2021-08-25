@@ -14,8 +14,8 @@ const ImageGalleryEditDisplay = () => {
   const editContext = useContext(EditContext);
   const [dragging, setDragging] = useState(false);
 
-  const onLayoutChange = (layout, x) => {
-    console.log("LAYOUT CHANGE", x);
+  const onLayoutChange = layout => {
+    console.log("LAYOUT CHANGE");
     // if (layout.length < 1) return;
     saveToLS("layouts", layout);
     if (editContext.dragging) return;

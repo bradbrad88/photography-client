@@ -17,8 +17,10 @@ const Fullscreen = ({ image, nextImage, previousImage, exit }) => {
     setLoading(true);
     getImage();
     getComments();
+    if (fullscreenElement.current) fullscreenElement.current.requestFullscreen();
   }, [image]);
   const timer = useRef(null);
+  const fullscreenElement = useRef();
   const getImage = () => {
     const img = new Image();
     img.src = image.highres;
@@ -59,7 +61,7 @@ const Fullscreen = ({ image, nextImage, previousImage, exit }) => {
   const onMouseMove = () => {
     clearTimeout(timer.current);
     setControlVisibility(true);
-    timer.current = setTimeout(controlVisibilityTimer, 500);
+    timer.current = setTimeout(controlVisibilityTimer, 1500);
   };
 
   const onMenuMouseEnter = e => {
@@ -76,7 +78,7 @@ const Fullscreen = ({ image, nextImage, previousImage, exit }) => {
   };
 
   return (
-    <div className={"fullscreen-background"}>
+    <div className={"fullscreen-background"} ref={fullscreenElement}>
       <div
         className={"image-viewer"}
         onClick={fullscreenClickHandler}

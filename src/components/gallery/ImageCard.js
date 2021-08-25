@@ -59,6 +59,7 @@ const ImageCard = React.forwardRef(
       // e.stopPropagation();
       console.log(ref.current);
       if (handleClick) {
+        e.stopPropagation();
         handleClick(image);
         return;
       }
@@ -152,41 +153,36 @@ const ImageCard = React.forwardRef(
         onClick={onClick}
         {...restOfProps}
       >
-        <div className={"tools"}>
-          <button className={"remove"} onClick={onRemoveClick}>
-            X
-          </button>
-          {clientRatio() > image.aspect_ratio && (
-            <div className={"position vertical"}>
-              <button onClick={handleVertBottom} onMouseDown={onMouseDown}></button>
-              <button onClick={handleVertCenter} onMouseDown={onMouseDown}>
-                {centerVertical}
-              </button>
-              <button onClick={handleVertTop} onMouseDown={onMouseDown}></button>
-            </div>
-          )}
-          {clientRatio() < image.aspect_ratio && (
-            <div className={"position horizontal"}>
-              <button onClick={handleHorRight} onMouseDown={onMouseDown}></button>
-              <button onClick={handleHorCenter} onMouseDown={onMouseDown}>
-                {centerHorizontal}
-              </button>
-              <button onClick={handleHorLeft} onMouseDown={onMouseDown}></button>
-            </div>
-          )}
-          {/* <p style={{ backgroundColor: "#000" }}>{image.image_id}</p> */}
-          {/* <img
-          className={`image-card ${image.selected ? "selected" : ""}`}
-          style={{
-            gridRowEnd: `span ${spans}`,
-            gridColumnEnd: `span ${image.emphasize}`,
-          }}
-          src={image.thumbnail}
-          alt={image.image_desc}
-          ref={imageRef}
-          onClick={onClick}
-        /> */}
-        </div>
+        {/* editContext tests for edit mode, disabling tools when in display mode */}
+        {editContext && (
+          <div className={"tools"}>
+            <button className={"remove"} onClick={onRemoveClick}>
+              X
+            </button>
+            {clientRatio() > image.aspect_ratio && (
+              <div className={"position vertical"}>
+                <button
+                  onClick={handleVertBottom}
+                  onMouseDown={onMouseDown}
+                ></button>
+                <button onClick={handleVertCenter} onMouseDown={onMouseDown}>
+                  {centerVertical}
+                </button>
+                <button onClick={handleVertTop} onMouseDown={onMouseDown}></button>
+              </div>
+            )}
+            {clientRatio() < image.aspect_ratio && (
+              <div className={"position horizontal"}>
+                <button onClick={handleHorRight} onMouseDown={onMouseDown}></button>
+                <button onClick={handleHorCenter} onMouseDown={onMouseDown}>
+                  {centerHorizontal}
+                </button>
+                <button onClick={handleHorLeft} onMouseDown={onMouseDown}></button>
+              </div>
+            )}
+            {/* <p style={{ backgroundColor: "#000" }}>{image.image_id}</p> */}
+          </div>
+        )}
         {children}
       </div>
     );
