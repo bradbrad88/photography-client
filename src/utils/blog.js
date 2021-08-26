@@ -8,7 +8,10 @@ export const submitBlog = async (auth, blog) => {
       method: "POST",
       body: JSON.stringify(blog),
     };
-    const result = await fetch("http://localhost:5000/edit/blog", options);
+    const result = await fetch(
+      `${process.env.REACT_APP_SERVER_API}/edit/blog`,
+      options
+    );
     return await result.json();
   } catch (error) {}
 };
@@ -23,7 +26,10 @@ export const editBlog = async (auth, blog) => {
       method: "PUT",
       body: JSON.stringify(blog),
     };
-    const result = await fetch("http://localhost:5000/edit/blog", options);
+    const result = await fetch(
+      `${process.env.REACT_APP_SERVER_API}/edit/blog`,
+      options
+    );
     return await result.json();
   } catch (error) {}
 };
@@ -37,7 +43,7 @@ export const fetchBlogs = async auth => {
       },
     };
     const result = await fetch(
-      `http://localhost:5000/blog/${auth ? "all" : "active"}`,
+      `${process.env.REACT_APP_SERVER_API}/blog/${auth ? "all" : "active"}`,
       options
     );
 
@@ -51,7 +57,9 @@ export const fetchBlogs = async auth => {
 
 export const fetchBlog = async blog_id => {
   try {
-    const result = await fetch(`http://localhost:5000/blog/${blog_id}`);
+    const result = await fetch(
+      `${process.env.REACT_APP_SERVER_API}/blog/${blog_id}`
+    );
     const { data } = await result.json();
     return data;
   } catch (error) {
@@ -69,7 +77,7 @@ export const deleteBlog = async (auth, blog_id) => {
       method: "DELETE",
     };
     const result = await fetch(
-      `http://localhost:5000/blog/delete/${blog_id}`,
+      `${process.env.REACT_APP_SERVER_API}/blog/delete/${blog_id}`,
       options
     );
   } catch (error) {
@@ -87,7 +95,10 @@ export const setActive = async (auth, blog_id, active) => {
       body: JSON.stringify({ blog_id, active }),
       method: "PUT",
     };
-    const result = await fetch("http://localhost:5000/blog/setActive", options);
+    const result = await fetch(
+      `${process.env.REACT_APP_SERVER_API}/blog/setActive`,
+      options
+    );
   } catch (error) {}
 };
 
@@ -103,7 +114,7 @@ export const setImageUrls = async (auth, blog_id, images) => {
     };
 
     const result = await fetch(
-      `http://localhost:5000/blog/urls/${blog_id}`,
+      `${process.env.REACT_APP_SERVER_API}/blog/urls/${blog_id}`,
       options
     );
     return true;
@@ -123,7 +134,10 @@ export const addBlogImage = async (auth, image) => {
       body: formData,
       method: "POST",
     };
-    const result = await fetch("http://localhost:5000/blog/image/upload", options);
+    const result = await fetch(
+      `${process.env.REACT_APP_SERVER_API}/blog/image/upload`,
+      options
+    );
     return await result.json();
   } catch (error) {
     console.log(error);

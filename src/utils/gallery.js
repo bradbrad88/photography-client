@@ -43,7 +43,10 @@ export const fetchAll = async auth => {
         "Content-Type": "application/json",
       },
     };
-    const response = await fetch("http://localhost:5000/gallery/all", options);
+    const response = await fetch(
+      `${process.env.REACT_APP_SERVER_API}/gallery/all`,
+      options
+    );
     console.log("response", response);
     const { data, error } = await response.json();
     console.log("result", data);
@@ -67,7 +70,10 @@ export const addImage = async (auth, image) => {
       method: "POST",
       body: formData,
     };
-    const res = await fetch("http://localhost:5000/gallery/insert", options);
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_API}/gallery/insert`,
+      options
+    );
     const { data, error } = await res.json();
     return data;
   } catch (error) {
@@ -85,7 +91,10 @@ export const deleteImages = async (auth, images) => {
       body: JSON.stringify(images),
       method: "POST",
     };
-    const res = await fetch("http://localhost:5000/gallery/delete", options);
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_API}/gallery/delete`,
+      options
+    );
     const { data, error } = await res.json();
     return data;
   } catch (error) {
@@ -103,7 +112,10 @@ export const saveDisplay = async (auth, displayData) => {
       body: JSON.stringify(displayData),
       method: "POST",
     };
-    const res = await fetch("http://localhost:5000/gallery/display", options);
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_API}/gallery/display`,
+      options
+    );
     const { data, error } = await res.json();
     return data;
   } catch (error) {}
@@ -125,7 +137,9 @@ const mapComments = commentList => {
 
 export const fetchComments = async image_id => {
   try {
-    const res = await fetch(`http://localhost:5000/comment/image/${image_id}`);
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_API}/comment/image/${image_id}`
+    );
     const { data, error } = await res.json();
     if (error) return { error };
     if (data) {
