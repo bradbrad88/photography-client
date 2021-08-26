@@ -5,7 +5,10 @@ export const fetchGallery = async () => {
         "Content-Type": "application/json",
       },
     };
-    const response = await fetch("http://localhost:5000/gallery", options);
+    const response = await fetch(
+      `${process.env.REACT_APP_SERVER_API}/gallery`,
+      options
+    );
     const { data, error } = await response.json();
     if (error) return { error };
     return { data };
