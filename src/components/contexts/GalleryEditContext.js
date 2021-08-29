@@ -87,7 +87,7 @@ export class GalleryEditStore extends React.Component {
 
   wsInit() {
     this.ws = new WebSocket(
-      `ws://localhost:3001/gallery?auth=${this.context.token}`
+      `${process.env.REACT_APP_WS_SERVER}/gallery?auth=${this.context.token}`
     );
     this.ws.onmessage = this.newMessage;
   }
