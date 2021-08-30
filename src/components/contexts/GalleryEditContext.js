@@ -94,6 +94,7 @@ export class GalleryEditStore extends React.Component {
 
   newMessage = message => {
     const update = JSON.parse(message.data);
+    console.log("new message", update);
     this.setState(prevState => ({
       imageBank: prevState.imageBank.map(image =>
         // looking for key matches for initial upload. If page is refreshed then image should have an image_id to communicate any further status updates
@@ -312,6 +313,10 @@ export class GalleryEditStore extends React.Component {
 
   setDragging = bool => {
     this.setState({ dragging: bool });
+  };
+
+  test = () => {
+    console.log("ws", this.ws);
   };
 
   render() {

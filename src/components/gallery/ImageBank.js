@@ -41,7 +41,7 @@ const ImageBank = () => {
           selectionLength() === 1 ? "" : "s"
         } selected`}</span>
         <button onClick={editContext.selectAllBank}>Select All</button>
-        <button onClick={() => console.log(editContext)}>Add to Gallery</button>
+        <button onClick={editContext.test}>Test</button>
         <button onClick={editContext.deleteSelectedBank}>Delete</button>
         <button onClick={editContext.saveDisplay}>Save</button>
         <button onClick={editContext.resetLayout}>Reset</button>

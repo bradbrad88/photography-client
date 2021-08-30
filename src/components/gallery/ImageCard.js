@@ -136,7 +136,6 @@ const ImageCard = React.forwardRef(
         style={{
           ...style,
           backgroundImage: `url(${image.thumbnail})`,
-          backgroundAttachment: "fixed",
           backgroundRepeat: "none",
           backgroundSize: "cover",
           backgroundPosition: `${

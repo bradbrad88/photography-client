@@ -75,6 +75,7 @@ export const addImage = async (auth, image) => {
       options
     );
     const { data, error } = await res.json();
+    console.log(error);
     return data;
   } catch (error) {
     console.log(error);
