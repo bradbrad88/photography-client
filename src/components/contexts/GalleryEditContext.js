@@ -1,5 +1,11 @@
 import React, { useMemo } from "react";
-import { fetchAll, addImage, deleteImages, saveDisplay } from "../../utils/gallery";
+import {
+  fetchAll,
+  addImage,
+  postImage,
+  deleteImages,
+  saveDisplay,
+} from "../../utils/gallery";
 import UserStore from "./UserContext";
 import ImageCard from "../gallery/ImageCard";
 const Context = React.createContext();
@@ -86,11 +92,59 @@ export class GalleryEditStore extends React.Component {
   };
 
   wsInit() {
-    this.ws = new WebSocket(
-      `${process.env.REACT_APP_WS_SERVER}/gallery?auth=${this.context.token}`
-    );
-    this.ws.onmessage = this.newMessage;
+    // this.sse = new EventSource(
+    //   `${process.env.REACT_APP_SERVER_API}/gallery/subscribe`
+    // );
+    // this.ws = new WebSocket(
+    //   `${process.env.REACT_APP_WS_SERVER}/gallery?auth=${this.context.token}`
+    // );
+    // this.ws.onmessage = this.newMessage;
   }
+
+  newUploads = async images => {
+    const newImages = await Promise.all(
+      images.map(async image => {
+        const image_id = await addImage(this.context.token);
+
+        // test for database fail
+
+        const es = new EventSource(
+          `${process.env.REACT_APP_SERVER_API}/gallery/subscribe/${image_id}`
+        );
+        es.onmessage = this.onMessage;
+        es.addEventListener("complete", () => {
+          es.close();
+        });
+        postImage(this.context.token, image.upload.file, image_id);
+
+        return { ...image, image_id: image_id };
+      })
+    );
+    const newImageBank = this.state.imageBank.concat(newImages);
+    console.log("new image bank", newImageBank);
+    this.setState({ imageBank: newImageBank });
+  };
+
+  onMessage = e => {
+    const { data } = e;
+    if (!data) return;
+    const imageUpdate = JSON.parse(data);
+    console.log("status", imageUpdate);
+    this.setState(prevState => ({
+      imageBank: prevState.imageBank.map(image =>
+        parseInt(image.image_id) === parseInt(imageUpdate.image_id)
+          ? {
+              ...image,
+              status: imageUpdate.status,
+              complete: imageUpdate.complete,
+              error: imageUpdate.error,
+              aspect_ratio: imageUpdate.aspect_ratio,
+              thumbnail: imageUpdate.url ? imageUpdate.url : image.thumbnail,
+            }
+          : image
+      ),
+    }));
+  };
 
   newMessage = message => {
     const update = JSON.parse(message.data);
@@ -113,18 +167,8 @@ export class GalleryEditStore extends React.Component {
     }));
   };
 
-  newUploads = async images => {
-    const newImages = await Promise.all(
-      images.map(async image => {
-        const image_id = await addImage(this.context.token, image);
-        return { ...image, image_id: image_id };
-      })
-    );
-    const newImageBank = this.state.imageBank.concat(newImages);
-    this.setState({ imageBank: newImageBank });
-  };
-
   toggleSelectedBank = (image_id, setTrue) => {
+    console.log("image id", image_id);
     if (!image_id) return;
     this.setState(prevState => ({
       imageBank: prevState.imageBank.map(image =>
@@ -275,6 +319,7 @@ export class GalleryEditStore extends React.Component {
         y: layout.y,
         w: layout.w,
         h: layout.h,
+        position: null,
       }));
     this.mapImagePositionToLayout(idToInteger);
     console.log("id to integer", idToInteger);
@@ -316,7 +361,7 @@ export class GalleryEditStore extends React.Component {
   };
 
   test = () => {
-    console.log("ws", this.ws);
+    console.log("imagebank", this.state.imageBank);
   };
 
   render() {

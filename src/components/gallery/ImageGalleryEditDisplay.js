@@ -73,7 +73,7 @@ const ImageGalleryEditDisplay = () => {
       isDroppable={true}
       onDrop={onDrop}
       margin={[20, 20]}
-      droppingItem={{ i: "new", h: 5, w: 3 }}
+      droppingItem={{ i: "new", h: 6, w: 3 }}
       onDragStart={onDragStart}
       onDragStop={onDragStop}
     >

@@ -16,7 +16,7 @@ const EditPanel = () => {
       return {
         image_id: null,
         date_uploaded: Date.now(),
-        url: null,
+        thumbnail: URL.createObjectURL(file),
         image_desc: "",
         complete: false,
         upload: {

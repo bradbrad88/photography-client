@@ -61,17 +61,35 @@ export const fetchAll = async auth => {
 
 export const addImage = async (auth, image) => {
   try {
-    const formData = new FormData();
-    formData.append("image", image.upload.file);
-    formData.append("key", image.upload.key);
-    formData.append("description", image.image_desc);
     const options = {
       headers: { authorization: auth },
+    };
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_API}/gallery/insert`,
+      options
+    );
+    const { data, error } = await res.json();
+    console.log(error);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postImage = async (auth, image_file, image_id) => {
+  try {
+    const formData = new FormData();
+    formData.append("image", image_file);
+    formData.append("id", image_id);
+    const options = {
+      headers: {
+        authorization: auth,
+      },
       method: "POST",
       body: formData,
     };
     const res = await fetch(
-      `${process.env.REACT_APP_SERVER_API}/gallery/insert`,
+      `${process.env.REACT_APP_SERVER_API}/gallery/post`,
       options
     );
     const { data, error } = await res.json();
