@@ -44,12 +44,14 @@ const ImageUploadCard = ({ image }) => {
       className={`upload-item ${image.complete ? "complete" : ""} ${
         image.selected ? "selected" : ""
       } ${image.error ? "error" : ""}`}
-      style={{ backgroundImage: `url(${image.thumbnail})` }}
+      style={{
+        backgroundImage: `url(${image.thumbnail})`,
+        opacity: image.uploadProgress !== undefined ? image.uploadProgress : 1,
+      }}
       draggable
       onClick={onClick}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
-      ondra
     >
       <div className={`status ${image.complete ? "complete" : ""}`}>
         {renderStatus()}

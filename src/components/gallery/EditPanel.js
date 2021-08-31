@@ -25,6 +25,7 @@ const EditPanel = () => {
           status: [],
           uploadTime: Date.now(),
         },
+        uploadProgress: 0,
       };
     });
 

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const fetchGallery = async () => {
   try {
     const options = {
@@ -76,7 +78,10 @@ export const addImage = async (auth, image) => {
   }
 };
 
-export const postImage = async (auth, image_file, image_id) => {
+export const postImage = async (auth, image_file, image_id, onUploadProgress) => {
+  const onUpload = e => {
+    onUploadProgress(e, image_id);
+  };
   try {
     const formData = new FormData();
     formData.append("image", image_file);
@@ -85,14 +90,22 @@ export const postImage = async (auth, image_file, image_id) => {
       headers: {
         authorization: auth,
       },
-      method: "POST",
-      body: formData,
+      onUploadProgress: onUpload,
+      // method: "POST",
+      // data: formData,
     };
-    const res = await fetch(
+
+    const res = await axios.post(
       `${process.env.REACT_APP_SERVER_API}/gallery/post`,
+      formData,
       options
     );
-    const { data, error } = await res.json();
+    console.log(res);
+    // const res = await fetch(
+    //   `${process.env.REACT_APP_SERVER_API}/gallery/post`,
+    //   options
+    // );
+    const { data, error } = res.data;
     console.log(error);
     return data;
   } catch (error) {

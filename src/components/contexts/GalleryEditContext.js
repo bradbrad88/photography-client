@@ -115,7 +115,12 @@ export class GalleryEditStore extends React.Component {
         es.addEventListener("complete", () => {
           es.close();
         });
-        postImage(this.context.token, image.upload.file, image_id);
+        postImage(
+          this.context.token,
+          image.upload.file,
+          image_id,
+          this.onUploadProgress
+        );
 
         return { ...image, image_id: image_id };
       })
@@ -125,11 +130,22 @@ export class GalleryEditStore extends React.Component {
     this.setState({ imageBank: newImageBank });
   };
 
+  onUploadProgress = (e, image_id) => {
+    const progress = e.loaded / e.total;
+    this.setState(prevState => ({
+      imageBank: prevState.imageBank.map(image =>
+        parseInt(image.image_id) === parseInt(image_id)
+          ? { ...image, uploadProgress: progress }
+          : image
+      ),
+    }));
+  };
+
   onMessage = e => {
     const { data } = e;
     if (!data) return;
     const imageUpdate = JSON.parse(data);
-    console.log("status", imageUpdate);
+    // console.log("status", imageUpdate);
     this.setState(prevState => ({
       imageBank: prevState.imageBank.map(image =>
         parseInt(image.image_id) === parseInt(imageUpdate.image_id)
