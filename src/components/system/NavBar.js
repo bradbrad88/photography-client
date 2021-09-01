@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
+
 import NavItem from "./NavItem";
 import Profile from "./Profile";
 import PopUpMenu from "./PopUpMenu";
@@ -87,12 +89,22 @@ const NavBar = () => {
       //   visibility: `${opacity === 0 ? "hidden" : "visible"}`,
       // }}
     >
-      <h1 className="title">Far Out Photography</h1>
+      <Link to={"/"} className={"title"}>
+        <h1 className="title">Far Out Photography</h1>
+      </Link>
+
       <Profile />
       <div className="nav-bar">
         <NavItem
-          title="Gallery"
+          title="Home"
           href="/"
+          popUp={newPopUp}
+          handleMouseLeave={mouseLeave}
+          handleMouseOver={mouseEnter}
+        />
+        <NavItem
+          title="Gallery"
+          href="/gallery"
           menu={gallery()}
           popUp={newPopUp}
           handleMouseLeave={mouseLeave}
@@ -101,6 +113,20 @@ const NavBar = () => {
         <NavItem
           title="Blog"
           href="/blog"
+          popUp={newPopUp}
+          handleMouseLeave={mouseLeave}
+          handleMouseOver={mouseEnter}
+        />
+        <NavItem
+          title="Prices"
+          href="/prices"
+          popUp={newPopUp}
+          handleMouseLeave={mouseLeave}
+          handleMouseOver={mouseEnter}
+        />
+        <NavItem
+          title="Contact"
+          href="/contact"
           popUp={newPopUp}
           handleMouseLeave={mouseLeave}
           handleMouseOver={mouseEnter}

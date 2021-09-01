@@ -42,7 +42,8 @@
   opacity: 0;
 }
 
-.title {
+.main-header > a > h1.title {
+  color: black;
   padding: 0;
   margin: 0;
   cursor: default;
@@ -50,9 +51,16 @@
   margin-left: 20px;
   margin-right: auto;
   transition: all ease 0.5s;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.main-header.minimized > .title {
+.title {
+  text-decoration: none;
+  margin-top: auto;
+}
+
+.main-header.minimized > a > h1.title {
   color: rgba(224, 224, 224, 0.521);
   font-size: 30px;
 }
@@ -66,8 +74,7 @@
 
 .nav-container {
   display: inline-block;
-  width: 4rem;
-  padding-right: 10px;
+  /* width: 4rem; */
   z-index: 10;
 }
 
@@ -76,6 +83,7 @@
   color: rgb(41, 41, 41);
   text-decoration: none;
   z-index: 10;
+  margin: 0 1rem 0 0;
   transition: font-size ease 0.6s, color ease 0.6s;
 }
 
