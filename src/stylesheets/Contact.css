@@ -1,0 +1,74 @@
+.contact-form-container {
+  background-color: rgb(255, 255, 255);
+  padding: 20px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.contact-form {
+}
+
+.contact-header {
+  /* background-color: red; */
+  color: #fff;
+  text-align: center;
+}
+
+.contact-header > h2 {
+  font-size: 2.4rem;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+.contact-form-container .contact-form {
+  background-color: rgba(0, 0, 0, 0.842);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.288);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 35rem;
+  border: none;
+  padding: 20px 50px;
+
+  background-image: url("https://s3.console.aws.amazon.com/s3/object/far-out-photography-gallery?region=ap-southeast-2&prefix=1630469977116.jpg");
+  background-blend-mode: lighten;
+}
+
+.contact-form > fieldset {
+  border: none;
+  /* width: 100%; */
+  /* margin: auto; */
+  margin-bottom: 10px;
+}
+
+.contact-form > fieldset > .contact-input {
+  border-radius: 5px;
+  border: rgba(0, 0, 0, 0.651) solid 1px;
+  background-color: rgba(255, 255, 255, 0.26);
+  width: 25rem;
+  height: 2.4rem;
+  color: #fff;
+  font-size: 1.5rem;
+  font-family: inherit;
+  transition: all ease 0.5s;
+  width: 100%;
+}
+
+.contact-form > fieldset > .contact-input.area {
+  /* background-color: rgb(146, 88, 88); */
+  resize: none;
+  height: 10rem;
+}
+
+.contact-form > fieldset > .contact-input:hover {
+  border: rgb(0, 195, 255) solid 1px;
+}
+
+.contact-form > fieldset > .contact-input:focus {
+  outline: none;
+  border: rgb(0, 174, 255) solid 1px;
+}
