@@ -1,0 +1,72 @@
+.container-3d {
+  background-color: rgba(255, 0, 0, 0.192);
+  height: 100vh;
+  /* width: 400px; */
+  perspective: 600px;
+  transform-style: preserve-3d;
+  /* backface-visibility: visible; */
+  /* transform: rotate(); */
+}
+
+section.landing > .container > .item {
+  position: fixed;
+  width: 600px;
+  /* height: 300px; */
+  /* background-color: rgba(188, 143, 143, 0.308); */
+  margin: 10px;
+  backface-visibility: visible;
+  background-size: cover;
+  transition: all ease 1.4s;
+  transform-origin: center;
+  overflow: visible;
+  transform: none;
+}
+
+.item1 {
+  /* transform: translate(-600px); */
+  /* transform: rotate3d(25deg); */
+}
+
+.item1.dart {
+  /* transform: translateZ(40px) rotateZ(4.1turn) translateX(280px) rotateY(10deg)
+    rotateX(5deg); */
+
+  overflow: visible;
+}
+
+.item > .card {
+  height: 100%;
+  background-color: royalblue;
+  background-size: cover;
+  transition: all ease 0.3;
+}
+
+.item1.dart > .card {
+  transform: rotateZ(2turn);
+  /* background-blend-mode: lighten; */
+  /* background-color: seagreen; */
+  opacity: 0.5;
+}
+
+section.landing {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+section.landing:nth-of-type(odd) {
+  /* background-color: seagreen; */
+}
+
+.landing > .container {
+  display: flex;
+  flex-direction: row;
+  width: 80vw;
+
+  /* flex-basis: 0; */
+}
+.landing > .container > .item {
+  flex-grow: 1;
+  font-size: 2rem;
+  height: fit-content;
+}

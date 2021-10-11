@@ -8,16 +8,16 @@
   right: 0;
   top: 0;
   height: 100px;
-  z-index: 10;
+  z-index: 2001;
   background-color: rgba(255, 255, 255, 0.5);
-  border-bottom: rgba(235, 235, 235, 0.658) 2px solid;
+  /* border-bottom: rgba(235, 235, 235, 0.658) 2px solid; */
   transition: all ease 0.5s;
   justify-content: center;
 }
 
 .main-header.minimized {
   background-color: rgba(0, 0, 0, 0.582);
-  border-bottom-color: rgb(58, 58, 58);
+  border-bottom: solid 2px rgb(58, 58, 58);
   height: 45px;
 }
 

@@ -337,9 +337,9 @@ export class GalleryEditStore extends React.Component {
         h: layout.h,
         position: null,
       }));
-    this.mapImagePositionToLayout(idToInteger);
-    console.log("id to integer", idToInteger);
-    const success = await saveDisplay(this.context.token, idToInteger);
+    const newLayout = this.mapImagePositionToLayout(idToInteger);
+    console.log("id to integer", newLayout);
+    const success = await saveDisplay(this.context.token, newLayout);
     if (success) localStorage.removeItem("rgl");
   };
 

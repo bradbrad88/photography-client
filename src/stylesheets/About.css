@@ -1,0 +1,101 @@
+body {
+  padding: 0;
+}
+.landing {
+  margin: 0;
+  padding: 0;
+}
+
+.landing > .welcome {
+  display: block;
+  position: relative;
+  height: 70vh;
+  text-align: center;
+  font-size: 9rem;
+  color: rgb(99, 32, 255);
+  perspective: 1000px;
+}
+
+.landing > .about {
+  height: 400vh;
+}
+
+.about > p {
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  z-index: 10;
+  font-size: 3rem;
+}
+
+.about > .drop-in {
+  padding: 5rem;
+  position: fixed;
+  top: 10vh;
+  display: flex;
+  flex-direction: row;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50px);
+  perspective: 1000px;
+  transition: all 0.8s;
+}
+
+.about > .drop-in.active {
+  pointer-events: all;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.drop-in > .text {
+  font-size: 1.8rem;
+  max-width: 50vw;
+  padding-right: 2rem;
+}
+
+.drop-in > .image {
+  border: solid 2px rgba(0, 0, 0, 0.123);
+  border-radius: 5px;
+  min-width: none;
+  max-width: fit-content;
+  min-height: calc(fit-content + 5rem);
+  max-height: fit-content;
+  padding: 1rem;
+  padding-bottom: 5rem;
+  filter: blur(30px);
+  /* max-height: 50vh; */
+  flex-shrink: -1;
+  transform-style: preserve-3d;
+  transform: rotate(7deg) rotateY(-5deg);
+  transition: all ease 0.5s;
+  /* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.123); */
+}
+
+/* .drop-in > .image:hover {
+  animation: shake 0.9s ease-in-out alternate infinite;
+} */
+
+.drop-in > .image > img {
+  height: 100%;
+  max-height: 50vh;
+}
+
+.drop-in.active > .image {
+  filter: blur(0);
+}
+
+.about-progress {
+  /* width: 10%; */
+  height: 10px;
+  background-color: rgba(0, 0, 0, 0.123);
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(7deg) rotateY(-5deg);
+  }
+
+  100% {
+    transform: rotate(7deg) rotateY(5deg);
+  }
+}

@@ -1,0 +1,54 @@
+.image-flare {
+  /* position: absolute; */
+  /* background-color: rgba(65, 105, 225, 0.089); */
+  /* height: 5000vh; */
+  margin-bottom: 1000px;
+  /* perspective: 1000px; */
+}
+
+.image-flare > .title-container {
+  padding: 5rem;
+  position: fixed;
+  top: 10vh;
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50px);
+  /* perspective: 1000px; */
+  transition: all 0.8s;
+  font-size: 1.8rem;
+}
+
+.image-flare > .title-container.active {
+  /* pointer-events: all; */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.image-flare > .title-container > h1 {
+  /* font-size: 4rem; */
+}
+
+.image-flare > .title-container.active > .image-flare-progress {
+  height: 10px;
+  background-color: rgba(0, 0, 0, 0.137);
+}
+
+.image-flare > .image-container {
+  visibility: hidden;
+  position: fixed;
+  top: 100vh;
+  height: fit-content;
+  width: fit-content;
+  padding: 1rem;
+  border: rgba(0, 0, 0, 0.171) 2px solid;
+  background-color: white;
+  padding-bottom: 5rem;
+  transition: all 1.7s cubic-bezier(0, 0, 0, 1);
+}
+
+.image-flare > .image-container.active {
+  visibility: visible;
+}

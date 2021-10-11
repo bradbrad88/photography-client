@@ -1,0 +1,21 @@
+.animate-text-in {
+  display: inline-block;
+  transform-origin: center center;
+  opacity: 0;
+  animation: animate-text-in 1.5s ease 1 normal forwards;
+}
+
+@keyframes animate-text-in {
+  0% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: none;
+    opacity: 1;
+    text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  }
+}
