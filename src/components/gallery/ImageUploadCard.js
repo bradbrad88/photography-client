@@ -38,6 +38,12 @@ const ImageUploadCard = ({ image }) => {
     editContext.setDragging(false);
   };
 
+  const getOpacity = () => {
+    if (image.complete) return 1;
+    if (image.uploadProgress !== undefined) return image.uploadProgress;
+    return 1;
+  };
+
   return (
     <div
       key={image.image_id}
@@ -46,7 +52,7 @@ const ImageUploadCard = ({ image }) => {
       } ${image.error ? "error" : ""}`}
       style={{
         backgroundImage: `url(${image.thumbnail})`,
-        opacity: image.uploadProgress !== undefined ? image.uploadProgress : 1,
+        // opacity: getOpacity(),
       }}
       draggable
       onClick={onClick}
