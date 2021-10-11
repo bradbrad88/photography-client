@@ -239,6 +239,7 @@ input.blog-title:hover::placeholder {
 
 .blog-item > .content > .text {
   width: 50%;
+  white-space: pre-wrap;
 }
 .blog-item.new-blog > p {
   align-self: center;
@@ -321,4 +322,14 @@ input.blog-title:hover::placeholder {
 
 .image-selector > .image.icon {
   width: 100%;
+}
+
+.image-picker-container > button {
+  position: absolute;
+  left: 50%;
+  bottom: 1em;
+  padding: 1em 2em;
+  background: white;
+  border: none;
+  /* font-family: inherit; */
 }

@@ -57,7 +57,7 @@ export const fetchAll = async auth => {
     }
     return { data, error };
   } catch (error) {
-    return { error: { message: error.message } };
+    return { error };
   }
 };
 

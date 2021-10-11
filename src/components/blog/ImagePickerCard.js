@@ -7,7 +7,7 @@ const ImagePickerCard = ({ image, clickHandler }) => {
 
   return (
     <div
-      style={{ backgroundImage: `url(${image.url})` }}
+      style={{ backgroundImage: `url(${image.thumbnail})` }}
       onClick={onClick}
       className={"image-picker-card"}
     ></div>

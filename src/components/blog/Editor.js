@@ -144,8 +144,13 @@ const Editor = () => {
 
   const onImageSelect = img => {
     console.log("image", img);
-    setImage(img.image_id);
-    setImageUrl(img.url);
+    if (img === "none") {
+      setImage(null);
+      setImageUrl(null);
+    } else {
+      setImage(img.image_id);
+      setImageUrl(img.thumbnail);
+    }
     setShowImagePicker(false);
   };
 
@@ -194,7 +199,7 @@ const Editor = () => {
           editorState={editorState}
           onEditorStateChange={setEditorState}
           toolbar={toolbar}
-          placeholder={"Type bitch..."}
+          placeholder={"Blog away..."}
         />
       </div>
     </>

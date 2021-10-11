@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ImagePickerCard from "./ImagePickerCard";
 import { fetchAll } from "../../utils/gallery";
+import UserContext from "../contexts/UserContext";
 
 const ImagePicker = ({ onSelection, clickAway }) => {
   const [imageList, setImageList] = useState([]);
+  const user = useContext(UserContext);
   useEffect(() => {
     window.addEventListener("click", clickAway);
     getAllImageThumbnails();
@@ -11,14 +13,20 @@ const ImagePicker = ({ onSelection, clickAway }) => {
   }, []);
 
   const getAllImageThumbnails = async () => {
-    const images = await fetchAll();
-    setImageList(images);
+    const { data, error } = await fetchAll(user.token);
+    if (error) {
+      return;
+    }
+
+    setImageList(data);
   };
-  console.log("imagelist", imageList);
 
   const handleImageSelection = image => {
-    console.log("picker", image);
     onSelection(image);
+  };
+
+  const handleRemove = () => {
+    onSelection("none");
   };
 
   const renderedList = () => {
@@ -35,7 +43,10 @@ const ImagePicker = ({ onSelection, clickAway }) => {
 
   return (
     <div className={"image-picker-background"}>
-      <div className={"image-picker-container"}>{renderedList()}</div>
+      <div className={"image-picker-container"}>
+        {renderedList()}
+        <button onClick={handleRemove}>Remove</button>
+      </div>
     </div>
   );
 };
