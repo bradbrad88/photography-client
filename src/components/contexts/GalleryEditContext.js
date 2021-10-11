@@ -8,8 +8,8 @@ import {
 } from "../../utils/gallery";
 import UserStore from "./UserContext";
 import ImageCard from "../gallery/ImageCard";
-const Context = React.createContext();
 
+const Context = React.createContext();
 const lsLayout = getFromLS("layouts") || [];
 
 export class GalleryEditStore extends React.Component {
@@ -17,7 +17,6 @@ export class GalleryEditStore extends React.Component {
   state = {
     imageBank: [],
     layouts: lsLayout,
-    // imageDisplay: [], // array of ImageCard components to display on GridLayout
     options: { gallery_columns: 3 },
     dragging: false,
     loading: true,
@@ -30,7 +29,6 @@ export class GalleryEditStore extends React.Component {
   }
 
   async init() {
-    this.wsInit();
     const gallery = await this.getImageBank();
     let layout = [...this.state.layouts];
     if (layout.length < 1) {
@@ -91,16 +89,6 @@ export class GalleryEditStore extends React.Component {
     }));
   };
 
-  wsInit() {
-    // this.sse = new EventSource(
-    //   `${process.env.REACT_APP_SERVER_API}/gallery/subscribe`
-    // );
-    // this.ws = new WebSocket(
-    //   `${process.env.REACT_APP_WS_SERVER}/gallery?auth=${this.context.token}`
-    // );
-    // this.ws.onmessage = this.newMessage;
-  }
-
   newUploads = async images => {
     const newImages = await Promise.all(
       images.map(async image => {
@@ -145,7 +133,6 @@ export class GalleryEditStore extends React.Component {
     const { data } = e;
     if (!data) return;
     const imageUpdate = JSON.parse(data);
-    // console.log("status", imageUpdate);
     this.setState(prevState => ({
       imageBank: prevState.imageBank.map(image =>
         parseInt(image.image_id) === parseInt(imageUpdate.image_id)
@@ -235,17 +222,6 @@ export class GalleryEditStore extends React.Component {
         image => !images.includes(image.image_id)
       ),
     }));
-  };
-
-  toggleSelectedDisplay = image_id => {
-    // if (!image_id) return;
-    // this.setState(prevState => ({
-    //   imageDisplay: prevState.imageDisplay.map(image =>
-    //     image.image_id === image_id
-    //       ? { ...image, selected: !image.selected }
-    //       : { ...image }
-    //   ),
-    // }));
   };
 
   deselectAllDisplay = () => {
@@ -338,8 +314,8 @@ export class GalleryEditStore extends React.Component {
         position: null,
       }));
     const newLayout = this.mapImagePositionToLayout(idToInteger);
-    console.log("id to integer", newLayout);
-    const success = await saveDisplay(this.context.token, newLayout);
+    console.log("id to integer", idToInteger);
+    const success = await saveDisplay(this.context.token, idToInteger);
     if (success) localStorage.removeItem("rgl");
   };
 
@@ -377,7 +353,7 @@ export class GalleryEditStore extends React.Component {
   };
 
   test = () => {
-    console.log("imagebank", this.state.imageBank);
+    console.log("imagebank", this.state);
   };
 
   render() {

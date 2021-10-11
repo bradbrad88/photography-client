@@ -64,7 +64,7 @@ const ImageCard = React.forwardRef(
         return;
       }
       if (!editContext) return;
-      editContext.toggleSelectedDisplay(image.image_id);
+      // editContext.toggleSelectedDisplay(image.image_id);
     };
 
     const onRemoveClick = () => {
@@ -76,6 +76,7 @@ const ImageCard = React.forwardRef(
       const pos = { v: 50 };
       editContext.setImagePosition(image.image_id, pos);
     };
+
     const handleVertTop = e => {
       e.stopPropagation();
       if (image.position?.v <= 0) return { v: 0 };
@@ -85,6 +86,7 @@ const ImageCard = React.forwardRef(
       const pos = { v: value };
       editContext.setImagePosition(image.image_id, pos);
     };
+
     const handleVertBottom = e => {
       e.stopPropagation();
       if (image.position?.v >= 100) return { v: 100 };
@@ -95,11 +97,13 @@ const ImageCard = React.forwardRef(
       const pos = { v: value };
       editContext.setImagePosition(image.image_id, pos);
     };
+
     const handleHorCenter = e => {
       e.stopPropagation();
       const pos = { h: 50 };
       editContext.setImagePosition(image.image_id, pos);
     };
+
     const handleHorLeft = e => {
       e.stopPropagation();
       if (image.position?.h <= 0) return { h: 0 };
@@ -109,6 +113,7 @@ const ImageCard = React.forwardRef(
       const pos = { h: value };
       editContext.setImagePosition(image.image_id, pos);
     };
+
     const handleHorRight = e => {
       e.stopPropagation();
       if (image.position?.h >= 100) return { h: 100 };
