@@ -1,9 +1,5 @@
 .image-flare {
-  /* position: absolute; */
-  /* background-color: rgba(65, 105, 225, 0.089); */
-  /* height: 5000vh; */
   margin-bottom: 1000px;
-  /* perspective: 1000px; */
 }
 
 .image-flare > .title-container {
@@ -16,19 +12,13 @@
   opacity: 0;
   pointer-events: none;
   transform: translateY(-50px);
-  /* perspective: 1000px; */
   transition: all 0.8s;
   font-size: 1.8rem;
 }
 
 .image-flare > .title-container.active {
-  /* pointer-events: all; */
   opacity: 1;
   transform: translateY(0);
-}
-
-.image-flare > .title-container > h1 {
-  /* font-size: 4rem; */
 }
 
 .image-flare > .title-container.active > .image-flare-progress {

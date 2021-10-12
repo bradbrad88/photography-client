@@ -58,22 +58,16 @@ body {
   border-radius: 5px;
   min-width: none;
   max-width: fit-content;
-  min-height: calc(fit-content + 5rem);
+  /* min-height: calc(fit-content + 5rem); */
   max-height: fit-content;
   padding: 1rem;
   padding-bottom: 5rem;
   filter: blur(30px);
-  /* max-height: 50vh; */
   flex-shrink: -1;
   transform-style: preserve-3d;
   transform: rotate(7deg) rotateY(-5deg);
   transition: all ease 0.5s;
-  /* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.123); */
 }
-
-/* .drop-in > .image:hover {
-  animation: shake 0.9s ease-in-out alternate infinite;
-} */
 
 .drop-in > .image > img {
   height: 100%;
@@ -85,7 +79,6 @@ body {
 }
 
 .about-progress {
-  /* width: 10%; */
   height: 10px;
   background-color: rgba(0, 0, 0, 0.123);
 }

@@ -6,11 +6,7 @@
   justify-content: center;
 }
 
-.contact-form {
-}
-
 .contact-header {
-  /* background-color: red; */
   color: #fff;
   text-align: center;
 }
@@ -33,15 +29,12 @@ fieldset {
   width: 35rem;
   border: none;
   padding: 20px 50px;
-
   background-image: url("https://s3.console.aws.amazon.com/s3/object/far-out-photography-gallery?region=ap-southeast-2&prefix=1630469977116.jpg");
   background-blend-mode: lighten;
 }
 
 .contact-form > fieldset {
   border: none;
-  /* width: 100%; */
-  /* margin: auto; */
   margin-bottom: 10px;
 }
 
@@ -59,7 +52,6 @@ fieldset {
 }
 
 .contact-form > fieldset > .contact-input.area {
-  /* background-color: rgb(146, 88, 88); */
   resize: none;
   height: 10rem;
 }

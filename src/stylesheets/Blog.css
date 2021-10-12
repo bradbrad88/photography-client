@@ -25,29 +25,15 @@
 }
 
 input.blog-title {
-  /* width: 500px; */
   height: 3rem;
   flex-grow: 1;
-}
-
-.header > .row > .image-selector {
-  /* width: 50px; */
-  /* height: 3.5rem; */
-  /* outline: 1px solid rgba(0, 0, 0, 0.048); */
-  /* border-radius: 5px; */
-  /* cursor: pointer; */
-
-  /* align-content: center; */
 }
 
 .editor > .header > .row > button {
   position: relative;
   width: 200px;
   color: rgba(1, 90, 255, 0.74);
-  /* margin-left: auto; */
   bottom: 0;
-  /* margin-bottom: 20px;
-  margin-right: 20px; */
   border: none;
   outline: rgba(0, 89, 255, 0.329) 1px solid;
   border-radius: 1.5rem;
@@ -74,7 +60,6 @@ button.image-selector {
 .header > .row > textarea {
   border: none;
   outline: 1px solid rgba(0, 0, 0, 0.062);
-  /* margin-bottom: 20px; */
   padding: 5px;
   border-radius: 5px;
   transition: all ease 0.5s;
@@ -274,8 +259,6 @@ input.blog-title:hover::placeholder {
 .editor > .header > .row > .blog-description {
   flex-grow: 1;
   height: 7rem;
-
-  /* margin: 0 20px 20px 20px; */
 }
 
 .image-picker-background {
@@ -289,10 +272,8 @@ input.blog-title:hover::placeholder {
 }
 
 .image-picker-container {
-  /* margin: 200px; */
   position: absolute;
   background-color: rgba(255, 255, 255, 0.904);
-  /* height: 50%; */
   top: 10vh;
   left: 10vw;
   right: 10vw;
@@ -331,5 +312,4 @@ input.blog-title:hover::placeholder {
   padding: 1em 2em;
   background: white;
   border: none;
-  /* font-family: inherit; */
 }

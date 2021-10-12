@@ -166,7 +166,6 @@
   fill: rgba(255, 255, 255, 0.3);
   background-repeat: no-repeat;
   background-size: cover;
-  /* background-position: 20% 00%; */
   transition: box-shadow ease 0.3s, transform ease 0.5s;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.26);
 }
@@ -255,9 +254,6 @@
 .status.complete {
   opacity: 0;
   transition: opacity ease 3s;
-}
-
-.status.error {
 }
 
 .status-item {
