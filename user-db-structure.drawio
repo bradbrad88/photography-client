@@ -1,0 +1,55 @@
+<mxfile host="65bd71144e">
+    <diagram id="j3bgSwWRMhQG4T4MKS-8" name="Page-1">
+        <mxGraphModel dx="816" dy="902" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="User table" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="40" width="290" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="Primary key&lt;br&gt;user_id" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="80" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="first_name" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="150" y="80" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="last_name" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="80" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="350" y="40" width="490" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="User_identity" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" parent="17" vertex="1">
+                    <mxGeometry width="410" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Primary key&lt;br&gt;identity_id&lt;br&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="17" vertex="1">
+                    <mxGeometry x="20" y="40" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Foreign key&lt;br&gt;user_id" style="rounded=1;whiteSpace=wrap;html=1;" parent="17" vertex="1">
+                    <mxGeometry x="110" y="40" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="policy_provider&lt;br&gt;local, google, etc" style="rounded=1;whiteSpace=wrap;html=1;" parent="17" vertex="1">
+                    <mxGeometry x="200" y="40" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="password" style="rounded=1;whiteSpace=wrap;html=1;" parent="17" vertex="1">
+                    <mxGeometry x="310" y="40" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="40" y="300" width="220" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Verified_emails" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" parent="18" vertex="1">
+                    <mxGeometry width="220" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Primary key&lt;br&gt;email" style="rounded=1;whiteSpace=wrap;html=1;" parent="18" vertex="1">
+                    <mxGeometry x="20" y="30" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Foreign key&lt;br&gt;user_id" style="rounded=1;whiteSpace=wrap;html=1;" parent="18" vertex="1">
+                    <mxGeometry x="120" y="30" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="Add to this table after verification process with new email or OIDC email" style="rounded=0;whiteSpace=wrap;html=1;" parent="18" vertex="1">
+                    <mxGeometry x="20" y="90" width="180" height="70" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
