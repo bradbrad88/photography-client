@@ -4,7 +4,7 @@ import UserContext from "../contexts/UserContext";
 
 const Auth = () => {
   const userContext = useContext(UserContext);
-  const history = useHistory();sp
+  const history = useHistory();
   if (!userContext.isAdmin) {
     if (history.length <= 2) {
       history.replace("/");

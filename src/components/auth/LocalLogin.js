@@ -9,8 +9,7 @@ const LocalLogin = () => {
       const headers = new Headers();
       headers.append("Content-Type", "application/x-www-form-urlencoded");
       const data = new URLSearchParams();
-
-      data.append("email", email);
+      data.append("username", email);
       data.append("password", pw);
       const body = data.toString();
       const options = {
@@ -22,7 +21,7 @@ const LocalLogin = () => {
         process.env.REACT_APP_SERVER_API + "/login/local",
         options
       );
-      console.log(res);
+      const user = await res.json();
     } catch (error) {}
   };
   return (
