@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import EditContext from "../contexts/GalleryEditContext";
-import "../../stylesheets/ImageGallery.css";
+import EditContext from "contexts/GalleryEditContext";
+import "stylesheets/ImageGallery.css";
 
 const DisplayPanel = props => {
   const editContext = useContext(EditContext);

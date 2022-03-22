@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 
-import { UserStore } from "./contexts/UserContext";
-import { GoogleStore } from "./contexts/GoogleContext";
+import { UserStore } from "contexts/UserContext";
+import { GoogleStore } from "contexts/GoogleContext";
 import NavBar from "./system/NavBar";
 import Auth from "./auth/Auth";
 import Login from "./auth/Login";
@@ -11,7 +11,7 @@ import GalleryEdit from "./gallery/ImageGalleryEdit";
 import BlogList from "./blog/BlogList";
 import Blog from "./blog/Blog";
 import Editor from "./blog/Editor";
-import "../stylesheets/Main.css";
+import "stylesheets/Main.css";
 
 const App = () => {
   return (

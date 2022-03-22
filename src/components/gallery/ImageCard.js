@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import EditContext from "../contexts/GalleryEditContext";
-import "../../stylesheets/ImageGallery.css";
-import "../../stylesheets/GalleryEdit.css";
-import { edit, centerHorizontal, centerVertical } from "../../assets/svgButtons";
+import EditContext from "contexts/GalleryEditContext";
+import "stylesheets/ImageGallery.css";
+import "stylesheets/GalleryEdit.css";
+import { edit, centerHorizontal, centerVertical } from "assets/svgButtons";
 
 const ImageCard = React.forwardRef(
   ({ style, className, image, handleClick, children, ...restOfProps }, ref) => {

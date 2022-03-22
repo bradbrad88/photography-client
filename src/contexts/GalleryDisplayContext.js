@@ -1,6 +1,6 @@
 import React from "react";
 import UserStore from "./UserContext";
-import { fetchGallery } from "../../utils/gallery";
+import { fetchGallery } from "../utils/gallery";
 const Context = React.createContext();
 
 export class GalleryDisplayStore extends React.Component {

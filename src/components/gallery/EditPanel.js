@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import DragAndDrop from "./DragAndDrop";
-import "../../stylesheets/GalleryEdit.css";
+import "stylesheets/GalleryEdit.css";
 import ImageBank from "./ImageBank";
-import EditContext from "../contexts/GalleryEditContext";
+import EditContext from "contexts/GalleryEditContext";
 
 const EditPanel = () => {
   const editContext = useContext(EditContext);

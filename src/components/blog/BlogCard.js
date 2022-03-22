@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
-import UserContext from "../contexts/UserContext";
+import UserContext from "contexts/UserContext";
 import Confirm from "../system/Confirm";
-import { setActive, deleteBlog } from "../../utils/blog";
-import { active, del, edit } from "../../assets/svgButtons.js";
+import { setActive, deleteBlog } from "utils/blog";
+import { active, del, edit } from "assets/svgButtons.js";
 
 import "../../stylesheets/Blog.css";
 

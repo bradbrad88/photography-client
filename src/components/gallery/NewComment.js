@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import UserContext from "../contexts/UserContext";
-import { postComment } from "../../utils/comment";
+import UserContext from "contexts/UserContext";
+import { postComment } from "utils/comment";
 
 const NewComment = ({ image_id, blog_id, reply, updateComments }) => {
   const userContext = useContext(UserContext);

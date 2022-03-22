@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
-import EditContext from "../contexts/GalleryEditContext";
-import "../../stylesheets/GalleryEdit.css";
+import EditContext from "contexts/GalleryEditContext";
+import "stylesheets/GalleryEdit.css";
 
 const DragAndDrop = props => {
   const editContext = useContext(EditContext);

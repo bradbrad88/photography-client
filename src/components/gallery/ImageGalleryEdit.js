@@ -2,9 +2,9 @@ import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import ImageGalleryEditDisplay from "./ImageGalleryEditDisplay";
 import ImageUpload from "./EditPanel";
-import UserContext from "../contexts/UserContext";
-import { GalleryDisplayStore } from "../contexts/GalleryDisplayContext";
-import { GalleryEditStore } from "../contexts/GalleryEditContext";
+import UserContext from "contexts/UserContext";
+import { GalleryDisplayStore } from "contexts/GalleryDisplayContext";
+import { GalleryEditStore } from "contexts/GalleryEditContext";
 
 const GalleryEdit = () => {
   const userContext = useContext(UserContext);

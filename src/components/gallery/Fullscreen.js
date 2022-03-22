@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import UserContext from "../contexts/UserContext";
+import UserContext from "contexts/UserContext";
 import Comment from "./Comment";
 import NewComment from "./NewComment";
 import Login from "../auth/Login";
-import { fetchComments } from "../../utils/gallery";
-import { menu, close, arrowLeft, arrowRight } from "../../assets/svgButtons";
-import "../../stylesheets/ImageGallery.css";
+import { fetchComments } from "utils/gallery";
+import { menu, close, arrowLeft, arrowRight } from "assets/svgButtons";
+import "stylesheets/ImageGallery.css";
 import { Grid } from "react-spinners-css";
 const Fullscreen = ({ image, nextImage, previousImage, exit }) => {
   const [loading, setLoading] = useState(false);

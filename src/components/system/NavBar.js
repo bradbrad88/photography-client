@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import NavItem from "./NavItem";
 import Profile from "./Profile";
 import PopUpMenu from "./PopUpMenu";
-import UserContext from "../contexts/UserContext";
-import "../../stylesheets/NavBar.css";
+import UserContext from "contexts/UserContext";
+import "stylesheets/NavBar.css";
 
 const NavBar = () => {
   const [opacity, setOpacity] = useState(100);

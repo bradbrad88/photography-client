@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
-import GalleryEditContext from "../contexts/GalleryEditContext";
-import "../../stylesheets/GalleryEdit.css";
+import GalleryEditContext from "contexts/GalleryEditContext";
+import "stylesheets/GalleryEdit.css";
 
 const ImageUploadCard = ({ image }) => {
   const editContext = useContext(GalleryEditContext);

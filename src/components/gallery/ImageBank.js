@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import GalleryEditContext from "../contexts/GalleryEditContext";
+import GalleryEditContext from "contexts/GalleryEditContext";
 import ImageUploadCard from "./ImageUploadCard";
 
 const ImageBank = () => {

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import UserStore from "../contexts/UserContext";
+import UserStore from "contexts/UserContext";
 import Logout from "../auth/Logout";
-import "../../stylesheets/NavBar.css";
+import "stylesheets/NavBar.css";
 
 const Profile = () => {
   const userContext = useContext(UserStore);

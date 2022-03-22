@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import UserContext from "../contexts/UserContext";
+import UserContext from "contexts/UserContext";
 import BlogCard from "./BlogCard";
 import Confirm from "../system/Confirm";
-import { fetchBlogs } from "../../utils/blog";
-import { add } from "../../assets/svgButtons";
-import "../../stylesheets/Blog.css";
+import { fetchBlogs } from "utils/blog";
+import { add } from "assets/svgButtons";
+import "stylesheets/Blog.css";
 
 const BlogList = () => {
   const userContext = useContext(UserContext);

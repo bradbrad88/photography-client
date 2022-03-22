@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import ImagePickerCard from "./ImagePickerCard";
-import { fetchAll } from "../../utils/gallery";
-import UserContext from "../contexts/UserContext";
+import { fetchAll } from "utils/gallery";
+import UserContext from "contexts/UserContext";
 
 const ImagePicker = ({ onSelection, clickAway }) => {
   const [imageList, setImageList] = useState([]);

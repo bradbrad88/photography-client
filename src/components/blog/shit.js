@@ -2,10 +2,10 @@ import React, { useState, useRef, useContext, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import JoditEditor from "jodit-react";
 
-import UserContext from "../contexts/UserContext";
-import { submitBlog, fetchBlog, editBlog, setImageUrls } from "../../utils/blog";
+import UserContext from "contexts/UserContext";
+import { submitBlog, fetchBlog, editBlog, setImageUrls } from "utils/blog";
 
-import "../../stylesheets/Blog.css";
+import "stylesheets/Blog.css";
 
 const Editor = props => {
   const editor = useRef(null);

@@ -4,7 +4,7 @@ import { ContentState, EditorState, convertToRaw } from "draft-js";
 import { Editor as DraftEditor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
-import UserContext from "../contexts/UserContext";
+import UserContext from "contexts/UserContext";
 import ImagePicker from "./ImagePicker";
 import {
   addBlogImage,
@@ -12,10 +12,10 @@ import {
   fetchBlog,
   editBlog,
   setImageUrls,
-} from "../../utils/blog";
-import { image as imageIcon } from "../../assets/svgButtons";
+} from "utils/blog";
+import { image as imageIcon } from "assets/svgButtons";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "../../stylesheets/Editor.css";
+import "stylesheets/Editor.css";
 
 const Editor = () => {
   const history = useHistory();

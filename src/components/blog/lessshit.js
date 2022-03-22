@@ -8,13 +8,13 @@ import {
 // import { useHistory, useParams } from "react-router-dom";
 // import JoditEditor from "jodit-react";
 import "draft-js/dist/Draft.css";
-import "../../stylesheets/Editor.css";
+import "stylesheets/Editor.css";
 // import "draft-js/dist/Draft.css";
 
-import UserContext from "../contexts/UserContext";
-import { submitBlog, fetchBlog, editBlog, setImageUrls } from "../../utils/blog";
+import UserContext from "contexts/UserContext";
+import { submitBlog, fetchBlog, editBlog, setImageUrls } from "utils/blog";
 
-import "../../stylesheets/Blog.css";
+import "stylesheets/Blog.css";
 
 const BLOCK_TYPES = [
   { label: "H1", style: "header-one" },

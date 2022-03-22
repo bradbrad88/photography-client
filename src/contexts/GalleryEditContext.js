@@ -5,9 +5,9 @@ import {
   postImage,
   deleteImages,
   saveDisplay,
-} from "../../utils/gallery";
+} from "../utils/gallery";
 import UserStore from "./UserContext";
-import ImageCard from "../gallery/ImageCard";
+import ImageCard from "../components/gallery/ImageCard";
 
 const Context = React.createContext();
 const lsLayout = getFromLS("layouts") || [];

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import GoogleContext from "../contexts/GoogleContext";
-import UserContext from "../contexts/UserContext";
+import GoogleContext from "contexts/GoogleContext";
+import UserContext from "contexts/UserContext";
 // import { refreshTokenSetup } from "../../utils/refreshToken";
 import "../../stylesheets/Auth.scss";
 import LocalLogin from "./LocalLogin";

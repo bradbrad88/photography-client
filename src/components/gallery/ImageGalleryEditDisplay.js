@@ -1,14 +1,14 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import GridLayout from "react-grid-layout";
-import EditContext from "../contexts/GalleryEditContext";
+import EditContext from "contexts/GalleryEditContext";
 import ImageGallery from "./ImageGallery";
 import ImageCard from "./ImageCard";
 import DisplayPanel from "./DisplayPanel";
 import { Grid } from "react-spinners-css";
-import "../../stylesheets/GalleryEdit.css";
+import "stylesheets/GalleryEdit.css";
 import "../../../node_modules/react-grid-layout/css/styles.css";
 import "../../../node_modules/react-resizable/css/styles.css";
-import { edit } from "../../assets/svgButtons";
+import { edit } from "assets/svgButtons";
 
 const ImageGalleryEditDisplay = () => {
   const editContext = useContext(EditContext);
