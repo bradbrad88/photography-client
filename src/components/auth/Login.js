@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import GoogleContext from "contexts/GoogleContext";
+// import GoogleContext from "contexts/GoogleContext";
 import UserContext from "contexts/UserContext";
 // import { refreshTokenSetup } from "../../utils/refreshToken";
 import "../../stylesheets/Auth.scss";
@@ -9,7 +9,7 @@ import Signup from "./Signup";
 
 const Login = ({ msg }) => {
   const [local, setLocal] = useState(false);
-  const googleContext = useContext(GoogleContext);
+  // const googleContext = useContext(GoogleContext);
   const userContext = useContext(UserContext);
   const history = useHistory();
   useEffect(() => {
@@ -17,9 +17,9 @@ const Login = ({ msg }) => {
       history.push("/");
     }
   }, [userContext]);
-  const onLoginGoogle = () => {
-    googleContext.onSignin();
-  };
+  // const onLoginGoogle = () => {
+  //   googleContext.onSignin();
+  // };
   return (
     <div className="container">
       <div className="text-container">{msg}</div>
@@ -31,8 +31,8 @@ const Login = ({ msg }) => {
       <button className="auth facebook">Login with Facebook</button>
       <button
         className="auth google"
-        disabled={googleContext.auth ? false : true}
-        onClick={onLoginGoogle}
+        // disabled={googleContext.auth ? false : true}
+        // onClick={onLoginGoogle}
       >
         Login with Google
       </button>

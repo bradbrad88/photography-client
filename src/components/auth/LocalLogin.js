@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import UserContext from "contexts/UserContext";
 
 const LocalLogin = () => {
+  const userContext = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const onSubmit = async e => {
