@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
-import GoogleContext from "contexts/GoogleContext";
+// import GoogleContext from "contexts/GoogleContext";
+import UserContext from "contexts/UserContext";
 import "stylesheets/NavBar.css";
 
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const Logout = () => {
-  const googleStore = useContext(GoogleContext);
+  const { logout } = useContext(UserContext);
   const onClick = () => {
-    googleStore.onSignout();
+    logout();
   };
   return (
     <>

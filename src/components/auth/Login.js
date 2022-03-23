@@ -3,20 +3,20 @@ import { useHistory } from "react-router-dom";
 // import GoogleContext from "contexts/GoogleContext";
 import UserContext from "contexts/UserContext";
 // import { refreshTokenSetup } from "../../utils/refreshToken";
-import "../../stylesheets/Auth.scss";
+import "stylesheets/Auth.scss";
 import LocalLogin from "./LocalLogin";
 import Signup from "./Signup";
 
 const Login = ({ msg }) => {
   const [local, setLocal] = useState(false);
   // const googleContext = useContext(GoogleContext);
-  const userContext = useContext(UserContext);
+  const { profile } = useContext(UserContext);
   const history = useHistory();
-  useEffect(() => {
-    if (userContext.profile) {
-      history.push("/");
-    }
-  }, [userContext]);
+  // useEffect(() => {
+  //   if (profile.id) {
+  //     history.push("/");
+  //   }
+  // }, [profile]);
   // const onLoginGoogle = () => {
   //   googleContext.onSignin();
   // };

@@ -1,10 +1,32 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import { onCompositionStart } from "draft-js/lib/DraftEditorEditHandler";
+import React, { useState } from "react";
+// import { useHistory } from "react-router-dom";
 const Context = React.createContext();
 
 const UserProvider = ({ children }) => {
-  console.log(children);
-  return <Context.Provider value={{ test: "new" }}>{children}</Context.Provider>;
+  const [profile, setProfileState] = useState({});
+  const setProfile = data => {
+    console.log(data);
+    const { id, givenName, familyName, email, imageUrl } = data;
+    console.log("Given Name", givenName);
+    setProfileState({ id, givenName, familyName, email, imageUrl });
+  };
+  const logout = () => {
+    setProfileState({});
+    const options = {
+      method: "POST",
+    };
+    fetch(process.env.REACT_APP_SERVER_API + "/logout", options);
+  };
+  const isLoggedIn = () => {
+    return profile.id ? true : false;
+  };
+  console.log("USER CONTEXT", profile);
+  return (
+    <Context.Provider value={{ setProfile, profile, logout }}>
+      {children}
+    </Context.Provider>
+  );
 };
 // export { UserProvider };
 
@@ -57,6 +79,6 @@ const UserProvider = ({ children }) => {
 // }
 // }
 
-export { Context as UserContext };
+export default Context;
 
-export default UserProvider;
+export { UserProvider };

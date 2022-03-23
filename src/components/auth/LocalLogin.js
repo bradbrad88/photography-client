@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import UserContext from "contexts/UserContext";
 
 const LocalLogin = () => {
-  const userContext = useContext(UserContext);
+  const { setProfile } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const onSubmit = async e => {
@@ -16,6 +16,7 @@ const LocalLogin = () => {
       const body = data.toString();
       const options = {
         method: "POST",
+        credentials: "include",
         body,
         headers,
       };
@@ -23,7 +24,20 @@ const LocalLogin = () => {
         process.env.REACT_APP_SERVER_API + "/login/local",
         options
       );
-      const user = await res.json();
+      const { user } = await res.json();
+      console.log(user);
+      setProfile(user);
+    } catch (error) {}
+  };
+  const test = async e => {
+    e.preventDefault();
+    try {
+      const options = {
+        credentials: "include",
+      };
+      const res = await fetch(process.env.REACT_APP_SERVER_API + "/test", options);
+      const data = await res.json();
+      console.log(res);
     } catch (error) {}
   };
   return (
@@ -50,6 +64,7 @@ const LocalLogin = () => {
       <div className="field">
         <input type={"submit"} value={"Login"} />
       </div>
+      <button onClick={test}>Test</button>
     </form>
   );
 };

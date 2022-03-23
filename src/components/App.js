@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
-import UserProvider from "contexts/UserContext";
+import { UserProvider } from "contexts/UserContext";
 import NavBar from "./system/NavBar";
 import Auth from "./auth/Auth";
 import Login from "./auth/Login";
