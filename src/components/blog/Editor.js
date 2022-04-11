@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ContentState, EditorState, convertToRaw } from "draft-js";
 import { Editor as DraftEditor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
@@ -18,7 +18,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "stylesheets/Editor.css";
 
 const Editor = () => {
-  const history = useHistory();
+  // const history = useHistory();
   const params = useParams();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [blogId, setBlogId] = useState();
@@ -97,7 +97,7 @@ const Editor = () => {
     const id = res.data.id;
     setBlogId(id);
     imageHandler(blog.html, id);
-    history.push("/blog");
+    // history.push("/blog");
   };
 
   const imageHandler = async (html, id) => {
@@ -121,7 +121,7 @@ const Editor = () => {
   const onEditBlog = async blog => {
     const res = await editBlog(userContext.token, blog);
     imageHandler(blog.html);
-    if (res?.data) history.push("/blog");
+    // if (res?.data) history.push("/blog");
   };
 
   const blogObject = () => {

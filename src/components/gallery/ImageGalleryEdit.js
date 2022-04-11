@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import ImageGalleryEditDisplay from "./ImageGalleryEditDisplay";
 import ImageUpload from "./EditPanel";
 import UserContext from "contexts/UserContext";
@@ -8,7 +8,7 @@ import { GalleryEditStore } from "contexts/GalleryEditContext";
 
 const GalleryEdit = () => {
   const userContext = useContext(UserContext);
-  const history = useHistory();
+  // const history = useHistory();
 
   useEffect(() => {
     authenticated();
@@ -25,7 +25,7 @@ const GalleryEdit = () => {
       const res = await fetch(`${process.env.REACT_APP_SERVER_API}/auth`, options);
       const { authenticated } = await res.json();
     } catch (error) {
-      history.goBack();
+      // history.goBack();
     }
   };
 

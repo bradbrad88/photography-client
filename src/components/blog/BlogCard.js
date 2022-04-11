@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 import UserContext from "contexts/UserContext";
 import Confirm from "../system/Confirm";
@@ -9,15 +9,15 @@ import { active, del, edit } from "assets/svgButtons.js";
 import "../../stylesheets/Blog.css";
 
 const BlogCard = ({ blog, getBlogs }) => {
-  const history = useHistory();
+  // const history = useHistory();
   const userContext = useContext(UserContext);
   const [displayConfirm, setDisplayConfirm] = useState(false);
   const handleClick = () => {
-    history.push(`/blog/${blog?.blog_id}`);
+    // history.push(`/blog/${blog?.blog_id}`);
   };
   const handleEdit = e => {
     e.stopPropagation();
-    history.push(`/edit/blog/${blog.blog_id}`);
+    // history.push(`/edit/blog/${blog.blog_id}`);
   };
   const handleActive = async e => {
     e.stopPropagation();

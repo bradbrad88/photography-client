@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import UserContext from "contexts/UserContext";
 import BlogCard from "./BlogCard";
 import Confirm from "../system/Confirm";
@@ -11,7 +11,7 @@ const BlogList = () => {
   const userContext = useContext(UserContext);
   const [blogs, setBlogs] = useState([]);
   const [error, setError] = useState();
-  const history = useHistory();
+  // const history = useHistory();
   useEffect(() => {
     getBlogs();
   }, []);
@@ -35,7 +35,7 @@ const BlogList = () => {
   };
 
   const createNewBlog = () => {
-    history.push("/edit/blog");
+    // history.push("/edit/blog");
   };
 
   const newBlogCard = () => {
