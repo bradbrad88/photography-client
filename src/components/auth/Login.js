@@ -5,6 +5,8 @@ import Signup from "./Signup";
 import "stylesheets/Auth.scss";
 import useGoogle from "hooks/useGoogle";
 import Google from "./Google";
+// import Twitter from "./Twitter";
+import Facebook from "./Facebook";
 
 const Login = ({ msg }) => {
   const [local, setLocal] = useState(false);
@@ -23,7 +25,7 @@ const Login = ({ msg }) => {
     useGoogle(handleGoogleLogin);
 
   return (
-    <div className="container">
+    <div className="login-container">
       <div className="text-container">{msg}</div>
       <button className="auth local" onClick={() => setLocal(true)}>
         Login with Email
@@ -31,7 +33,7 @@ const Login = ({ msg }) => {
       {local && <LocalLogin />}
       {local && <Signup />}
       <Google />
-      {/* <Facebook /> */}
+      <Facebook />
     </div>
   );
 };

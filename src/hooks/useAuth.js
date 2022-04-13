@@ -1,5 +1,7 @@
+import { UserProvider } from "contexts/UserContext";
+
 export const useAuth = () => {
-  const loginGoogle = async token => {
+  const loginOauth = async (provider, token) => {
     try {
       const headers = new Headers();
       headers.append("Content-Type", "application/x-www-form-urlencoded");
@@ -13,7 +15,7 @@ export const useAuth = () => {
         credentials: "include",
       };
       const res = await fetch(
-        process.env.REACT_APP_SERVER_API + "/auth/google",
+        process.env.REACT_APP_SERVER_API + `/auth/${provider}`,
         options
       );
       const user = await res.json();
@@ -22,6 +24,14 @@ export const useAuth = () => {
       return { error };
     }
   };
+  // const loginFacebook = async token => {
+  //   try {
+  //     const headers = new Headers()
+  //     headers.append("Content-Type", "application/x-www-form-urlencoded")
+  //   } catch (error) {
+
+  //   }
+  // }
   const isLoggedIn = async () => {
     try {
       const options = {
@@ -37,5 +47,5 @@ export const useAuth = () => {
       return { error };
     }
   };
-  return { loginGoogle, isLoggedIn };
+  return { loginOauth, isLoggedIn };
 };

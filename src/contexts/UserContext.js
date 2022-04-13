@@ -4,13 +4,15 @@ const Context = React.createContext();
 
 const UserProvider = ({ children }) => {
   const [profile, setProfileState] = useState({});
-  const { loginGoogle, isLoggedIn: _isLoggedIn } = useAuth();
+  const { loginOauth, isLoggedIn: _isLoggedIn } = useAuth();
 
   useEffect(() => {
     checkLoginStatus();
   }, []);
 
   const setProfile = data => {
+    console.log("WTF IS THIS", data);
+    if (typeof data !== "object") return setProfileState({});
     const { id, givenName, familyName, email, imageUrl } = data;
     setProfileState({ id, givenName, familyName, email, imageUrl });
   };
@@ -36,11 +38,24 @@ const UserProvider = ({ children }) => {
 
   const login = async options => {
     const { provider, lookup } = options;
+    let data;
     switch (provider) {
       case "https://accounts.google.com":
-        const { user } = await loginGoogle(lookup);
-        console.log(user);
-        return setProfile(user);
+        data = await loginOauth("google", lookup);
+        console.log(data.user);
+        if (data.error) {
+          setProfileState({});
+          console.error(data.error);
+        }
+        return setProfile(data.user);
+      case "https://graph.facebook.com":
+        data = await loginOauth("facebook", lookup);
+        console.log(data.user);
+        if (data.error) {
+          setProfileState({});
+          console.error(data.error);
+        }
+        return setProfile(data.user);
       case "LOCAL":
         return;
       default:

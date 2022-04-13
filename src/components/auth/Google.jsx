@@ -1,4 +1,4 @@
-import { useEffect, useContext, useCallback, useRef } from "react";
+import { useEffect, useContext, useRef } from "react";
 import UserContext from "contexts/UserContext";
 
 const ELEMENT_ID = "google-gsi";

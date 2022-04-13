@@ -27,7 +27,7 @@ const App = () => {
   const notLoggedIn = (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Login msg={"Login Options"} />} />
       </Routes>
     </BrowserRouter>
   );
