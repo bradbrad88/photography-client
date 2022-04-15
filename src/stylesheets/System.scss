@@ -1,22 +1,35 @@
 // Main positional properties for these lie in Main.scss (over-arching grid structure)
-.header {
-  background-color: rgb(144, 18, 255);
-  height: 100%;
-  color: white;
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: min-content 1fr;
-  h2 {
-    margin: auto 2rem 0.3rem;
+
+@import "variables.scss";
+.toolbar-placement {
+  position: relative;
+  width: $toolbar-width-collapsed;
+  transition: width 500ms ease-in-out;
+  &.active {
+    width: $toolbar-width;
   }
 }
 
 .toolbar {
-  background-color: rgb(46, 6, 224);
-  width: 0;
-  transition: width 0.5s;
-  &.active {
-    width: 15rem;
+  display: grid;
+  grid-template-columns: 1fr $toolbar-width-collapsed;
+  grid-template-rows: $toolbar-width-collapsed;
+  position: absolute;
+  color: white;
+  font-size: 2rem;
+  background: linear-gradient(138deg, $primary-colour 1%, rgb(249, 85, 255) 51%);
+  width: $toolbar-width;
+  height: 100%;
+  right: 0;
+  transition: all 0.5s;
+  .menu {
+    grid-column: 2;
+    display: block;
+    justify-self: center;
+    align-self: center;
+    .icon {
+      fill: white;
+    }
   }
 }
 

@@ -8,7 +8,7 @@ const View = () => {
 
   return (
     <div className="view">
-      <Header setToolbar={() => setActive(!active)} />
+      {/* <Header setToolbar={() => setActive(!active)} /> */}
       <div className="page">
         <Toolbar active={active} />
         <Main />

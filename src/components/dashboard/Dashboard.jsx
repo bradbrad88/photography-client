@@ -1,12 +1,17 @@
 import React from "react";
+import "stylesheets/Dashboard.scss";
 
 const Dashboard = () => {
   return (
     <div className="dashboard">
-      <h2>Dashboard</h2>
-      <button>Create New Album</button>
-      <button>Post Blog</button>
-      <button>View Profile</button>
+      <div className="title">
+        <h2>React Photography</h2>
+      </div>
+      <div className="content">
+        <button id="new-album">Create New Album</button>
+        <button id="new-blog">Post Blog</button>
+        <button id="view-profile">View Profile</button>
+      </div>
     </div>
   );
 };
