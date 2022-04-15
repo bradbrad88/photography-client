@@ -1,0 +1,66 @@
+body {
+  font-family: "Antonio", sans-serif;
+  margin: 0;
+}
+
+.view {
+  display: grid;
+  height: 100vh;
+  grid-auto-flow: row;
+  grid-template-rows: 3rem 1fr;
+  .header {
+    overflow: hidden;
+  }
+
+  .page {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: max-content 1fr;
+    .toolbar {
+      overflow: hidden;
+    }
+  }
+}
+
+// body {
+//   margin: 0;
+//   margin-top: 120px;
+// }
+
+// .background-box {
+//   position: fixed;
+//   left: 0;
+//   right: 0;
+//   top: 0;
+//   bottom: 0;
+//   background-color: rgba(255, 255, 255, 0.973);
+// }
+
+// .confirmation-box {
+//   position: fixed;
+//   left: 50%;
+//   height: 50%;
+//   transform: translateX(-50%);
+//   width: 400px;
+//   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+//   background-color: rgba(255, 255, 255, 0.925);
+// }
+
+// .confirmation-box > button {
+//   height: 30px;
+//   margin-top: auto;
+//   margin-bottom: 10px;
+
+//   justify-content: space-between;
+// }
+
+// body.noscroll {
+//   overflow: hidden;
+// }
+
+// .loading-spinner {
+//   position: absolute;
+//   left: 50%;
+//   top: 50%;
+//   transform: translate(-50%, -50%);
+// }

@@ -1,0 +1,26 @@
+// Main positional properties for these lie in Main.scss (over-arching grid structure)
+.header {
+  background-color: rgb(144, 18, 255);
+  height: 100%;
+  color: white;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: min-content 1fr;
+  h2 {
+    margin: auto 2rem 0.3rem;
+  }
+}
+
+.toolbar {
+  background-color: rgb(46, 6, 224);
+  width: 0;
+  transition: width 0.5s;
+  &.active {
+    width: 15rem;
+  }
+}
+
+.logout {
+  border: none;
+  margin: 0.5rem 1rem;
+}

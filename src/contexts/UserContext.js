@@ -3,18 +3,23 @@ import { useAuth } from "../hooks/useAuth";
 const Context = React.createContext();
 
 const UserProvider = ({ children }) => {
-  const [profile, setProfileState] = useState({});
+  const [profile, setProfileState] = useState({
+    id: 1,
+    givenName: "Brad",
+    familyName: "Teague",
+    verified: true,
+  });
   const { loginOauth, isLoggedIn: _isLoggedIn } = useAuth();
 
   useEffect(() => {
-    checkLoginStatus();
+    // checkLoginStatus();
   }, []);
 
   const setProfile = data => {
     console.log("WTF IS THIS", data);
     if (typeof data !== "object") return setProfileState({});
-    const { id, givenName, familyName, email, imageUrl } = data;
-    setProfileState({ id, givenName, familyName, email, imageUrl });
+    const { id, givenName, familyName, email, imageUrl, verified } = data;
+    setProfileState({ id, givenName, familyName, email, imageUrl, verified });
   };
 
   const logout = () => {
@@ -42,7 +47,6 @@ const UserProvider = ({ children }) => {
     switch (provider) {
       case "https://accounts.google.com":
         data = await loginOauth("google", lookup);
-        console.log(data.user);
         if (data.error) {
           setProfileState({});
           console.error(data.error);
@@ -50,7 +54,6 @@ const UserProvider = ({ children }) => {
         return setProfile(data.user);
       case "https://graph.facebook.com":
         data = await loginOauth("facebook", lookup);
-        console.log(data.user);
         if (data.error) {
           setProfileState({});
           console.error(data.error);

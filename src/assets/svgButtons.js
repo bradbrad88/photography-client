@@ -79,13 +79,13 @@ export const image = () => {
   );
 };
 
-export const menu = (
+export const menu = (size = 24) => (
   <svg
     className={"icon menu"}
     xmlns="http://www.w3.org/2000/svg"
-    height="36px"
+    height={`${size}px`}
     viewBox="0 0 24 24"
-    width="36px"
+    width={`${size}px`}
     fill="#000000"
   >
     <path d="M0 0h24v24H0V0z" fill="none" />

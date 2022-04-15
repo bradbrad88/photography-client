@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import UserContext from "contexts/UserContext";
-import "stylesheets/NavBar.css";
+import "stylesheets/System.scss";
 
 const Logout = () => {
   const { logout } = useContext(UserContext);
