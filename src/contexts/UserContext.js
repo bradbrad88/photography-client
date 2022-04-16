@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 const Context = React.createContext();
 
 const UserProvider = ({ children }) => {
+  const nav = useNavigate();
   const [profile, setProfileState] = useState({
     id: 1,
     givenName: "Brad",
@@ -46,6 +48,7 @@ const UserProvider = ({ children }) => {
       credentials: "include",
     };
     fetch(process.env.REACT_APP_SERVER_API + "/logout", options);
+    nav("/");
   };
 
   const login = async options => {

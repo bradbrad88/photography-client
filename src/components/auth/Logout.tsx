@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import UserContext from "contexts/UserContext";
+import Button from "components/elements/Button";
 import "stylesheets/System.scss";
 
 const Logout = () => {
@@ -7,12 +8,6 @@ const Logout = () => {
   const onClick = () => {
     logout();
   };
-  return (
-    <>
-      <button className={"logout"} onClick={onClick}>
-        Logout
-      </button>
-    </>
-  );
+  return <Button className="logout" onClick={onClick} text="Logout" />;
 };
 export default Logout;
