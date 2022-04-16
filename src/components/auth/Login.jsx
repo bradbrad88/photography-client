@@ -1,7 +1,8 @@
 import { useNavigate, Link } from "react-router-dom";
 import Google from "./Google";
 import Facebook from "./Facebook";
-import { menu } from "assets/svgButtons";
+import Button from "components/elements/Button";
+import { email } from "assets/svgButtons";
 import "stylesheets/Auth.scss";
 
 const Login = () => {
@@ -17,10 +18,17 @@ const Login = () => {
       <Link to={"/signup"}>
         <p>New Account</p>
       </Link>
-      <button onClick={onLogin} className="auth local">
+      {/* <button onClick={onLogin} className="auth local">
         {menu(20)}
         Login with Email
-      </button>
+      </button> */}
+      <Button
+        onClick={onLogin}
+        className="auth local"
+        icon={email}
+        iconSize={30}
+        text={"Login with Email"}
+      />
       <Google />
       <Facebook />
     </>

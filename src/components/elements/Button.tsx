@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { JsxElement } from "typescript";
 
 interface Props {
   text: string;
@@ -21,7 +20,7 @@ const Button = ({ onClick, className, text, icon, iconSize, img }: Props) => {
         {(img || icon) && (
           <div className="button-image">
             <>
-              {img && img}
+              {img && <img src={img} alt={text + " button icon"} />}
               {icon && icon(iconSize)}
             </>
           </div>

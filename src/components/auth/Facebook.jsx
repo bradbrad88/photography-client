@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext, useCallback } from "react";
 import UserContext from "contexts/UserContext";
+import Button from "components/elements/Button";
 
 const PROVIDER = "https://graph.facebook.com";
 const ELEMENT_SRC = "https://connect.facebook.net/en_US/sdk.js";
@@ -75,7 +76,7 @@ const Facebook = () => {
 
   return (
     <>
-      <button className="facebook auth" onClick={onClick}>
+      {/* <button className="facebook auth" onClick={onClick}>
         <img
           className="icon"
           src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_facebook.png"
@@ -84,7 +85,13 @@ const Facebook = () => {
         <span className="text">
           {continueAs ? "Continue as " + continueAs : "Sign in with Facebook"}
         </span>
-      </button>
+      </button> */}
+      <Button
+        text={continueAs ? "Continue as " + continueAs : "Sign in with Facebook"}
+        className="facebook auth"
+        onClick={onClick}
+        img={"https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_facebook.png"}
+      />
 
       <div
         className="fb-login-button"
