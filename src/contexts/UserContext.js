@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../hooks/useAuth";
 const Context = React.createContext();
 
@@ -11,9 +11,26 @@ const UserProvider = ({ children }) => {
   });
   const { loginOauth, isLoggedIn: _isLoggedIn } = useAuth();
 
+  const checkLoginStatus = useCallback(
+    async exit => {
+      if (!exit)
+        return console.log(
+          "Remove this return statement - blocking login check for development"
+        );
+      const { user, error } = await _isLoggedIn();
+      if (error) {
+        console.error(error);
+        setProfileState({});
+      }
+      if (!user) return setProfileState({});
+      setProfile(user);
+    },
+    [_isLoggedIn]
+  );
+
   useEffect(() => {
-    // checkLoginStatus();
-  }, []);
+    checkLoginStatus();
+  }, [checkLoginStatus]);
 
   const setProfile = data => {
     console.log("WTF IS THIS", data);
@@ -29,16 +46,6 @@ const UserProvider = ({ children }) => {
       credentials: "include",
     };
     fetch(process.env.REACT_APP_SERVER_API + "/logout", options);
-  };
-
-  const checkLoginStatus = async () => {
-    const { user, error } = await _isLoggedIn();
-    if (error) {
-      console.error(error);
-      setProfileState({});
-    }
-    if (!user) return setProfileState({});
-    setProfile(user);
   };
 
   const login = async options => {

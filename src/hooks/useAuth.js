@@ -1,5 +1,3 @@
-import { UserProvider } from "contexts/UserContext";
-
 export const useAuth = () => {
   const loginOauth = async (provider, token) => {
     try {

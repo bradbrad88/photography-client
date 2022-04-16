@@ -16,8 +16,9 @@ const App = () => {
   const { isLoggedIn, profile } = useContext(UserContext);
   const nav = useNavigate();
   useEffect(() => {
+    console.log("App: use effect");
     if (isLoggedIn() && !profile.verified) nav("/verify");
-  }, [isLoggedIn, profile.verified]);
+  }, [nav, isLoggedIn, profile.verified]);
 
   const loggedIn = (
     <Routes>

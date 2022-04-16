@@ -76,7 +76,14 @@ const Facebook = () => {
   return (
     <>
       <button className="facebook auth" onClick={onClick}>
-        {continueAs ? "Continue as " + continueAs : "Sign in with Facebook"}
+        <img
+          className="icon"
+          src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_facebook.png"
+          alt=""
+        />
+        <span className="text">
+          {continueAs ? "Continue as " + continueAs : "Sign in with Facebook"}
+        </span>
       </button>
 
       <div

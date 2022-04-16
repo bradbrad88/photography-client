@@ -1,4 +1,4 @@
-import { useEffect, useContext, useRef } from "react";
+import { useEffect, useContext, useRef, useCallback } from "react";
 import UserContext from "contexts/UserContext";
 
 const ELEMENT_ID = "google-gsi";
@@ -7,6 +7,16 @@ const ELEMENT_SRC = "https://accounts.google.com/gsi/client";
 const useGoogle = () => {
   const { login } = useContext(UserContext);
   const scriptRef = useRef(null);
+  const callback = useCallback(
+    res => {
+      const options = {
+        provider: "https://accounts.google.com",
+        lookup: res.credential,
+      };
+      login(options);
+    },
+    [login]
+  );
 
   useEffect(() => {
     scriptRef.current = document.createElement("script");
@@ -28,15 +38,7 @@ const useGoogle = () => {
     return () => {
       script.remove();
     };
-  }, []);
-
-  const callback = res => {
-    const options = {
-      provider: "https://accounts.google.com",
-      lookup: res.credential,
-    };
-    login(options);
-  };
+  }, [callback]);
 
   return <div id="google-sign-in" className="auth google"></div>;
 };

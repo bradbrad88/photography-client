@@ -29,17 +29,7 @@ const LocalLogin = () => {
       setProfile(user);
     } catch (error) {}
   };
-  const test = async e => {
-    e.preventDefault();
-    try {
-      const options = {
-        credentials: "include",
-      };
-      const res = await fetch(process.env.REACT_APP_SERVER_API + "/test", options);
-      const data = await res.json();
-      console.log(res);
-    } catch (error) {}
-  };
+
   return (
     <form className="form" onSubmit={onSubmit}>
       <h1>Login</h1>
