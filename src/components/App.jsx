@@ -9,6 +9,8 @@ import Verify from "./auth/Verify";
 import View from "./View";
 import "stylesheets/Main.scss";
 import Dashboard from "./dashboard/Dashboard";
+import NewAlbum from "./gallery/NewAlbum";
+import Albums from "./gallery/Albums";
 
 const App = () => {
   const { isLoggedIn, profile } = useContext(UserContext);
@@ -21,6 +23,15 @@ const App = () => {
     <Routes>
       <Route path="/" element={<View />}>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/gallery" element={<Albums />} />
+        <Route
+          path="/album/:albumId"
+          element={<div>A particular photo album</div>}
+        />
+        <Route path="/gallery/album/new" element={<NewAlbum />} />
+        <Route path="/blog" element={<div>Blog</div>} />
+        <Route path="/blog/new" element={<div>New Blog</div>} />
+        <Route path="/profile" element={<div>Profile</div>} />
       </Route>
       <Route path={"/verify"} element={<Verify />} />
     </Routes>

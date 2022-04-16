@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
-import NavItem from "./NavItem";
+import NavItem from "./NavItem_";
 import Profile from "./Profile";
 import PopUpMenu from "./PopUpMenu";
 import UserContext from "contexts/UserContext";

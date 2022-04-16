@@ -14,7 +14,6 @@
     justify-content: center;
   }
   button {
-    // font-family: "Antonio", sans-serif;
     font-family: inherit;
     width: 15rem;
     height: 10rem;
@@ -24,15 +23,19 @@
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.156);
     font-size: 1.8rem;
     color: white;
-
+    cursor: pointer;
+    transition: opacity 300ms;
     &#new-album {
-      background: linear-gradient(0deg, $primary-colour 0%, rgb(255, 228, 53) 100%);
+      background: linear-gradient(0deg, $primary-colour 0%, rgb(255, 226, 40) 100%);
     }
     &#new-blog {
       background: linear-gradient(0deg, $primary-colour 0%, rgb(0, 247, 255) 100%);
     }
     &#view-profile {
       background: linear-gradient(0deg, $primary-colour 0%, rgb(255, 82, 146) 100%);
+    }
+    &:hover {
+      opacity: 0.8;
     }
   }
 }

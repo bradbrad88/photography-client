@@ -4,30 +4,38 @@
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="2" value="React Photography" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fontSize=16;" vertex="1" parent="1">
+                <mxCell id="2" value="React Photography" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fontSize=16;" parent="1" vertex="1">
                     <mxGeometry x="114" y="245" width="696" height="385" as="geometry"/>
                 </mxCell>
-                <mxCell id="3" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="3" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="1130" y="250" width="240" height="450" as="geometry"/>
                 </mxCell>
-                <mxCell id="4" value="Create New Album" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="4" value="Create New Album" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="300" y="347" width="90" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="5" value="Blog" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="5" value="Blog" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="414" y="347" width="90" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="6" value="Profile" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="6" value="Profile" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="530" y="347" width="90" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="7" value="Create New Album" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="7" value="Create New Album" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="1190" y="330" width="130" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="8" value="Blog" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="8" value="Blog" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="1190" y="397" width="130" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="9" value="Profile" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="9" value="Profile" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="1190" y="470" width="130" height="50" as="geometry"/>
                 </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="xnYENSdFouw6Zq-Jqu4l" name="Albums">
+        <mxGraphModel dx="2597" dy="758" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="P0Z6Q1v5PwVmOftyeueQ-0"/>
+                <mxCell id="P0Z6Q1v5PwVmOftyeueQ-1" parent="P0Z6Q1v5PwVmOftyeueQ-0"/>
             </root>
         </mxGraphModel>
     </diagram>

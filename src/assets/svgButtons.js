@@ -163,3 +163,83 @@ export const centerHorizontal = (
     <polygon points="11,2 13,2 13,7 21,7 21,10 13,10 13,14 18,14 18,17 13,17 13,22 11,22 11,17 6,17 6,14 11,14 11,10 3,10 3,7 11,7" />
   </svg>
 );
+
+export const home = (size = 24) => (
+  <svg
+    className="icon home"
+    xmlns="http://www.w3.org/2000/svg"
+    height={`${size}px`}
+    viewBox="0 0 24 24"
+    width={`${size}px`}
+    fill="#000000"
+  >
+    <path d="M0 0h24v24H0V0z" fill="none" />
+    <path d="M12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" />
+  </svg>
+);
+
+export const gallery = (size = 24) => (
+  <svg
+    className="icon gallery"
+    xmlns="http://www.w3.org/2000/svg"
+    height={`${size}px`}
+    viewBox="0 0 24 24"
+    width={`${size}px`}
+    fill="#000000"
+  >
+    <path d="M0 0h24v24H0V0z" fill="none" />
+    <path d="M20 4v12H8V4h12m0-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 9.67l1.69 2.26 2.48-3.1L19 15H9zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z" />
+  </svg>
+);
+
+export const blog = (size = 24) => (
+  <svg
+    className="icon blog"
+    xmlns="http://www.w3.org/2000/svg"
+    enable-background="new 0 0 24 24"
+    height={`${size}px`}
+    viewBox="0 0 24 24"
+    width={`${size}px`}
+    fill="#000000"
+  >
+    <g>
+      <rect fill="none" height="24" width="24" />
+    </g>
+    <g>
+      <path d="M22,3l-1.67,1.67L18.67,3L17,4.67L15.33,3l-1.66,1.67L12,3l-1.67,1.67L8.67,3L7,4.67L5.33,3L3.67,4.67L2,3v16 c0,1.1,0.9,2,2,2l16,0c1.1,0,2-0.9,2-2V3z M11,19H4v-6h7V19z M20,19h-7v-2h7V19z M20,15h-7v-2h7V15z M20,11H4V8h16V11z" />
+    </g>
+  </svg>
+);
+
+export const profile = (size = 24) => (
+  <svg
+    className="icon profile"
+    xmlns="http://www.w3.org/2000/svg"
+    height={`${size}px`}
+    viewBox="0 0 24 24"
+    width={`${size}px`}
+    fill="#000000"
+  >
+    <path d="M0 0h24v24H0V0z" fill="none" />
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM7.07 18.28c.43-.9 3.05-1.78 4.93-1.78s4.51.88 4.93 1.78C15.57 19.36 13.86 20 12 20s-3.57-.64-4.93-1.72zm11.29-1.45c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33C4.62 15.49 4 13.82 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.49-1.64 4.83zM12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z" />
+  </svg>
+);
+
+export const album = (size = 24) => (
+  <svg
+    className="icon album"
+    xmlns="http://www.w3.org/2000/svg"
+    enable-background="new 0 0 24 24"
+    height={`${size}px`}
+    viewBox="0 0 24 24"
+    width={`${size}px`}
+    fill="#000000"
+  >
+    <g>
+      <rect fill="none" height="24" width="24" x="0" />
+    </g>
+    <g>
+      <path d="M22.47,5.2C22,4.96,21.51,4.76,21,4.59v12.03C19.86,16.21,18.69,16,17.5,16c-1.9,0-3.78,0.54-5.5,1.58V5.48 C10.38,4.55,8.51,4,6.5,4C4.71,4,3.02,4.44,1.53,5.2C1.2,5.36,1,5.71,1,6.08v12.08c0,0.58,0.47,0.99,1,0.99 c0.16,0,0.32-0.04,0.48-0.12C3.69,18.4,5.05,18,6.5,18c2.07,0,3.98,0.82,5.5,2c1.52-1.18,3.43-2,5.5-2c1.45,0,2.81,0.4,4.02,1.04 c0.16,0.08,0.32,0.12,0.48,0.12c0.52,0,1-0.41,1-0.99V6.08C23,5.71,22.8,5.36,22.47,5.2z M10,16.62C8.86,16.21,7.69,16,6.5,16 c-1.19,0-2.36,0.21-3.5,0.62V6.71C4.11,6.24,5.28,6,6.5,6C7.7,6,8.89,6.25,10,6.72V16.62z M19,0.5l-5,5V15l5-4.5V0.5z" />
+    </g>
+  </svg>
+);
