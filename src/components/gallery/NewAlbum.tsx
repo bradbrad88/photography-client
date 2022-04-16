@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { add } from "assets/svgButtons";
+import Button from "components/elements/Button";
 
 const NewAlbum = () => {
   const [albumName, setAlbumName] = useState("");
@@ -32,7 +34,9 @@ const NewAlbum = () => {
             onChange={onChange}
           />
         </label>
-        <button onClick={submit}>Create</button>
+
+        <Button onClick={submit} text="Create" icon={add} iconSize={36} />
+
         {msg && <div className="error-message">{msg}</div>}
       </div>
     </div>
