@@ -1,5 +1,7 @@
+import { useCallback } from "react";
+
 export const useAuth = () => {
-  const loginOauth = async (provider, token) => {
+  const loginOauth = useCallback(async (provider, token) => {
     try {
       const headers = new Headers();
       headers.append("Content-Type", "application/x-www-form-urlencoded");
@@ -21,16 +23,9 @@ export const useAuth = () => {
     } catch (error) {
       return { error };
     }
-  };
-  // const loginFacebook = async token => {
-  //   try {
-  //     const headers = new Headers()
-  //     headers.append("Content-Type", "application/x-www-form-urlencoded")
-  //   } catch (error) {
+  }, []);
 
-  //   }
-  // }
-  const isLoggedIn = async () => {
+  const getSessionProfile = useCallback(async () => {
     try {
       const options = {
         credentials: "include",
@@ -44,6 +39,6 @@ export const useAuth = () => {
     } catch (error) {
       return { error };
     }
-  };
-  return { loginOauth, isLoggedIn };
+  }, []);
+  return { loginOauth, getSessionProfile };
 };

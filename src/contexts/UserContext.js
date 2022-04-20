@@ -1,41 +1,29 @@
+import { useAuth } from "hooks/useAuth";
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+// import { useAuth } from "../hooks/useAuth";
 const Context = React.createContext();
 
 const UserProvider = ({ children }) => {
   const nav = useNavigate();
-  const [profile, setProfileState] = useState({
-    id: 1,
-    givenName: "Brad",
-    familyName: "Teague",
-    verified: true,
-  });
-  const { loginOauth, isLoggedIn: _isLoggedIn } = useAuth();
+  const [profile, setProfileState] = useState({});
+  const { loginOauth, getSessionProfile } = useAuth();
 
-  const checkLoginStatus = useCallback(
-    async exit => {
-      if (!exit)
-        return console.log(
-          "Remove this return statement - blocking login check for development"
-        );
-      const { user, error } = await _isLoggedIn();
-      if (error) {
-        console.error(error);
-        setProfileState({});
-      }
-      if (!user) return setProfileState({});
-      setProfile(user);
-    },
-    [_isLoggedIn]
-  );
+  const checkLoginStatus = useCallback(async () => {
+    const { user, error } = await getSessionProfile();
+    if (error) {
+      console.error(error);
+      setProfileState({});
+    }
+    if (!user) return setProfileState({});
+    setProfile(user);
+  }, [getSessionProfile]);
 
   useEffect(() => {
     checkLoginStatus();
   }, [checkLoginStatus]);
 
   const setProfile = data => {
-    console.log("WTF IS THIS", data);
     if (typeof data !== "object") return setProfileState({});
     const { id, givenName, familyName, email, imageUrl, verified } = data;
     setProfileState({ id, givenName, familyName, email, imageUrl, verified });
