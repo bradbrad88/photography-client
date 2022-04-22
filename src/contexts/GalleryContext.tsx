@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useCallback, useContext } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import UserContext from "contexts/UserContext";
 
 interface Image {
@@ -45,7 +45,7 @@ export const GalleryProvider = ({ children }: any) => {
   };
   useEffect(() => {
     getGallery(profile.id);
-  }, [profile]);
+  }, [getGallery, profile]);
   return (
     <GalleryContext.Provider value={{ gallery, getGallery, addAlbum } as GalleryCtx}>
       {children}

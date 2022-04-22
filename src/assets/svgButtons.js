@@ -45,7 +45,7 @@ export const add = (size = 100) => {
     <svg
       className={"icon add"}
       xmlns="http://www.w3.org/2000/svg"
-      enable-background={`new 0 0 24 24`}
+      enableBackground={`new 0 0 24 24`}
       height={`${size}px`}
       viewBox={`0 0 24 24`}
       width={`${size}px`}
@@ -153,7 +153,7 @@ export const centerHorizontal = (
   <svg
     className={"icon center-horizontal"}
     xmlns="http://www.w3.org/2000/svg"
-    enable-background="new 0 0 24 24"
+    enableBackground="new 0 0 24 24"
     height="24px"
     viewBox="0 0 24 24"
     width="24px"
@@ -196,7 +196,7 @@ export const blog = (size = 24) => (
   <svg
     className="icon blog"
     xmlns="http://www.w3.org/2000/svg"
-    enable-background="new 0 0 24 24"
+    enableBackground="new 0 0 24 24"
     height={`${size}px`}
     viewBox="0 0 24 24"
     width={`${size}px`}
@@ -229,7 +229,7 @@ export const album = (size = 24) => (
   <svg
     className="icon album"
     xmlns="http://www.w3.org/2000/svg"
-    enable-background="new 0 0 24 24"
+    enableBackground="new 0 0 24 24"
     height={`${size}px`}
     viewBox="0 0 24 24"
     width={`${size}px`}
