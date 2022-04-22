@@ -1,21 +1,29 @@
-import { useMemo } from "react";
+import { useMemo, useContext } from "react";
+import { useParams } from "react-router-dom";
+import GalleryContext from "contexts/GalleryContext";
 
-interface Props {
-  album?: AlbumObject[] | undefined;
-}
+const Album = () => {
+  const { gallery } = useContext(GalleryContext);
+  const { albumId } = useParams();
 
-interface AlbumObject {
-  src: string;
-  alt: string;
-}
+  const album = useMemo(() => {
+    return gallery.find(album => album.url === albumId);
+  }, [gallery, albumId]);
 
-const Album = ({ album = [] }: Props) => {
-  const renderAlbum = useMemo(() => {
-    return album.map(image => (
-      <img src={image.src} alt={image.alt} key={image.src} />
+  const images = useMemo(() => {
+    if (!album) return null;
+    return album.images.map(image => (
+      <img src={image.url} key={image.id} alt={"TODO"} />
     ));
   }, [album]);
-  return <div className="album">Hi, im an album{renderAlbum}</div>;
+
+  if (!album) return null;
+  return (
+    <div className="album">
+      <h1>{album.title}</h1>
+      {images}
+    </div>
+  );
 };
 
 export default Album;

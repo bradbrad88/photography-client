@@ -9,7 +9,7 @@ const Dashboard = () => {
         <h2>React Photography</h2>
       </div>
       <div className="content">
-        <button onClick={() => nav("/gallery/album/new")} id="new-album">
+        <button onClick={() => nav("/gallery/new")} id="new-album">
           Create New Album
         </button>
         <button onClick={() => nav("/blog/new")} id="new-blog">

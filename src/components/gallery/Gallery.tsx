@@ -1,14 +1,23 @@
-import { Routes, Route } from "react-router-dom";
+import { useContext } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Albums from "./Albums";
-import NewAlbum from "./NewAlbum";
+import NewGallery from "./NewGallery";
 import Album from "./Album";
+import GalleryContext, { Album as AlbumType } from "contexts/GalleryContext";
 
 const Gallery = () => {
+  const { addAlbum } = useContext(GalleryContext);
+  const nav = useNavigate();
+
+  const onNewAlbum = (album: AlbumType) => {
+    addAlbum(album);
+    nav(album.url);
+  };
   return (
     <Routes>
       <Route path="" element={<Albums />} />
       <Route path=":albumId" element={<Album />} />
-      <Route path="album/new" element={<NewAlbum />} />
+      <Route path="/new" element={<NewGallery onNewAlbum={onNewAlbum} />} />
     </Routes>
   );
 };

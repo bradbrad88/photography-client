@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import UserContext from "contexts/UserContext";
+import { GalleryProvider } from "contexts/GalleryContext";
 import Login from "./auth/Login";
 import LocalLogin from "./auth/LocalLogin";
 import Signup from "./auth/Signup";
@@ -23,7 +24,14 @@ const App = () => {
     <Routes>
       <Route path="/" element={<View />}>
         <Route path="/" element={<Dashboard />} />
-        <Route path="gallery/*" element={<Gallery />} />
+        <Route
+          path="gallery/*"
+          element={
+            <GalleryProvider>
+              <Gallery />
+            </GalleryProvider>
+          }
+        />
         <Route path="/blog" element={<div>Blog</div>} />
         <Route path="/blog/new" element={<div>New Blog</div>} />
         <Route path="/profile" element={<Profile />} />

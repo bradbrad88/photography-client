@@ -1,30 +1,17 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Reel from "components/elements/Reel";
 import { album } from "assets/svgButtons";
 import "stylesheets/Gallery.scss";
+import GalleryContext from "contexts/GalleryContext";
 
-const Albums = ({
-  albums = [
-    {
-      title: "Example",
-      images: [
-        {
-          src: "https://images.unsplash.com/photo-1636015348041-cea51783d2ec?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3088&q=80",
-          alt: "example picture",
-        },
-        {
-          src: "https://images.unsplash.com/photo-1459682687441-7761439a709d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2140&q=80",
-          alt: "duck",
-        },
-      ],
-    },
-  ],
-}) => {
+const Albums = () => {
+  const { gallery } = useContext(GalleryContext);
   const nav = useNavigate();
   const renderAlbums = () => {
-    return albums.map(album => (
+    return gallery.map(album => (
       <div
-        onClick={() => nav(`/gallery/${album.title.toLowerCase()}`)}
+        onClick={() => nav(`/gallery/${album.url.toLowerCase()}`)}
         className="album item"
         key={album.title}
       >
@@ -34,7 +21,7 @@ const Albums = ({
     ));
   };
   const newAlbum = () => {
-    nav("/gallery/album/new");
+    nav("/gallery/new");
   };
   return (
     <div className="albums">
