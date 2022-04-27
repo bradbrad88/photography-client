@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import "stylesheets/Main.scss";
 const Container = ({ children, classNames = [] }) => {
   const classes = () => {
     let arr;
