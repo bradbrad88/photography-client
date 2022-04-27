@@ -9,7 +9,7 @@ const UserProvider = ({ children }) => {
   const [profile, setProfileState] = useState({});
   const { loginOauth, getSessionProfile } = useAuth();
 
-  const checkLoginStatus = useCallback(async () => {
+  const checkActiveSession = useCallback(async () => {
     const { user, error } = await getSessionProfile();
     if (error) {
       console.error(error);
@@ -20,8 +20,8 @@ const UserProvider = ({ children }) => {
   }, [getSessionProfile]);
 
   useEffect(() => {
-    checkLoginStatus();
-  }, [checkLoginStatus]);
+    checkActiveSession();
+  }, [checkActiveSession]);
 
   const setProfile = data => {
     if (typeof data !== "object") return setProfileState({});
@@ -69,7 +69,9 @@ const UserProvider = ({ children }) => {
   };
 
   return (
-    <Context.Provider value={{ setProfile, profile, logout, login, isLoggedIn }}>
+    <Context.Provider
+      value={{ setProfile, profile, logout, login, isLoggedIn, checkActiveSession }}
+    >
       {children}
     </Context.Provider>
   );
