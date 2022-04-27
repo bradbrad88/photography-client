@@ -7,6 +7,21 @@ body {
   font-family: "Antonio", sans-serif;
 }
 
+p {
+  margin-bottom: 1rem;
+}
+
+input {
+  font: inherit;
+  width: 14rem;
+  height: 2rem;
+  font-size: 1.4rem;
+  background: none;
+  border: none;
+  border-bottom: solid 2px rgba(0, 0, 0, 0.133);
+  outline: none;
+}
+
 button {
   display: grid;
   grid-auto-flow: column;
@@ -29,6 +44,16 @@ button {
       fill: white;
     }
   }
+  &.back {
+    display: grid;
+    width: 3rem;
+    color: rgb(255, 255, 255);
+    border-radius: 50%;
+    justify-content: center;
+    .icon {
+      fill: white;
+    }
+  }
 }
 
 .view {
@@ -48,45 +73,9 @@ button {
   }
 }
 
-// body {
-//   margin: 0;
-//   margin-top: 120px;
-// }
-
-// .background-box {
-//   position: fixed;
-//   left: 0;
-//   right: 0;
-//   top: 0;
-//   bottom: 0;
-//   background-color: rgba(255, 255, 255, 0.973);
-// }
-
-// .confirmation-box {
-//   position: fixed;
-//   left: 50%;
-//   height: 50%;
-//   transform: translateX(-50%);
-//   width: 400px;
-//   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
-//   background-color: rgba(255, 255, 255, 0.925);
-// }
-
-// .confirmation-box > button {
-//   height: 30px;
-//   margin-top: auto;
-//   margin-bottom: 10px;
-
-//   justify-content: space-between;
-// }
-
-// body.noscroll {
-//   overflow: hidden;
-// }
-
-// .loading-spinner {
-//   position: absolute;
-//   left: 50%;
-//   top: 50%;
-//   transform: translate(-50%, -50%);
-// }
+.container {
+  position: relative;
+  border: solid 1px rgba(0, 0, 0, 0.062);
+  border-radius: 1rem;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}

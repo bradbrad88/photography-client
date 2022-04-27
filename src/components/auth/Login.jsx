@@ -13,7 +13,7 @@ const Login = () => {
   };
 
   return (
-    <>
+    <div className="login-options">
       <h2>Login Options</h2>
       <Link to={"/signup"}>
         <p>New Account</p>
@@ -31,7 +31,7 @@ const Login = () => {
       />
       <Google />
       <Facebook />
-    </>
+    </div>
   );
 };
 

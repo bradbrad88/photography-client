@@ -1,24 +1,35 @@
 import { useContext, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useSearchParams } from "react-router-dom";
 import UserContext from "contexts/UserContext";
 import { GalleryProvider } from "contexts/GalleryContext";
-import Login from "./auth/Login";
-import LocalLogin from "./auth/LocalLogin";
-import Signup from "./auth/Signup";
-import Container from "./elements/Container";
-import Verify from "./auth/Verify";
 import View from "./View";
-import "stylesheets/Main.scss";
 import Dashboard from "./dashboard/Dashboard";
+import Login from "./auth/Login";
+import MagicLogin from "./auth/MagicLogin";
+import Signup from "./auth/Signup";
+import Verify from "./auth/Verify";
 import Gallery from "./gallery/Gallery";
 import Profile from "./profile/Profile";
+import Container from "./elements/Container";
+import "stylesheets/Main.scss";
 
 const App = () => {
-  const { isLoggedIn, profile } = useContext(UserContext);
+  const { isLoggedIn, profile, checkActiveSession } = useContext(UserContext);
   const nav = useNavigate();
+  const [query] = useSearchParams();
+  const token = query.get("token");
   useEffect(() => {
     if (isLoggedIn() && !profile.verified) nav("/verify");
   }, [nav, isLoggedIn, profile.verified]);
+  useEffect(() => {
+    if (token)
+      (async () => {
+        await fetch(process.env.REACT_APP_SERVER_API + "/auth/magic?token=" + token, {
+          credentials: "include",
+        });
+        checkActiveSession();
+      })();
+  }, [token, checkActiveSession]);
 
   const loggedIn = (
     <Routes>
@@ -42,11 +53,11 @@ const App = () => {
 
   const notLoggedIn = (
     <>
-      <h1>React Photography</h1>
+      <h1>React Photography {process.env.REACT_APP_SERVER_API}</h1>
       <Routes>
-        <Route path="/" element={<Container classNames={"login-options"} />}>
+        <Route path="/" element={<Container classNames={"main-auth"} />}>
           <Route path="/" element={<Login />} />
-          <Route path="/login" element={<LocalLogin />} />
+          <Route path="/login" element={<MagicLogin />} />
           <Route path="/signup" element={<Signup />}></Route>
         </Route>
       </Routes>
