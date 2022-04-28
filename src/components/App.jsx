@@ -47,7 +47,6 @@ const App = () => {
         <Route path="/blog/new" element={<div>New Blog</div>} />
         <Route path="/profile" element={<Profile />} />
       </Route>
-      <Route path={"/verify"} element={<Verify />} />
     </Routes>
   );
 
@@ -59,6 +58,7 @@ const App = () => {
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<MagicLogin />} />
           <Route path="/signup" element={<Signup />}></Route>
+          <Route path={"/verify"} element={<Verify />} />
         </Route>
       </Routes>
     </>
