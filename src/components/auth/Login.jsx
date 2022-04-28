@@ -18,10 +18,6 @@ const Login = () => {
       <Link to={"/signup"}>
         <p>New Account</p>
       </Link>
-      {/* <button onClick={onLogin} className="auth local">
-        {menu(20)}
-        Login with Email
-      </button> */}
       <Button
         onClick={onLogin}
         className="auth local"
