@@ -6,7 +6,6 @@ import View from "./View";
 import Dashboard from "./dashboard/Dashboard";
 import Login from "./auth/Login";
 import MagicLogin from "./auth/MagicLogin";
-import Signup from "./auth/Signup";
 import Verify from "./auth/Verify";
 import Gallery from "./gallery/Gallery";
 import Profile from "./profile/Profile";
@@ -57,7 +56,6 @@ const App = () => {
         <Route path="/" element={<Container classNames={"main-auth"} />}>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<MagicLogin />} />
-          <Route path="/signup" element={<Signup />}></Route>
           <Route path={"/verify"} element={<Verify />} />
         </Route>
       </Routes>
