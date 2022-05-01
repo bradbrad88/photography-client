@@ -1,20 +1,40 @@
+@import "variables.scss";
+
 .main-auth {
+  display: flex;
+  align-content: center;
+  justify-content: center;
   position: relative;
-  width: 60%;
+  box-sizing: border-box;
+  width: min(95vw, 800px);
+  // max-width: min(800px, 95vw);
   height: 40rem;
-  min-width: 500px;
-  padding: 3rem 3rem;
-  margin-top: 200px;
-  margin-bottom: 200px;
+  max-height: 150vw;
+  padding: clamp(1rem, 3vw, 3rem);
+  margin-top: 50px;
+  margin-bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
+  button.back {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .frame {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 // As opposed to auth containers that may pop-up when trying to post a comment while not logged in
 
 .login-options {
   display: grid;
-  grid-template-rows: 6rem repeat(4, 4rem);
+  grid-template-rows: 4rem 2rem 2rem repeat(3, 4rem);
   align-items: center;
   justify-items: center;
 }
@@ -32,25 +52,26 @@
   form {
     display: flex;
     flex-direction: column;
-    Button {
-      // position: relative;
-      margin-top: 1rem;
+    gap: clamp(1rem, 5vw, 3rem);
+    p,
+    h2 {
+      margin: 0;
+    }
+    button {
       align-self: center;
     }
   }
-  Button.back {
-    position: absolute;
-  }
   .email-sent {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 5vw, 3rem);
+    p,
+    h2 {
+      margin: 0;
+    }
     .email {
       color: rgb(32, 91, 255);
     }
-  }
-  .resend {
-    font-size: 0.8em;
-    color: rgb(32, 91, 255);
-    text-decoration: underline;
-    cursor: pointer;
   }
 }
 
@@ -59,6 +80,53 @@
   font-size: 2em;
   color: rgba(0, 0, 0, 0.534);
   cursor: default;
+}
+
+.verify {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  width: 100%;
+  p {
+    margin: 0;
+  }
+  .input {
+    width: 100%;
+    position: relative;
+    display: grid;
+    grid-template-columns: min-content 1fr min-content;
+    // overflow: hidden;
+
+    label {
+      width: 100%;
+
+      white-space: nowrap;
+    }
+    input {
+      font-size: clamp(1rem, 2vw, 1.8rem);
+      color: $primary-colour;
+      text-align: center;
+      letter-spacing: 1rem;
+      width: 100%;
+    }
+  }
+  .err-msg {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 0.3rem;
+    width: fit-content;
+  }
+  // height: 100%;
+}
+
+.new-code {
+  display: inline-block;
+  width: 7rem;
+  text-align: center;
 }
 
 button {
@@ -74,4 +142,23 @@ button {
   &.facebook {
     background-color: #5b7bd5;
   }
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  label {
+    font-weight: bold;
+  }
+  input {
+    width: 100%;
+  }
+}
+
+.err-msg {
+  position: absolute;
+  top: calc(100% + 1rem);
+  text-align: center;
+  width: 100%;
 }
