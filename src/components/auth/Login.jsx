@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Google from "./Google";
 import Facebook from "./Facebook";
 import Button from "components/elements/Button";
@@ -13,20 +13,21 @@ const Login = () => {
   };
 
   return (
-    <div className="login-options">
-      <h2>Login Options</h2>
-      <Link to={"/signup"}>
-        <p>New Account</p>
-      </Link>
-      <Button
-        onClick={onLogin}
-        className="auth local"
-        icon={email}
-        iconSize={30}
-        text={"Login with Email"}
-      />
-      <Google />
-      <Facebook />
+    <div className="frame">
+      <div className="login-options">
+        <h2>Login Options</h2>
+        <p>New Or Returning User?</p>
+        <p>Use the links below either way</p>
+        <Button
+          onClick={onLogin}
+          className="auth local"
+          icon={email}
+          iconSize={30}
+          text={"Sign in with Email"}
+        />
+        <Google />
+        <Facebook />
+      </div>
     </div>
   );
 };
