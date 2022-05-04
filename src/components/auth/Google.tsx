@@ -1,21 +1,33 @@
 import { useEffect, useRef, useCallback } from "react";
+import jwt from "jsonwebtoken";
+import { useNavigate } from "react-router-dom";
 import userContext from "contexts/UserContext";
 
 const ELEMENT_ID = "google-gsi";
 const ELEMENT_SRC = "https://accounts.google.com/gsi/client";
+const PROVIDER = "https://accounts.google.com";
 
 const useGoogle = () => {
+  const nav = useNavigate();
   const { login } = userContext();
-  const scriptRef = useRef(null);
+  const scriptRef = useRef<HTMLScriptElement>();
   const callback = useCallback(
-    res => {
+    async (res: any) => {
       const options = {
         provider: "https://accounts.google.com",
         lookup: res.credential,
       };
-      login(options);
+      const { verify } = await login(options);
+      if (verify) {
+        const params = new URLSearchParams();
+        const id: any = jwt.decode(res.credential);
+        if (typeof id !== "object") return;
+        params.append("provider", PROVIDER);
+        params.append("providerUserId", id.sub);
+        nav("/verify?" + params.toString());
+      }
     },
-    [login]
+    [login, nav]
   );
 
   useEffect(() => {
@@ -29,9 +41,12 @@ const useGoogle = () => {
         callback: callback,
       });
       const googleElement = document.getElementById("google-sign-in");
+      if (!googleElement) return;
       window.google.accounts.id.renderButton(googleElement, {
         theme: "outline",
         size: "large",
+        width: 208,
+        logo_alignment: "left",
       });
     };
     document.body.appendChild(script);
