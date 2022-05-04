@@ -13,6 +13,8 @@
 
 # misc
 /.vscode
+localhost.crt
+localhost.key
 .DS_Store
 .env
 .env.local
