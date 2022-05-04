@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import UserContext from "contexts/UserContext";
+import userContext from "contexts/UserContext";
 import Button from "components/elements/Button";
 
 const PROVIDER = "https://graph.facebook.com";
@@ -15,7 +15,7 @@ declare global {
 
 const Facebook = () => {
   const nav = useNavigate();
-  const { login } = useContext(UserContext);
+  const { login } = userContext();
   const [sdkLoaded, setSdkLoaded] = useState(false);
   const [continueAs, setContinueAs] = useState("");
   const mounted = useRef(false);
@@ -42,7 +42,7 @@ const Facebook = () => {
     return () => {
       mounted.current = false;
     };
-  }, [loadSdk]);
+  }, [loadSdk, sdkLoaded]);
 
   useEffect(() => {
     if (sdkLoaded) {

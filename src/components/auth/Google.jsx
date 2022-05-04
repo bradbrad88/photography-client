@@ -1,11 +1,11 @@
-import { useEffect, useContext, useRef, useCallback } from "react";
-import UserContext from "contexts/UserContext";
+import { useEffect, useRef, useCallback } from "react";
+import userContext from "contexts/UserContext";
 
 const ELEMENT_ID = "google-gsi";
 const ELEMENT_SRC = "https://accounts.google.com/gsi/client";
 
 const useGoogle = () => {
-  const { login } = useContext(UserContext);
+  const { login } = userContext();
   const scriptRef = useRef(null);
   const callback = useCallback(
     res => {

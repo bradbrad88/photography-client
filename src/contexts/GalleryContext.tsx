@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
-import UserContext from "contexts/UserContext";
+import { useState, useEffect, useCallback } from "react";
+import userContext from "contexts/UserContext";
+import { createCtx } from "./utils";
 
 interface Image {
-  id: number;
+  id: string;
   url: string;
   aspectRatio: number;
 }
 
 export interface Album {
-  id: number;
+  id: string;
   title: string;
   url: string;
   images: Image[];
@@ -22,17 +23,17 @@ type GalleryCtx = {
   [x: string | number | symbol]: unknown;
 };
 
-const GalleryContext = React.createContext({} as GalleryCtx);
+// const GalleryContext = React.createContext({} as GalleryCtx);
+const [useCtx, Provider] = createCtx<GalleryCtx>();
 
 export const GalleryProvider = ({ children }: any) => {
-  const { profile } = useContext(UserContext);
+  const { profile } = userContext();
   const [gallery, setGallery] = useState<Gallery>([]);
 
-  const getGallery = useCallback(async (profileId: number) => {
+  const getGallery = useCallback(async (profileId: string | undefined) => {
+    if (profileId === undefined) return;
     try {
-      const res = await fetch(
-        process.env.REACT_APP_SERVER_API + `/gallery/${profileId}`
-      );
+      const res = await fetch(process.env.REACT_APP_SERVER_API + `/gallery/${profileId}`);
       const data = await res.json();
       setGallery!(data);
     } catch (error) {
@@ -44,13 +45,11 @@ export const GalleryProvider = ({ children }: any) => {
     setGallery(prevState => [...prevState, album]);
   };
   useEffect(() => {
-    getGallery(profile.id);
+    getGallery(profile?.id);
   }, [getGallery, profile]);
   return (
-    <GalleryContext.Provider value={{ gallery, getGallery, addAlbum } as GalleryCtx}>
-      {children}
-    </GalleryContext.Provider>
+    <Provider value={{ gallery, getGallery, addAlbum } as GalleryCtx}>{children}</Provider>
   );
 };
 
-export default GalleryContext;
+export default useCtx;

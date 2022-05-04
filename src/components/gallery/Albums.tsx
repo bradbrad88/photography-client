@@ -1,12 +1,11 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import galleryContext from "contexts/GalleryContext";
 import Reel from "components/elements/Reel";
 import { album } from "assets/svgButtons";
 import "stylesheets/Gallery.scss";
-import GalleryContext from "contexts/GalleryContext";
 
 const Albums = () => {
-  const { gallery } = useContext(GalleryContext);
+  const { gallery } = galleryContext();
   const nav = useNavigate();
   const renderAlbums = () => {
     return gallery.map(album => (
@@ -16,7 +15,7 @@ const Albums = () => {
         key={album.title}
       >
         <h3>{album.title}</h3>
-        <Reel images={album.images} width={500} imageWidth={250} height={130} />
+        <Reel className={""} images={album.images} width={500} imageWidth={250} height={130} />
       </div>
     ));
   };

@@ -1,10 +1,9 @@
-import { useContext } from "react";
-import UserContext from "contexts/UserContext";
+import userContext from "contexts/UserContext";
 import Button from "components/elements/Button";
 import "stylesheets/System.scss";
 
 const Logout = () => {
-  const { logout } = useContext(UserContext);
+  const { logout } = userContext();
   const onClick = () => {
     logout();
   };

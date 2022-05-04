@@ -1,6 +1,6 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { Routes, Route, useNavigate, useSearchParams } from "react-router-dom";
-import UserContext from "contexts/UserContext";
+import userContext from "contexts/UserContext";
 import { GalleryProvider } from "contexts/GalleryContext";
 import View from "./View";
 import Dashboard from "./dashboard/Dashboard";
@@ -13,24 +13,26 @@ import Container from "./elements/Container";
 import "stylesheets/Main.scss";
 
 const App = () => {
-  const { isLoggedIn, profile, checkActiveSession } = useContext(UserContext);
+  const { isLoggedIn, profile, checkActiveSession } = userContext();
   const nav = useNavigate();
   const [query] = useSearchParams();
   const token = query.get("token");
   useEffect(() => {
     if (isLoggedIn() && !profile.verified) nav("/verify");
-  }, [nav, isLoggedIn, profile.verified]);
+  }, [nav, isLoggedIn, profile?.verified]);
   useEffect(() => {
     if (token)
       (async () => {
-        await fetch(process.env.REACT_APP_SERVER_API + "/auth/magic?token=" + token, {
-          credentials: "include",
-        });
-        checkActiveSession();
+        try {
+          await fetch(process.env.REACT_APP_SERVER_API + "/auth/magic?token=" + token, {
+            credentials: "include",
+          });
+          checkActiveSession();
+        } catch (error) {}
       })();
   }, [token, checkActiveSession]);
 
-  const loggedIn = (
+  const loggedIn = () => (
     <Routes>
       <Route path="/" element={<View />}>
         <Route path="/" element={<Dashboard />} />
@@ -49,7 +51,7 @@ const App = () => {
     </Routes>
   );
 
-  const notLoggedIn = (
+  const notLoggedIn = () => (
     <>
       <h1>React Photography {process.env.REACT_APP_SERVER_API}</h1>
       <Routes>
@@ -61,7 +63,7 @@ const App = () => {
       </Routes>
     </>
   );
-  return isLoggedIn() ? loggedIn : notLoggedIn;
+  return isLoggedIn() ? loggedIn() : notLoggedIn();
 };
 
 export default App;
