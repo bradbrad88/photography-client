@@ -1823,6 +1823,11 @@
   "resolved" "https://registry.npmjs.org/@types/estree/-/estree-0.0.39.tgz"
   "version" "0.0.39"
 
+"@types/facebook-js-sdk@^3.3.5":
+  "integrity" "sha512-80UAq9UoDzDDpsRXxV2ci1R+g/durNJTEzqh3ES4YkswW5T2lWAUuAghUWruw/H849ZhugyQqeaLHKF0iapReg=="
+  "resolved" "https://registry.npmjs.org/@types/facebook-js-sdk/-/facebook-js-sdk-3.3.5.tgz"
+  "version" "3.3.5"
+
 "@types/glob@^7.1.1":
   "integrity" "sha512-w+LsMxKyYQm347Otw+IfBXOv9UWVjpHpCDdbBMt8Kz/xbvCYNjP+0qPh91Km3iKfSRLBB0P7fAMf0KHrPu+MyA=="
   "resolved" "https://registry.npmjs.org/@types/glob/-/glob-7.1.4.tgz"
