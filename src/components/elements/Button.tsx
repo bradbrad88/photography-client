@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Grid, Ripple } from "react-spinners-css";
+import { Ripple } from "react-spinners-css";
 import { back as backIcon } from "assets/svgButtons";
 
 interface Props {
