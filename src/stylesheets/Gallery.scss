@@ -32,3 +32,23 @@
   }
   padding: 1rem;
 }
+
+.album-view {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 250px;
+  .display {
+  }
+
+  .image-bank {
+    width: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    // border: solid 2px rgba(0, 0, 0, 0.114);
+    .ui {
+    }
+    .tools {
+    }
+  }
+}

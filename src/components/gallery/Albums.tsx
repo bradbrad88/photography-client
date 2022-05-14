@@ -1,27 +1,45 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import galleryContext from "contexts/GalleryContext";
-import Reel from "components/elements/Reel";
+import { Ouroboro } from "react-spinners-css";
+import { AxiosRequestConfig } from "axios";
+import useFetch from "hooks/useFetch";
+import { AlbumType } from "./Album";
 import { album } from "assets/svgButtons";
 import "stylesheets/Gallery.scss";
 
 const Albums = () => {
-  const { gallery } = galleryContext();
+  const [albums, setAlbums] = useState<AlbumType[] | null>(null);
   const nav = useNavigate();
+  const { fetchJSON, working } = useFetch();
+
+  useEffect(() => {
+    const loadState = async () => {
+      const req: AxiosRequestConfig = { url: "/gallery/albums", withCredentials: true };
+      const fetchedAlbums = await fetchJSON<AlbumType[]>(req);
+      setAlbums(fetchedAlbums);
+    };
+    loadState();
+  }, []);
+
+  const navToAlbum = (url: string) => {
+    const urlLower = url.toLowerCase();
+    nav(`/gallery/${urlLower}`);
+  };
+
   const renderAlbums = () => {
-    return gallery.map(album => (
-      <div
-        onClick={() => nav(`/gallery/${album.url.toLowerCase()}`)}
-        className="album item"
-        key={album.title}
-      >
+    if (!albums) return null;
+    return albums.map(album => (
+      <div onClick={() => navToAlbum(album.url)} className="album item" key={album.title}>
         <h3>{album.title}</h3>
-        <Reel className={""} images={album.images} width={500} imageWidth={250} height={130} />
+        {/* <Reel className={""} images={album.images} width={500} imageWidth={250} height={130} /> */}
       </div>
     ));
   };
+
   const newAlbum = () => {
     nav("/gallery/new");
   };
+
   return (
     <div className="albums">
       <h2>Your Albums</h2>
@@ -30,7 +48,7 @@ const Albums = () => {
           <h3>Create New Album</h3>
           <span>{album(150)}</span>
         </div>
-        {renderAlbums()}
+        {working ? <Ouroboro size={50} color={"black"} /> : renderAlbums()}
       </div>
     </div>
   );

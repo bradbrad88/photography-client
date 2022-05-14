@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Routes, Route, useNavigate, useSearchParams } from "react-router-dom";
 import userContext from "contexts/UserContext";
-import { GalleryProvider } from "contexts/GalleryContext";
 import View from "./View";
 import Dashboard from "./dashboard/Dashboard";
 import Login from "./auth/Login";
@@ -36,14 +35,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<View />}>
         <Route path="/" element={<Dashboard />} />
-        <Route
-          path="gallery/*"
-          element={
-            <GalleryProvider>
-              <Gallery />
-            </GalleryProvider>
-          }
-        />
+        <Route path="gallery/*" element={<Gallery />} />
         <Route path="/blog" element={<div>Blog</div>} />
         <Route path="/blog/new" element={<div>New Blog</div>} />
         <Route path="/profile" element={<Profile />} />

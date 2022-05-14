@@ -2,7 +2,8 @@ import { useState } from "react";
 import { add } from "assets/svgButtons";
 import Button from "components/elements/Button";
 import { Album as AlbumType } from "contexts/GalleryContext";
-import useFetch from "utils/fetchData";
+import useFetch from "hooks/useFetch";
+import { AxiosRequestConfig } from "axios";
 
 interface Props {
   onNewAlbum: (album: AlbumType) => void;
@@ -16,12 +17,12 @@ const NewAlbum = ({ onNewAlbum }: Props) => {
   const submit = async () => {
     if (failTest()) return;
     const url = process.env.REACT_APP_SERVER_API + "/gallery/new";
-    const req = new Request(url, {
-      body: JSON.stringify({ title: albumName }),
+    const req: AxiosRequestConfig = {
+      url,
+      data: { title: albumName },
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
+      withCredentials: true,
+    };
     const album = await fetchJSON<AlbumType>(req);
     if (!album) return;
     onNewAlbum(album);
