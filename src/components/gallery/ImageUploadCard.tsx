@@ -1,3 +1,5 @@
+import useSubscribe, { CompleteEvent, ProgressEvent } from "hooks/useSubscribe";
+import { useState, useEffect, useCallback } from "react";
 import { Image } from "./Album";
 import "./stylesheets/ImageCards.scss";
 
@@ -5,82 +7,69 @@ interface PropTypes {
   image: Image;
 }
 
+interface UpdateData {
+  step: string;
+  progress: number;
+}
+
+// type Steps = "loading" | "thumbnail" | "highres";
+
 const ImageUploadCard = ({ image }: PropTypes) => {
+  const { subscribeImage, initProgress } = useSubscribe();
+  const [progress, setProgress] = useState<UpdateData[]>([
+    // { step: "hello", progress: 50 },
+    // { step: "sir", progress: 100 },
+  ]);
+
+  const onProgress = useCallback((data: ProgressEvent) => {
+    setProgress(prevState => {
+      const prog = prevState.findIndex(prog => prog.step === data.step);
+      if (prog !== -1) {
+        prevState[prog].progress = data.progress;
+        return [...prevState];
+      }
+      return [...prevState, { step: data.step, progress: data.progress }];
+    });
+  }, []);
+
+  const onComplete = useCallback((data: CompleteEvent) => {}, []);
+
+  const initSubscribe = useCallback(() => {
+    subscribeImage(image.imageId, onProgress, onComplete);
+    if (initProgress && progress.length < 1) setProgress(initProgress);
+  }, [image.imageId, initProgress, onProgress, onComplete, subscribeImage, progress.length]);
+
+  useEffect(() => {
+    console.log("Concerned about this USE EFFECT");
+    initSubscribe();
+  }, [initSubscribe]);
+
+  const renderProgress = () => {
+    if (!progress) return null;
+
+    return (
+      <div className="progress-overlay">
+        {progress.map(step => (
+          <div
+            className={`progress-container ${step.progress === 100 ? "complete" : ""}`}
+            key={step.step}
+          >
+            <div className="progress" style={{ width: `${100 - step.progress}%` }}></div>
+            <div className={`step ${step.progress === 100 ? "complete" : ""}`}>
+              {step.step}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="image-bank-card">
       <img src={image.urls.thumbnail} />
+      {renderProgress()}
     </div>
   );
 };
 
 export default ImageUploadCard;
-
-// import React, { useContext, useEffect } from "react";
-// import GalleryEditContext from "contexts/GalleryEditContext";
-// import "stylesheets/GalleryEdit.css";
-
-// const ImageUploadCard = ({ image }) => {
-//   const editContext = useContext(GalleryEditContext);
-
-//   const renderStatus = () => {
-//     return image.status?.map((status, index) => {
-//       return (
-//         <div
-//           key={status.step}
-//           className={`status-item ${
-//             status.inProgress && !status.error ? "in-progress" : ""
-//           } ${status.complete ? "complete" : ""} ${status.error ? "error" : ""}`}
-//         >
-//           {`${index + 1}: ${status.step}${
-//             status.progress > 0 ? ` ${status.progress.toFixed(0)}%` : ""
-//           }`}
-//         </div>
-//       );
-//     });
-//   };
-
-//   const onClick = () => {
-//     editContext.toggleSelectedBank(image.image_id);
-//   };
-
-//   const onDragStart = e => {
-//     e.dataTransfer.setData("text/plain", "");
-//     e.dataTransfer.setData("image-id", image.image_id);
-//     editContext.deselectAllBank();
-//     editContext.setDragging(true);
-//     // editContext.toggleSelectedBank(image.image_id, true);
-//   };
-
-//   const onDragEnd = e => {
-//     editContext.setDragging(false);
-//   };
-
-//   const getOpacity = () => {
-//     if (image.complete) return 1;
-//     if (image.uploadProgress !== undefined) return image.uploadProgress;
-//     return 1;
-//   };
-
-//   return (
-//     <div
-//       key={image.image_id}
-//       className={`upload-item ${image.complete ? "complete" : ""} ${
-//         image.selected ? "selected" : ""
-//       } ${image.error ? "error" : ""}`}
-//       style={{
-//         backgroundImage: `url(${image.thumbnail})`,
-//         // opacity: getOpacity(),
-//       }}
-//       draggable
-//       onClick={onClick}
-//       onDragStart={onDragStart}
-//       onDragEnd={onDragEnd}
-//     >
-//       <div className={`status ${image.complete ? "complete" : ""}`}>
-//         {renderStatus()}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ImageUploadCard;
