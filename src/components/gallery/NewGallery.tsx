@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { add } from "assets/svgButtons";
-import Button from "components/elements/Button";
-import { Album as AlbumType } from "contexts/GalleryContext";
-import useFetch from "hooks/useFetch";
 import { AxiosRequestConfig } from "axios";
+import useFetch from "hooks/useFetch";
+import Button from "components/elements/Button";
+import { AlbumType } from "./Album";
+import { add } from "assets/svgButtons";
 
 interface Props {
   onNewAlbum: (album: AlbumType) => void;
