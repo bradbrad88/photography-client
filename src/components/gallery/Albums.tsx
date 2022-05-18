@@ -19,7 +19,7 @@ const Albums = () => {
       setAlbums(fetchedAlbums);
     };
     loadState();
-  }, []);
+  }, [fetchJSON]);
 
   const navToAlbum = (url: string) => {
     const urlLower = url.toLowerCase();
