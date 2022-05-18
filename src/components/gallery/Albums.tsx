@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Ouroboro } from "react-spinners-css";
 import { AxiosRequestConfig } from "axios";
 import useFetch from "hooks/useFetch";
+import Reel from "components/elements/Reel";
 import { AlbumType } from "./Album";
 import { album } from "assets/svgButtons";
 import "stylesheets/Gallery.scss";
@@ -31,7 +32,15 @@ const Albums = () => {
     return albums.map(album => (
       <div onClick={() => navToAlbum(album.url)} className="album item" key={album.title}>
         <h3>{album.title}</h3>
-        {/* <Reel className={""} images={album.images} width={500} imageWidth={250} height={130} /> */}
+        {album.thumbnails && album.thumbnails.length > 0 ? (
+          <div className="album-content">
+            <Reel images={album.thumbnails} />
+          </div>
+        ) : (
+          <div className="album-content">
+            <h3>Add some images</h3>
+          </div>
+        )}
       </div>
     ));
   };

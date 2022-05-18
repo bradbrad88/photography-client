@@ -3,6 +3,7 @@
   display: flex;
   width: 800px;
   flex-direction: column;
+  margin-bottom: 3rem;
   h2 {
     font-size: 2rem;
     margin-top: 2rem;
@@ -11,7 +12,10 @@
 }
 
 .album.grid {
+  box-sizing: border-box;
+  width: 100%;
   display: grid;
+  grid-template-columns: 100%;
   gap: 2rem;
 }
 
@@ -31,15 +35,19 @@
     }
   }
   padding: 1rem;
+  .album-content {
+    h3 {
+      margin: 2rem;
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+  }
 }
 
 .album-view {
   height: 100%;
   display: grid;
   grid-template-rows: 1fr 250px;
-  .display {
-  }
-
   .image-bank {
     width: 100%;
     box-sizing: border-box;

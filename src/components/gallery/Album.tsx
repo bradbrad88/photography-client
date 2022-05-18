@@ -26,6 +26,7 @@ export interface AlbumType {
   title: string;
   url: string;
   images: Image[];
+  thumbnails?: string[];
 }
 
 interface FileWithId {
@@ -66,7 +67,7 @@ const Album = () => {
           }
           return { ...prevState };
         });
-      }, 1000);
+      }, 500);
     });
 
     onProgress(data => {
@@ -76,10 +77,12 @@ const Album = () => {
     });
   }, [onComplete, onProgress]);
 
+  // Seperate useEffect to ensure connection will only close on component unmounting
   useEffect(() => {
     return () => closeConnection();
   }, [closeConnection]);
 
+  // Performance related - image lookup object for quick handling of messages with unknown id (eg: currently uploading on a different device)
   useEffect(() => {
     imageIdRef.current = album?.images.reduce((p: any, img) => {
       p[img.imageId] = true;
