@@ -5,6 +5,7 @@
 
 body {
   font-family: "Antonio", sans-serif;
+  font-weight: 300;
 }
 
 p {
@@ -37,6 +38,7 @@ button {
   height: 3rem;
   font-size: 1.5rem;
   font-family: inherit;
+  font-weight: inherit;
   color: white;
   border: none;
   border-radius: 0.5rem;
@@ -45,6 +47,10 @@ button {
   overflow: hidden;
   transition: all 200ms;
   cursor: pointer;
+  span {
+    height: fit-content;
+    padding-bottom: 3px;
+  }
   &.button-image {
     grid-template-columns: min-content 1fr;
     svg {

@@ -8,7 +8,6 @@
   &.active {
     width: $toolbar-width;
     p {
-      // transition: opacity 500ms;
       opacity: 1;
     }
   }
@@ -27,26 +26,27 @@
   height: 100%;
   right: 0;
   transition: all 0.5s;
-  cursor: pointer;
-  // &.active {
-  //   // color: red;
-  //   width: $toolbar-width;
-  //   grid-template-columns: 1fr $toolbar-width-collapsed;
-  // }
+  .navitem {
+    cursor: pointer;
+  }
   .menu {
     grid-column: 2;
     display: block;
     justify-self: center;
     align-self: center;
+    cursor: pointer;
     .icon {
       fill: white;
     }
   }
   p {
-    transition: opacity 500ms ease-out 300ms;
+    transition: opacity 500ms ease-out 250ms, color 300ms;
     opacity: 0;
     align-self: center;
     margin-left: 1rem;
+  }
+  p:hover {
+    color: rgb(255, 235, 87);
   }
   .icon {
     justify-self: center;
