@@ -16,8 +16,8 @@ const ImageBank = ({ album, addImages }: PropTypes) => {
     if (!album) return null;
     return album.images.map(image => {
       return image.uploadedAt ? (
-        <div className="image-bank-card">
-          <img src={image.urls.thumbnail} alt="" />
+        <div className="image-bank-card" key={image.imageId}>
+          <img src={image.urls?.thumbnail} alt="" />
         </div>
       ) : (
         <ImageUploadCard image={image} key={image.imageId} />
@@ -33,7 +33,6 @@ const ImageBank = ({ album, addImages }: PropTypes) => {
   const onAddFileInput = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (!fileRef.current || !fileRef.current.files) return;
-    console.log(album.id);
     addImages([...fileRef.current.files], album.id);
   };
 

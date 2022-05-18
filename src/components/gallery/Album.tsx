@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { v4 as uuidV4 } from "uuid";
 import { Ouroboro } from "react-spinners-css";
+import subscribeContext from "contexts/UploadSubscribeContext";
 import useFetch from "hooks/useFetch";
 import ImageBank from "./ImageBank";
 import Button from "components/elements/Button";
@@ -9,14 +10,14 @@ import { AxiosRequestConfig } from "axios";
 
 export interface Image {
   imageId: string;
-  urls: Urls;
+  urls?: Urls;
   aspectRatio?: number;
   uploadedBy?: string;
   uploadedAt?: Date;
 }
 
 export interface Urls {
-  thumbnail: string;
+  thumbnail?: string;
   highres?: string;
 }
 
@@ -33,10 +34,12 @@ interface FileWithId {
 }
 
 const Album = () => {
+  const { closeConnection, onProgress, onComplete } = subscribeContext();
   const [album, setAlbum] = useState<AlbumType | null>(null);
   const { albumUrl } = useParams();
   const { fetchJSON, deleteData, postImage, working } = useFetch();
   const nav = useNavigate();
+  const imageIdRef = useRef<any>({});
 
   useEffect(() => {
     const fetchAlbum = async () => {
@@ -50,12 +53,39 @@ const Album = () => {
     fetchAlbum();
   }, [albumUrl, fetchJSON]);
 
-  // const images = useMemo(() => {
-  //   if (!album) return null;
-  //   return album.images.map(image => (
-  //     <img src={image.urls.thumbnail} key={image.imageId} alt={"TODO"} />
-  //   ));
-  // }, [album]);
+  useEffect(() => {
+    onComplete(data => {
+      setTimeout(() => {
+        setAlbum(prevState => {
+          if (!prevState) return null;
+          const editImage = prevState.images.findIndex(img => img.imageId === data.imageId);
+          if (editImage !== -1) {
+            prevState.images.splice(editImage, 1, { ...data });
+          } else {
+            prevState.images.unshift({ ...data });
+          }
+          return { ...prevState };
+        });
+      }, 1000);
+    });
+
+    onProgress(data => {
+      if (!imageIdRef.current[data.imageId]) {
+        setImagesState([data]);
+      }
+    });
+  }, [onComplete, onProgress]);
+
+  useEffect(() => {
+    return () => closeConnection();
+  }, [closeConnection]);
+
+  useEffect(() => {
+    imageIdRef.current = album?.images.reduce((p: any, img) => {
+      p[img.imageId] = true;
+      return p;
+    }, {});
+  }, [album?.images]);
 
   const onDelete = async () => {
     if (!album) return;
@@ -109,7 +139,7 @@ const Album = () => {
     Promise.all(promises);
   };
 
-  const onAddImages = (files: Array<File>, albumId: string): void => {
+  const onAddImages = (files: Array<File>): void => {
     const filesWithId = applyId(files);
     const images = createImageArray(filesWithId);
     setImagesState(images);
@@ -122,8 +152,8 @@ const Album = () => {
       <div>
         <h1>{album.title}</h1>
         <Button text="Delete Album" onClick={onDelete} />
+        {working && <Ouroboro size={40} color={"rgba(0,0,0,0.3)"} />}
       </div>
-      {working && <Ouroboro size={40} color={"rgba(0,0,0,0.3)"} />}
       <ImageBank album={album} addImages={onAddImages} />
     </div>
   );

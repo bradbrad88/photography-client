@@ -1,5 +1,5 @@
-import useSubscribe, { CompleteEvent, ProgressEvent } from "hooks/useSubscribe";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useLayoutEffect, useCallback } from "react";
+import subscribeContext, { ProgressEvent } from "contexts/UploadSubscribeContext";
 import { Image } from "./Album";
 import "./stylesheets/ImageCards.scss";
 
@@ -12,10 +12,8 @@ interface UpdateData {
   progress: number;
 }
 
-// type Steps = "loading" | "thumbnail" | "highres";
-
 const ImageUploadCard = ({ image }: PropTypes) => {
-  const { subscribeImage, initProgress } = useSubscribe();
+  const { subscribeImage, initProgress } = subscribeContext();
   const [progress, setProgress] = useState<UpdateData[]>([
     // { step: "hello", progress: 50 },
     // { step: "sir", progress: 100 },
@@ -25,28 +23,24 @@ const ImageUploadCard = ({ image }: PropTypes) => {
     setProgress(prevState => {
       const prog = prevState.findIndex(prog => prog.step === data.step);
       if (prog !== -1) {
-        prevState[prog].progress = data.progress;
+        prevState[prog] = data;
         return [...prevState];
       }
       return [...prevState, { step: data.step, progress: data.progress }];
     });
   }, []);
 
-  const onComplete = useCallback((data: CompleteEvent) => {}, []);
-
   const initSubscribe = useCallback(() => {
-    subscribeImage(image.imageId, onProgress, onComplete);
+    subscribeImage(image.imageId, onProgress);
     if (initProgress && progress.length < 1) setProgress(initProgress);
-  }, [image.imageId, initProgress, onProgress, onComplete, subscribeImage, progress.length]);
+  }, [image.imageId, initProgress, onProgress, subscribeImage, progress]);
 
-  useEffect(() => {
-    console.log("Concerned about this USE EFFECT");
+  useLayoutEffect(() => {
     initSubscribe();
   }, [initSubscribe]);
 
   const renderProgress = () => {
     if (!progress) return null;
-
     return (
       <div className="progress-overlay">
         {progress.map(step => (
@@ -66,7 +60,13 @@ const ImageUploadCard = ({ image }: PropTypes) => {
 
   return (
     <div className="image-bank-card">
-      <img src={image.urls.thumbnail} />
+      {image.urls?.thumbnail ? (
+        <img src={image.urls?.thumbnail} alt={""} />
+      ) : (
+        <div className="coming-soon">
+          <h2>IMAGE COMING SOON</h2>
+        </div>
+      )}
       {renderProgress()}
     </div>
   );

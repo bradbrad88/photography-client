@@ -7,6 +7,13 @@
     height: 100%;
     object-fit: cover;
   }
+  .coming-soon {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    font-size: 1.5rem;
+  }
 }
 
 .progress-overlay {
@@ -29,7 +36,7 @@
       background: linear-gradient(
         90deg,
         rgba(255, 255, 255, 0) 0%,
-        rgba(255, 251, 0, 0.161) 50%,
+        rgba(255, 254, 185, 0.29) 50%,
         rgba(255, 255, 255, 0) 100%
       );
     }
