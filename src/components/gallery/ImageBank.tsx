@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import ImageUploadCard from "./ImageUploadCard";
 import { AlbumType } from "./Album";
 import Button from "components/elements/Button";
@@ -10,6 +10,7 @@ interface PropTypes {
 }
 
 const ImageBank = ({ album, addImages }: PropTypes) => {
+  const [collapsed, setCollapsed] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const imageCards = useMemo(() => {
@@ -40,22 +41,31 @@ const ImageBank = ({ album, addImages }: PropTypes) => {
     fetch(process.env.REACT_APP_SERVER_API + "/show-stuff");
   };
 
+  const onCollapse = () => {
+    setCollapsed(!collapsed);
+  };
+
   return (
-    <div className="image-bank">
-      <div className={"ui"}>
+    <div className={`image-bank ${collapsed && "collapsed"}`}>
+      <div className="header">
         <h1>IMAGE BANK</h1>
-        <Button onClick={onDebug} text={"Debug Server"} />
-        <Button onClick={onAddImage} text={"Add Image"} />
-        <input
-          type={"file"}
-          ref={fileRef}
-          style={{ display: "none" }}
-          onInput={onAddFileInput}
-          accept={"image/png, image/jpeg"}
-          multiple
-        />
+        <Button className="top-right small" text="-" onClick={onCollapse} />
       </div>
-      <div className="images">{imageCards}</div>
+      <div className="ui">
+        <div className="controls">
+          <Button onClick={onDebug} text={"Debug Server"} />
+          <Button onClick={onAddImage} text={"Add Image"} />
+          <input
+            type={"file"}
+            ref={fileRef}
+            style={{ display: "none" }}
+            onInput={onAddFileInput}
+            accept={"image/png, image/jpeg"}
+            multiple
+          />
+        </div>
+        <div className="images">{imageCards}</div>
+      </div>
     </div>
   );
 };
