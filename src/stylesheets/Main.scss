@@ -76,17 +76,16 @@ button {
 .view {
   height: 100vh;
   width: 100vw;
-  .page {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: max-content 1fr;
+  .main {
+    box-sizing: border-box;
     height: 100%;
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: max-content 1fr;
-    .main {
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 }
 
@@ -102,9 +101,18 @@ button {
 }
 
 .link {
-  // font-size: 0.8em;
-  // vertical-align: sub;
   color: rgb(0, 84, 194);
-  // text-decoration: underline;
   cursor: pointer;
+}
+
+.top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0.5rem;
+}
+
+.small {
+  width: 2rem;
+  height: 2rem;
 }

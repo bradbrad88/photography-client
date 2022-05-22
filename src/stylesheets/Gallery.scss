@@ -45,18 +45,12 @@
 }
 
 .album-view {
+  box-sizing: border-box;
   height: 100%;
   display: grid;
-  grid-template-rows: 1fr 250px;
-  .image-bank {
-    width: 100%;
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: min-content 1fr;
-    // border: solid 2px rgba(0, 0, 0, 0.114);
-    .ui {
-    }
-    .tools {
-    }
+  grid-template-rows: 1fr min-content;
+  .work-space {
+    height: 100%;
+    overflow-y: auto;
   }
 }
