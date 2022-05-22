@@ -4,7 +4,7 @@
 .toolbar-placement {
   position: relative;
   width: $toolbar-width-collapsed;
-  transition: width 500ms ease-in-out;
+  transition: width 300ms ease-in-out;
   &.active {
     width: $toolbar-width;
     p {
