@@ -1,5 +1,7 @@
 .image-bank-card {
+  position: relative;
   scroll-snap-align: start;
+  height: fit-content;
   img {
     box-sizing: border-box;
     inline-size: 100%;
@@ -12,6 +14,7 @@
     display: flex;
     align-items: center;
     text-align: center;
+    aspect-ratio: 4 / 3;
     height: 100%;
     font-size: 1.5rem;
   }
@@ -37,7 +40,7 @@
       background: linear-gradient(
         90deg,
         rgba(255, 255, 255, 0) 0%,
-        rgba(255, 254, 185, 0.29) 50%,
+        rgba(255, 255, 240, 0.29) 50%,
         rgba(255, 255, 255, 0) 100%
       );
     }
@@ -57,7 +60,8 @@
       height: 100%;
       align-items: center;
       &.complete {
-        color: rgb(130, 255, 28);
+        color: rgb(255, 255, 255);
+        text-shadow: 10px 10px 10px black;
         opacity: 0;
         transition: color 0.5s, opacity 0.5s 1s;
       }
