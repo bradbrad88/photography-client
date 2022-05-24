@@ -22,9 +22,10 @@ export interface CanvasItem {
 interface PropTypes {
   canvasItems: CanvasItem[];
   maxWidth: number;
+  setPosition: (id: string, position: any) => void;
 }
 
-const Canvas = ({ canvasItems, maxWidth }: PropTypes) => {
+const Canvas = ({ canvasItems, maxWidth, setPosition }: PropTypes) => {
   const [width, setWidth] = useState<number>(0);
   const [scale, setScale] = useState<number>(1);
   const ref = useRef<HTMLDivElement>(null);
@@ -49,11 +50,17 @@ const Canvas = ({ canvasItems, maxWidth }: PropTypes) => {
 
   const items = useMemo(() => {
     return canvasItems.map(item => (
-      <PositionalWrapper key={item.id} {...item.display} scale={scale}>
+      <PositionalWrapper
+        key={item.id}
+        id={item.id}
+        {...item.display}
+        scale={scale}
+        setPosition={setPosition}
+      >
         {getComponent(item)}
       </PositionalWrapper>
     ));
-  }, [canvasItems, getComponent, scale]);
+  }, [canvasItems, getComponent, scale, setPosition]);
 
   useEffect(() => {
     setWidth(0.7 * maxWidth);

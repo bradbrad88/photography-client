@@ -187,6 +187,12 @@ const Album = () => {
     sendImages(filesWithId);
   };
 
+  const setPosition = (id: string, position: any) => {
+    console.log(id, position);
+    const item = canvasItems.find(item => item.id === id);
+    if (!item) return;
+  };
+
   if (!album) return null;
   return (
     <div className="album-view">
@@ -196,7 +202,7 @@ const Album = () => {
         {working && <Ouroboro size={40} color={"rgba(0,0,0,0.3)"} />}
       </div>
       <div ref={workspaceRef} className="work-space">
-        <Canvas canvasItems={canvasItems} maxWidth={size.width} />
+        <Canvas canvasItems={canvasItems} maxWidth={size.width} setPosition={setPosition} />
       </div>
       <ImageBank album={album} addImages={onAddImages} />
     </div>
