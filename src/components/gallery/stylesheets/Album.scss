@@ -1,0 +1,50 @@
+.album.grid {
+  box-sizing: border-box;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 100%;
+  gap: 2rem;
+}
+
+.album.item {
+  display: flex;
+  flex-direction: column;
+  border: solid 1px rgb(228, 228, 228);
+  border-radius: 1rem;
+  width: 100%;
+  align-items: center;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+  font-size: 1.5rem;
+  &.new {
+    font-size: 1.5rem;
+    .icon {
+      fill: rgb(128, 0, 255);
+    }
+  }
+  padding: 1rem;
+  .album-content {
+    h3 {
+      margin: 2rem;
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+  }
+}
+
+.album-view {
+  box-sizing: border-box;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 3rem 1fr min-content;
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .work-space {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+  }
+}

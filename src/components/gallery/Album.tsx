@@ -4,9 +4,12 @@ import { v4 as uuidV4 } from "uuid";
 import { Ouroboro } from "react-spinners-css";
 import subscribeContext from "contexts/UploadSubscribeContext";
 import useFetch from "hooks/useFetch";
+import useSize from "hooks/useSize";
+import Canvas, { CanvasItem } from "./Canvas";
 import ImageBank from "./ImageBank";
 import Button from "components/elements/Button";
 import { AxiosRequestConfig } from "axios";
+import "./stylesheets/Album.scss";
 
 export interface Image {
   imageId: string;
@@ -34,13 +37,49 @@ interface FileWithId {
   file: File;
 }
 
+interface ImageIdRef {
+  [key: string]: string;
+}
+
+const canvasItems: CanvasItem[] = [
+  {
+    id: "1",
+    type: "image",
+    content: {
+      imageId: "",
+      urls: {
+        thumbnail:
+          "https://far-out-photography-gallery.s3.ap-southeast-2.amazonaws.com/3dba85ac-7e7b-4881-ab9e-787ec6851b06.highres.jpg",
+      },
+    },
+    display: {
+      x: 0,
+      y: 0,
+      width: 6000,
+      height: 5000,
+    },
+  },
+  {
+    id: "2",
+    type: "text",
+    content: "Hey there",
+    display: {
+      height: 2000,
+      width: 3000,
+      x: 5000,
+      y: 4000,
+    },
+  },
+];
+
 const Album = () => {
+  const nav = useNavigate();
   const { closeConnection, onProgress, onComplete } = subscribeContext();
   const [album, setAlbum] = useState<AlbumType | null>(null);
   const { albumUrl } = useParams();
   const { fetchJSON, deleteData, postImage, working } = useFetch();
-  const nav = useNavigate();
-  const imageIdRef = useRef<any>({});
+  const [size, workspaceRef] = useSize();
+  const imageIdRef = useRef<ImageIdRef>({});
 
   useEffect(() => {
     const fetchAlbum = async () => {
@@ -69,7 +108,6 @@ const Album = () => {
         });
       }, 500);
     });
-
     onProgress(data => {
       if (!imageIdRef.current[data.imageId]) {
         setImagesState([data]);
@@ -152,10 +190,13 @@ const Album = () => {
   if (!album) return null;
   return (
     <div className="album-view">
-      <div>
+      <div className="header">
         <h1>{album.title}</h1>
         <Button text="Delete Album" onClick={onDelete} />
         {working && <Ouroboro size={40} color={"rgba(0,0,0,0.3)"} />}
+      </div>
+      <div ref={workspaceRef} className="work-space">
+        <Canvas canvasItems={canvasItems} maxWidth={size.width} />
       </div>
       <ImageBank album={album} addImages={onAddImages} />
     </div>

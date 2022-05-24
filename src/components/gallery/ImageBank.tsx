@@ -10,7 +10,7 @@ interface PropTypes {
 }
 
 const ImageBank = ({ album, addImages }: PropTypes) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const imageCards = useMemo(() => {
