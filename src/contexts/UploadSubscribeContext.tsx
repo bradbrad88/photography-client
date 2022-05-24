@@ -114,10 +114,6 @@ const SubscribeProvider = ({ children }: PropTypes) => {
     };
   }, [closeConnection]);
 
-  useEffect(() => {
-    console.log("Event Source Changing", eventSource);
-  }, [eventSource]);
-
   return (
     <Provider
       value={{ subscribeImage, closeConnection, initProgress, onComplete, onProgress }}
