@@ -9,6 +9,7 @@ import Canvas, { CanvasItem } from "./Canvas";
 import ImageBank from "./ImageBank";
 import Button from "components/elements/Button";
 import { AxiosRequestConfig } from "axios";
+import { desktop, tablet, mobile } from "assets/svgButtons";
 import "./stylesheets/Album.scss";
 
 export interface Image {
@@ -41,43 +42,52 @@ interface ImageIdRef {
   [key: string]: string;
 }
 
-const canvasItems: CanvasItem[] = [
-  {
-    id: "1",
-    type: "image",
-    content: {
-      imageId: "",
-      urls: {
-        thumbnail:
-          "https://far-out-photography-gallery.s3.ap-southeast-2.amazonaws.com/3dba85ac-7e7b-4881-ab9e-787ec6851b06.highres.jpg",
-      },
-    },
-    display: {
-      x: 0,
-      y: 0,
-      width: 6000,
-      height: 5000,
-    },
-  },
-  {
-    id: "2",
-    type: "text",
-    content: "Hey there",
-    display: {
-      height: 2000,
-      width: 3000,
-      x: 5000,
-      y: 4000,
-    },
-  },
-];
+interface Display {
+  breakpoint: Breakpoint;
+  canvasItems: CanvasItem[];
+}
+
+type Breakpoint = "desktop" | "tablet" | "mobile";
+
+// const canvasItems: CanvasItem[] = [
+//   {
+//     id: "1",
+//     type: "image",
+//     content: {
+//       imageId: "",
+//       urls: {
+//         thumbnail:
+//           "https://far-out-photography-gallery.s3.ap-southeast-2.amazonaws.com/3dba85ac-7e7b-4881-ab9e-787ec6851b06.highres.jpg",
+//       },
+//     },
+//     display: {
+//       x: 0,
+//       y: 0,
+//       width: 6000,
+//       height: 5000,
+//     },
+//   },
+//   {
+//     id: "2",
+//     type: "text",
+//     content: "Hey there",
+//     display: {
+//       height: 2000,
+//       width: 3000,
+//       x: 5000,
+//       y: 4000,
+//     },
+//   },
+// ];
 
 const Album = () => {
   const nav = useNavigate();
   const { closeConnection, onProgress, onComplete } = subscribeContext();
   const [album, setAlbum] = useState<AlbumType | null>(null);
+  const [displays, setDisplays] = useState<Display[]>([]);
+  const [breakpoint, setBreakpoint] = useState<Breakpoint>("desktop");
   const { albumUrl } = useParams();
-  const { fetchJSON, deleteData, postImage, working } = useFetch();
+  const { fetchJSON, deleteData, postRequest, working } = useFetch();
   const [size, workspaceRef] = useSize();
   const imageIdRef = useRef<ImageIdRef>({});
 
@@ -90,7 +100,17 @@ const Album = () => {
       const fetchedAlbum = await fetchJSON<AlbumType>(req);
       setAlbum(fetchedAlbum);
     };
+    const fetchCanvas = async () => {
+      const req: AxiosRequestConfig = {
+        url: `/gallery/${albumUrl}/canvas-items`,
+        withCredentials: true,
+        data: { url: albumUrl },
+      };
+      const fetchedItems = await fetchJSON<Display[]>(req);
+      if (fetchedItems) setDisplays(fetchedItems);
+    };
     fetchAlbum();
+    fetchCanvas();
   }, [albumUrl, fetchJSON]);
 
   useEffect(() => {
@@ -175,7 +195,7 @@ const Album = () => {
         data,
         withCredentials: true,
       };
-      return await postImage(req);
+      return await postRequest(req);
     });
     Promise.all(promises);
   };
@@ -185,6 +205,24 @@ const Album = () => {
     const images = createImageArray(filesWithId);
     setImagesState(images);
     sendImages(filesWithId);
+  };
+
+  const canvasItems =
+    displays.find(display => display.breakpoint === breakpoint)?.canvasItems || [];
+
+  const saveLayout = async () => {
+    if (!album) return;
+    const req: AxiosRequestConfig = {
+      url: "/gallery/canvas-items",
+      data: {
+        album: album.id,
+        breakpoint,
+        items: [{ test: true }, { test: "my patience" }],
+      },
+      method: "POST",
+      withCredentials: true,
+    };
+    const res = await postRequest(req);
   };
 
   const setPosition = (id: string, position: any) => {
@@ -198,6 +236,27 @@ const Album = () => {
     <div className="album-view">
       <div className="header">
         <h1>{album.title}</h1>
+        <Button text="save" onClick={saveLayout} />
+        <div className="breakpoints">
+          <Button
+            className="small"
+            icon={desktop}
+            iconSize={35}
+            onClick={() => setBreakpoint("desktop")}
+          />
+          <Button
+            className="small"
+            icon={tablet}
+            iconSize={35}
+            onClick={() => setBreakpoint("tablet")}
+          />
+          <Button
+            className="small"
+            icon={mobile}
+            iconSize={35}
+            onClick={() => setBreakpoint("mobile")}
+          />
+        </div>
         <Button text="Delete Album" onClick={onDelete} />
         {working && <Ouroboro size={40} color={"rgba(0,0,0,0.3)"} />}
       </div>

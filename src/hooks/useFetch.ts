@@ -16,11 +16,17 @@ const useFetch = () => {
     return true;
   }, []);
 
-  const postImage = async <T>(req: AxiosRequestConfig): Promise<T | null> => {
+  const postRequest = async <T>(req: AxiosRequestConfig): Promise<T | null> => {
     const res = await sendRequest<T>(req);
     if (!res) return null;
     return res.data;
   };
+
+  // const postJSON = async (req: AxiosRequestConfig): Promise<true | null> => {
+  //   const res = await sendRequest(req);
+  //   if (!res) return null;
+  //   return true;
+  // };
 
   const sendRequest = async <T>(req: AxiosRequestConfig) => {
     req.baseURL = process.env.REACT_APP_SERVER_API;
@@ -36,7 +42,7 @@ const useFetch = () => {
     }
   };
 
-  return { fetchJSON, postImage, deleteData, working };
+  return { fetchJSON, postRequest, deleteData, working };
 };
 
 export default useFetch;
