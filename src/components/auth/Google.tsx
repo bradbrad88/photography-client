@@ -45,7 +45,7 @@ const useGoogle = () => {
       window.google.accounts.id.renderButton(googleElement, {
         theme: "outline",
         size: "large",
-        width: 208,
+        width: 240,
         logo_alignment: "left",
       });
     };
