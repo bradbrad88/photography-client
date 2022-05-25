@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import ImageUploadCard from "./ImageUploadCard";
 import { AlbumType } from "./Album";
 import Button from "components/elements/Button";
+import { up, down } from "assets/svgButtons";
 import "./stylesheets/ImageBank.scss";
 
 interface PropTypes {
@@ -49,7 +50,11 @@ const ImageBank = ({ album, addImages }: PropTypes) => {
     <div className={`image-bank ${collapsed && "collapsed"}`}>
       <div className="header">
         <h1>IMAGE BANK</h1>
-        <Button className="top-right small" text="-" onClick={onCollapse} />
+        <Button
+          className="top right verysmall"
+          icon={collapsed ? up : down}
+          onClick={onCollapse}
+        />
       </div>
       <div className="ui">
         <div className="controls">
