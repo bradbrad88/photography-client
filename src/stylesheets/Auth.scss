@@ -133,7 +133,7 @@ button {
   &.auth {
     font-size: 1.2rem;
     box-shadow: none;
-    width: 13rem;
+    width: 15rem;
     height: 2.5rem;
   }
   &.local {
@@ -142,6 +142,10 @@ button {
   &.facebook {
     background-color: #5b7bd5;
   }
+}
+
+#google-sign-in {
+  width: 15rem;
 }
 
 section {
