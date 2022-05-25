@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Ripple } from "react-spinners-css";
 import { back as backIcon } from "assets/svgButtons";
+import classnames from "classnames";
 
 interface Props {
   text?: string;
@@ -11,6 +12,7 @@ interface Props {
   img?: string;
   back?: boolean;
   working?: boolean;
+  style?: React.CSSProperties;
 }
 
 const Button = ({
@@ -18,33 +20,42 @@ const Button = ({
   className,
   text = "",
   icon,
-  iconSize,
+  iconSize = 24,
   img,
   back,
   working,
+  style,
 }: Props) => {
-  const classes = useMemo(() => {
-    if (back) return "back";
-    const displayIcon = img || icon ? true : false;
-    return `${className} ${displayIcon && "button-image"}`;
-  }, [icon, img, className, back]);
+  const classes = classnames(
+    {
+      //  "button-image": img || icon,
+      "icon-only": (img || icon) && !text,
+      "text-only": text && !(img || icon),
+      back,
+    },
+    className
+  );
+
+  const styleProperties: React.CSSProperties = {
+    // width: img || icon ? "3rem" : "14rem",
+    ...style,
+  };
+
   return (
-    <button onClick={onClick} className={classes}>
-      <>
-        {(img || icon) && !back && (
-          <div className="button-image">
-            <>
+    <button onClick={onClick} className={classes} style={styleProperties}>
+      {working ? (
+        <Ripple color="white" size={45} />
+      ) : (
+        <>
+          {(img || icon) && (
+            <div className="button icon">
               {img && <img src={img} alt={text + " button icon"} />}
               {icon && icon(iconSize)}
-            </>
-          </div>
-        )}
-        {back ? (
-          backIcon(25)
-        ) : (
-          <span className="text">{working ? <Ripple color="white" size={45} /> : text}</span>
-        )}
-      </>
+            </div>
+          )}
+          {text && <span className="text">{text}</span>}
+        </>
+      )}
     </button>
   );
 };

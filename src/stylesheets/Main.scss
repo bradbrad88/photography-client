@@ -31,11 +31,22 @@ input[type="email"]:not(:placeholder-shown):invalid:not(:focus) {
 }
 
 button {
+  position: relative;
   display: grid;
-  grid-auto-flow: column;
+  box-sizing: border-box;
+  padding: 0;
   align-items: center;
   width: 14rem;
   height: 3rem;
+  &:not(.icon-only, .text-only) {
+    grid-template-columns: min-content 1fr;
+  }
+  .icon-only,
+  .text-only {
+    grid-template-columns: 1fr;
+  }
+
+  // max-height: 3rem;
   font-size: 1.5rem;
   font-family: inherit;
   font-weight: inherit;
@@ -44,17 +55,23 @@ button {
   border-radius: 0.5rem;
   background-color: $primary-colour;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
   transition: all 200ms;
   cursor: pointer;
-  span {
-    height: fit-content;
-    padding-bottom: 3px;
+  &.text {
+    width: 11rem;
   }
-  &.button-image {
-    grid-template-columns: min-content 1fr;
+  span {
+    display: inline-block;
+    height: fit-content;
+  }
+  .text {
+    min-width: fit-content;
+    white-space: nowrap;
+  }
+  .button.icon {
+    display: flex;
+    justify-content: center;
     svg {
-      vertical-align: bottom;
       fill: white;
     }
   }
@@ -70,6 +87,14 @@ button {
   }
   &:focus-visible {
     outline: solid 1px rgb(76, 0, 255);
+  }
+  &.small {
+    width: 3rem;
+    height: 3rem;
+  }
+  &.verysmall {
+    width: 2rem;
+    height: 2rem;
   }
 }
 
@@ -105,14 +130,14 @@ button {
   cursor: pointer;
 }
 
-.top-right {
+.top {
   position: absolute;
   top: 0;
-  right: 0;
   margin: 0.5rem;
 }
 
-.small {
-  width: 2rem;
-  height: 2rem;
+.right {
+  position: absolute;
+  right: 0;
+  margin: 0.5rem;
 }
