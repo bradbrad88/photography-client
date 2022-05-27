@@ -1,4 +1,11 @@
-import React, { ReactNode, useRef } from "react";
+import React, { ReactNode, useState, useRef, useEffect } from "react";
+
+export interface Position {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 type PropTypes = {
   id: string;
@@ -7,7 +14,7 @@ type PropTypes = {
   width: number;
   height: number;
   scale: number;
-  setPosition: (id: string, position: any) => void;
+  setPosition: (id: string, position: Position) => void;
   children: ReactNode;
 };
 
@@ -21,18 +28,51 @@ const PositionalWrapper = ({
   setPosition,
   children,
 }: PropTypes) => {
-  const offsetX = useRef<number>();
+  const offsetX = useRef<number>(0);
+  const offsetY = useRef<number>(0);
+  const initX = useRef<number>(0);
+  const initY = useRef<number>(0);
+  const [dragging, setDragging] = useState<boolean>(false);
+  const [dragLeft, setDragLeft] = useState<number>(0);
+  const [dragTop, setDragTop] = useState<number>(0);
+  const dragImg = useRef<HTMLImageElement>();
+
+  useEffect(() => {
+    dragImg.current = new Image();
+    dragImg.current.src =
+      "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
+  }, []);
 
   const onDragStart = (e: React.DragEvent) => {
+    var img = new Image();
+    img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
+    e.dataTransfer.setDragImage(dragImg.current!, 0, 0);
+    e.stopPropagation();
     const rect = e.currentTarget.getBoundingClientRect();
+    initX.current = rect.left;
+    initY.current = rect.top;
     offsetX.current = e.clientX - rect.left;
+    offsetY.current = e.clientY - rect.top;
+  };
+
+  const onDrag = (e: React.DragEvent) => {
+    if (!dragging) setDragging(true);
+    e.preventDefault();
+    setDragLeft(e.clientX);
+    setDragTop(e.clientY);
   };
 
   const onDragEnd = (e: React.DragEvent) => {
-    const parentRect = e.currentTarget.parentElement?.getBoundingClientRect();
-    if (!parentRect || !offsetX.current) return;
-    const canvasX = (e.clientX - offsetX.current - parentRect.left) / scale;
-    setPosition(id, canvasX);
+    const parent = e.currentTarget.parentElement;
+    if (!parent) return;
+    const rect = parent.getBoundingClientRect();
+    if (!offsetX.current || !offsetY.current) return;
+    const { left, top } = rect;
+    const x = (dragLeft - left - offsetX.current) / scale;
+    const y = (dragTop - top - offsetY.current) / scale;
+    const position: Position = { height, width, x, y };
+    setDragging(false);
+    setPosition(id, position);
   };
 
   const style: React.CSSProperties = {
@@ -41,13 +81,19 @@ const PositionalWrapper = ({
     height: `${height * scale}px`,
     left: `${x * scale}px`,
     top: `${y * scale}px`,
+    transform: dragging
+      ? `translate(${dragLeft - initX.current - offsetX.current}px, ${
+          dragTop - initY.current - offsetY.current
+        }px)`
+      : "",
   };
   return (
     <div
-      className="position"
+      className="canvas-item"
       style={style}
       draggable
       onDragStart={onDragStart}
+      onDrag={onDrag}
       onDragEnd={onDragEnd}
     >
       {children}
