@@ -1,5 +1,5 @@
 import React, { ReactNode, useState, useRef, useEffect } from "react";
-import { aspectRatio } from "assets/svgButtons";
+import { aspectRatio, resizeHandle } from "assets/svgButtons";
 import "./stylesheets/PositionalWrapper.scss";
 
 export interface Position {
@@ -30,6 +30,10 @@ const PositionalWrapper = ({
   setPosition,
   children,
 }: PropTypes) => {
+  const initialMouseX = useRef<number>(0);
+  const initialMouseY = useRef<number>(0);
+  const [resizeHeight, setResizeHeight] = useState<number | null>(null);
+  const [resizeWidth, setResizeWidth] = useState<number | null>(null);
   const offsetX = useRef<number>(0);
   const offsetY = useRef<number>(0);
   const initX = useRef<number>(0);
@@ -76,10 +80,33 @@ const PositionalWrapper = ({
     setPosition(id, position);
   };
 
+  const onDragStartResize = (e: React.DragEvent) => {
+    e.stopPropagation();
+    e.dataTransfer.setDragImage(dragImg.current!, 0, 0);
+    initialMouseX.current = e.clientX;
+    initialMouseY.current = e.clientY;
+  };
+
+  const onDragResize = (e: React.DragEvent) => {
+    e.stopPropagation();
+    const newHeight = (height * scale + e.clientY - initialMouseY.current) / scale;
+    const newWidth = (width * scale + e.clientX - initialMouseX.current) / scale;
+    setResizeHeight(newHeight);
+    setResizeWidth(newWidth);
+  };
+
+  const onDragEndResize = (e: React.DragEvent) => {
+    e.stopPropagation();
+    const position: Position = { height: resizeHeight!, width: resizeWidth!, x, y };
+    setPosition(id, position);
+    setResizeHeight(null);
+    setResizeWidth(null);
+  };
+
   const style: React.CSSProperties = {
     position: "absolute",
-    width: `${width * scale}px`,
-    height: `${height * scale}px`,
+    width: resizeWidth ? `${resizeWidth * scale}px` : `${width * scale}px`,
+    height: resizeHeight ? `${resizeHeight * scale}px` : `${height * scale}px`,
     left: `${x * scale}px`,
     top: `${y * scale}px`,
     transform: dragging
@@ -90,20 +117,31 @@ const PositionalWrapper = ({
   };
   return (
     <div
-      className="canvas-item"
+      className="position"
       style={style}
       draggable
       onDragStart={onDragStart}
       onDrag={onDrag}
       onDragEnd={onDragEnd}
     >
-      <div
-        onClick={() => setOriginalAspectRatio(!originalAspectRatio)}
-        className="original-ratio"
-      >
-        {aspectRatio()}
+      <div className="relative-container" draggable={false}>
+        <div
+          onClick={() => setOriginalAspectRatio(!originalAspectRatio)}
+          className="original-ratio"
+        >
+          {aspectRatio()}
+        </div>
+        <div
+          onDragStart={onDragStartResize}
+          onDrag={onDragResize}
+          onDragEnd={onDragEndResize}
+          className="resize"
+          draggable
+        >
+          {resizeHandle(20)}
+        </div>
+        <div className="canvas-item">{children}</div>
       </div>
-      {children}
     </div>
   );
 };

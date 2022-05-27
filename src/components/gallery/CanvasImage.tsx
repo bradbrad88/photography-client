@@ -6,8 +6,8 @@ interface PropTypes {
 
 const CanvasImage = ({ image }: PropTypes) => {
   return (
-    <div className="image">
-      <img src={image.urls?.thumbnail} />
+    <div className="image" draggable={false}>
+      <img src={image.urls?.thumbnail} draggable={false} />
     </div>
   );
 };

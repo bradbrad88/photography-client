@@ -1,3 +1,14 @@
+.position {
+  // background-color: red;
+}
+
+.relative-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  // background-color: green;
+}
+
 .original-ratio {
   position: absolute;
   margin: 10px;
@@ -9,6 +20,25 @@
     .icon {
       fill: rgb(19, 255, 19);
       cursor: pointer;
+    }
+  }
+}
+
+.resize {
+  position: absolute;
+  margin: 1px;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  transition: 200ms;
+  .icon {
+    // fill: red;
+    stroke: rgb(255, 255, 255);
+  }
+  &:hover {
+    .icon {
+      filter: drop-shadow(13px 13px 13px rgb(255, 255, 255));
+      stroke: rgb(134, 47, 255);
     }
   }
 }
