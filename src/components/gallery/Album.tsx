@@ -68,6 +68,14 @@ const Album = () => {
     );
   }, [breakpoint, displays]);
 
+  const imageBankImages = useMemo(() => {
+    return (
+      album?.images.filter(
+        image => !canvasItems.some(item => item.content.imageId === image.imageId)
+      ) || []
+    );
+  }, [canvasItems, album?.images]);
+
   useEffect(() => {
     const fetchAlbum = async () => {
       const req: AxiosRequestConfig = {
@@ -270,7 +278,7 @@ const Album = () => {
           addImageToDisplay={addImageToDisplay}
         />
       </div>
-      <ImageBank album={album} addImages={onAddImages} />
+      <ImageBank images={imageBankImages} addImages={onAddImages} />
     </div>
   );
 };

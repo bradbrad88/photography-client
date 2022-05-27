@@ -1,30 +1,29 @@
 import { useMemo, useRef, useState } from "react";
 import ImageBankCard from "./ImageBankCard";
 import ImageUploadCard from "./ImageUploadCard";
-import { AlbumType } from "./Album";
+import { Image } from "./Album";
 import Button from "components/elements/Button";
 import { up, down } from "assets/svgButtons";
 import "./stylesheets/ImageBank.scss";
 
 interface PropTypes {
-  album: AlbumType;
-  addImages: (images: Array<File>, imageId: string) => void;
+  images: Image[];
+  addImages: (images: Array<File>) => void;
 }
 
-const ImageBank = ({ album, addImages }: PropTypes) => {
+const ImageBank = ({ images = [], addImages }: PropTypes) => {
   const [collapsed, setCollapsed] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const imageCards = useMemo(() => {
-    if (!album) return null;
-    return album.images.map(image => {
+    return images.map(image => {
       return image.uploadedAt ? (
-        <ImageBankCard image={image} />
+        <ImageBankCard image={image} key={image.imageId} />
       ) : (
         <ImageUploadCard image={image} key={image.imageId} />
       );
     });
-  }, [album]);
+  }, [images]);
 
   const onAddImage = () => {
     if (!fileRef.current) return;
@@ -34,7 +33,7 @@ const ImageBank = ({ album, addImages }: PropTypes) => {
   const onAddFileInput = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (!fileRef.current || !fileRef.current.files) return;
-    addImages([...fileRef.current.files], album.id);
+    addImages([...fileRef.current.files]);
   };
 
   const onDebug = () => {
