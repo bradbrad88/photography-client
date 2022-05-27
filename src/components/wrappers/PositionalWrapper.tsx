@@ -1,6 +1,7 @@
 import React, { ReactNode, useState, useRef, useEffect } from "react";
-import { aspectRatio, resizeHandle } from "assets/svgButtons";
+import { aspectRatio, aspectRatioLock, resizeHandle } from "assets/svgButtons";
 import "./stylesheets/PositionalWrapper.scss";
+import classnames from "classnames";
 
 export interface Position {
   x: number;
@@ -42,7 +43,7 @@ const PositionalWrapper = ({
   const [dragLeft, setDragLeft] = useState<number>(0);
   const [dragTop, setDragTop] = useState<number>(0);
   const dragImg = useRef<HTMLImageElement>();
-  const [originalAspectRatio, setOriginalAspectRatio] = useState(true);
+  const [lockAspectRatio, setLockAspectRatio] = useState(true);
 
   useEffect(() => {
     dragImg.current = new Image();
@@ -89,8 +90,11 @@ const PositionalWrapper = ({
 
   const onDragResize = (e: React.DragEvent) => {
     e.stopPropagation();
-    const newHeight = (height * scale + e.clientY - initialMouseY.current) / scale;
     const newWidth = (width * scale + e.clientX - initialMouseX.current) / scale;
+    const newHeight = lockAspectRatio
+      ? newWidth * (height / width)
+      : (height * scale + e.clientY - initialMouseY.current) / scale;
+
     setResizeHeight(newHeight);
     setResizeWidth(newWidth);
   };
@@ -115,6 +119,11 @@ const PositionalWrapper = ({
         }px)`
       : "",
   };
+
+  const aspectRatioClass = classnames("aspect-options", {
+    active: lockAspectRatio,
+  });
+
   return (
     <div
       className="position"
@@ -125,20 +134,27 @@ const PositionalWrapper = ({
       onDragEnd={onDragEnd}
     >
       <div className="relative-container" draggable={false}>
-        <div
-          onClick={() => setOriginalAspectRatio(!originalAspectRatio)}
-          className="original-ratio"
-        >
-          {aspectRatio()}
-        </div>
-        <div
-          onDragStart={onDragStartResize}
-          onDrag={onDragResize}
-          onDragEnd={onDragEndResize}
-          className="resize"
-          draggable
-        >
-          {resizeHandle(20)}
+        <div className="canvas-image-controls hover">
+          <div
+            onClick={() => setLockAspectRatio(!lockAspectRatio)}
+            className={aspectRatioClass}
+          >
+            <div className="relative-container">
+              {aspectRatio(38)}
+              {lockAspectRatio && aspectRatioLock(17)}
+            </div>
+          </div>
+          <div className="lock-ratio"></div>
+          <div className="set-ratio"></div>
+          <div
+            onDragStart={onDragStartResize}
+            onDrag={onDragResize}
+            onDragEnd={onDragEndResize}
+            className="resize"
+            draggable
+          >
+            {resizeHandle(20)}
+          </div>
         </div>
         <div className="canvas-item">{children}</div>
       </div>

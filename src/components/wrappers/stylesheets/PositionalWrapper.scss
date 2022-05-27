@@ -1,3 +1,5 @@
+@import "../../../stylesheets/variables.scss";
+
 .position {
   // background-color: red;
 }
@@ -9,16 +11,32 @@
   // background-color: green;
 }
 
-.original-ratio {
+.aspect-options {
   position: absolute;
-  margin: 10px;
-  width: 20px;
+  display: flex;
+  margin: 5px;
+  width: fit-content;
+  height: fit-content;
+  .relative-container {
+    height: fit-content;
+    width: fit-content;
+  }
   .icon {
-    fill: white;
+    fill: $primary-colour;
+  }
+  .icon.aspect-ratio {
+    position: relative;
+  }
+  .aspect-ratio-lock {
+    position: absolute;
+    fill: rgb(246, 101, 23);
+    margin: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
   &:hover {
     .icon {
-      fill: rgb(19, 255, 19);
       cursor: pointer;
     }
   }
@@ -32,13 +50,17 @@
   cursor: pointer;
   transition: 200ms;
   .icon {
-    // fill: red;
     stroke: rgb(255, 255, 255);
   }
   &:hover {
     .icon {
-      filter: drop-shadow(13px 13px 13px rgb(255, 255, 255));
       stroke: rgb(134, 47, 255);
     }
   }
+}
+
+.canvas-image-controls {
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }
