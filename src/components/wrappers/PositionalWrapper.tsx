@@ -1,4 +1,6 @@
 import React, { ReactNode, useState, useRef, useEffect } from "react";
+import { aspectRatio } from "assets/svgButtons";
+import "./stylesheets/PositionalWrapper.scss";
 
 export interface Position {
   x: number;
@@ -36,6 +38,7 @@ const PositionalWrapper = ({
   const [dragLeft, setDragLeft] = useState<number>(0);
   const [dragTop, setDragTop] = useState<number>(0);
   const dragImg = useRef<HTMLImageElement>();
+  const [originalAspectRatio, setOriginalAspectRatio] = useState(true);
 
   useEffect(() => {
     dragImg.current = new Image();
@@ -44,8 +47,6 @@ const PositionalWrapper = ({
   }, []);
 
   const onDragStart = (e: React.DragEvent) => {
-    var img = new Image();
-    img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
     e.dataTransfer.setDragImage(dragImg.current!, 0, 0);
     e.stopPropagation();
     const rect = e.currentTarget.getBoundingClientRect();
@@ -96,6 +97,12 @@ const PositionalWrapper = ({
       onDrag={onDrag}
       onDragEnd={onDragEnd}
     >
+      <div
+        onClick={() => setOriginalAspectRatio(!originalAspectRatio)}
+        className="original-ratio"
+      >
+        {aspectRatio()}
+      </div>
       {children}
     </div>
   );

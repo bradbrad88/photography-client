@@ -1,0 +1,14 @@
+.original-ratio {
+  position: absolute;
+  margin: 10px;
+  width: 20px;
+  .icon {
+    fill: white;
+  }
+  &:hover {
+    .icon {
+      fill: rgb(19, 255, 19);
+      cursor: pointer;
+    }
+  }
+}
