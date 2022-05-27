@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from "react";
+import ImageBankCard from "./ImageBankCard";
 import ImageUploadCard from "./ImageUploadCard";
 import { AlbumType } from "./Album";
 import Button from "components/elements/Button";
@@ -11,16 +12,14 @@ interface PropTypes {
 }
 
 const ImageBank = ({ album, addImages }: PropTypes) => {
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const imageCards = useMemo(() => {
     if (!album) return null;
     return album.images.map(image => {
       return image.uploadedAt ? (
-        <div className="image-bank-card" key={image.imageId}>
-          <img src={image.urls?.thumbnail} alt="" />
-        </div>
+        <ImageBankCard image={image} />
       ) : (
         <ImageUploadCard image={image} key={image.imageId} />
       );

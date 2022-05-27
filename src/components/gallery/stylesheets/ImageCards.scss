@@ -3,12 +3,13 @@
   scroll-snap-align: start;
   height: fit-content;
   img {
+    display: block;
     box-sizing: border-box;
     inline-size: 100%;
     aspect-ratio: 4 / 3;
-    border-radius: 10px;
     object-fit: cover;
     object-position: center;
+    border-radius: 10px;
   }
   .coming-soon {
     display: flex;
