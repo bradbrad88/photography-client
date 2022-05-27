@@ -226,14 +226,11 @@ const Album = () => {
       position,
     };
     const newCanvasItems = [...canvasItems, newItem];
-    setDisplays(prevState =>
-      prevState.map(display => {
-        if (display.breakpoint === breakpoint) {
-          display.canvasItems = newCanvasItems;
-        }
-        return display;
-      })
-    );
+    setDisplays(prevState => {
+      const newDisplay = { breakpoint, canvasItems: newCanvasItems };
+      const filteredDisplay = prevState.filter(display => display.breakpoint !== breakpoint);
+      return [...filteredDisplay, newDisplay];
+    });
   };
 
   if (!album) return null;
