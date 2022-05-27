@@ -78,8 +78,8 @@ const Canvas = ({ canvasItems, maxWidth, setPosition, addImageToDisplay }: PropT
       const display: Position = {
         width,
         height,
-        x: (e.clientX - left) / scale,
-        y: (e.clientY - top) / scale,
+        x: (e.clientX - left - (width * scale) / 2) / scale,
+        y: (e.clientY - top - (height * scale) / 2) / scale,
       };
       addImageToDisplay(imageId, display);
     } catch (error) {}
