@@ -6,6 +6,7 @@ import subscribeContext from "contexts/UploadSubscribeContext";
 import useFetch from "hooks/useFetch";
 import useSize from "hooks/useSize";
 import Canvas, { CanvasItem } from "./Canvas";
+import { Position } from "components/wrappers/PositionalWrapper";
 import ImageBank from "./ImageBank";
 import Button from "components/elements/Button";
 import { AxiosRequestConfig } from "axios";
@@ -48,37 +49,6 @@ interface Display {
 }
 
 type Breakpoint = "desktop" | "tablet" | "mobile";
-
-// const canvasItems: CanvasItem[] = [
-//   {
-//     id: "1",
-//     type: "image",
-//     content: {
-//       imageId: "",
-//       urls: {
-//         thumbnail:
-//           "https://far-out-photography-gallery.s3.ap-southeast-2.amazonaws.com/3dba85ac-7e7b-4881-ab9e-787ec6851b06.highres.jpg",
-//       },
-//     },
-//     display: {
-//       x: 0,
-//       y: 0,
-//       width: 6000,
-//       height: 5000,
-//     },
-//   },
-//   {
-//     id: "2",
-//     type: "text",
-//     content: "Hey there",
-//     display: {
-//       height: 2000,
-//       width: 3000,
-//       x: 5000,
-//       y: 4000,
-//     },
-//   },
-// ];
 
 const Album = () => {
   const nav = useNavigate();
@@ -217,7 +187,7 @@ const Album = () => {
       data: {
         album: album.id,
         breakpoint,
-        items: [{ test: true }, { test: "my patience" }],
+        items: canvasItems,
       },
       method: "POST",
       withCredentials: true,
@@ -225,10 +195,41 @@ const Album = () => {
     const res = await postRequest(req);
   };
 
-  const setPosition = (id: string, position: any) => {
-    console.log(id, position);
+  const setPosition = (id: string, position: Position) => {
     const item = canvasItems.find(item => item.id === id);
     if (!item) return;
+    setDisplays(prevState =>
+      prevState.map(display => {
+        if (display.breakpoint === breakpoint) {
+          display.canvasItems = display.canvasItems.map(item => {
+            if (item.id === id) {
+              item.position = position;
+            }
+            return item;
+          });
+        }
+        return display;
+      })
+    );
+  };
+
+  const addImageToDisplay = (id: string, position: Position) => {
+    const content = album?.images.find(image => image.imageId === id);
+    const newItem: CanvasItem = {
+      id,
+      type: "image",
+      content,
+      position,
+    };
+    const newCanvasItems = [...canvasItems, newItem];
+    setDisplays(prevState =>
+      prevState.map(display => {
+        if (display.breakpoint === breakpoint) {
+          display.canvasItems = newCanvasItems;
+        }
+        return display;
+      })
+    );
   };
 
   if (!album) return null;
@@ -261,7 +262,12 @@ const Album = () => {
         {working && <Ouroboro size={40} color={"rgba(0,0,0,0.3)"} />}
       </div>
       <div ref={workspaceRef} className="work-space">
-        <Canvas canvasItems={canvasItems} maxWidth={size.width} setPosition={setPosition} />
+        <Canvas
+          canvasItems={canvasItems}
+          maxWidth={size.width}
+          setPosition={setPosition}
+          addImageToDisplay={addImageToDisplay}
+        />
       </div>
       <ImageBank album={album} addImages={onAddImages} />
     </div>
