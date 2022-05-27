@@ -49,6 +49,9 @@
       flex-direction: row;
       gap: 1rem;
       align-items: center;
+      .active {
+        background-color: rgb(67, 130, 255);
+      }
     }
   }
   .work-space {

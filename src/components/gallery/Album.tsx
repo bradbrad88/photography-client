@@ -249,19 +249,19 @@ const Album = () => {
         <Button text="save" onClick={saveLayout} />
         <div className="breakpoints">
           <Button
-            className="small"
+            className={`small ${breakpoint === "desktop" ? "active" : ""}`}
             icon={desktop}
             iconSize={35}
             onClick={() => setBreakpoint("desktop")}
           />
           <Button
-            className="small"
+            className={`small ${breakpoint === "tablet" ? "active" : ""}`}
             icon={tablet}
             iconSize={35}
             onClick={() => setBreakpoint("tablet")}
           />
           <Button
-            className="small"
+            className={`small ${breakpoint === "mobile" ? "active" : ""}`}
             icon={mobile}
             iconSize={35}
             onClick={() => setBreakpoint("mobile")}
