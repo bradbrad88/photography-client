@@ -1,7 +1,12 @@
 import React, { ReactNode, useState, useRef, useEffect } from "react";
-import { aspectRatio, aspectRatioLock, resizeHandle } from "assets/svgButtons";
-import "./stylesheets/PositionalWrapper.scss";
 import classnames from "classnames";
+import Menu, { Menu as MenuType } from "components/system/Menu";
+import {
+  aspectRatio as aspectRatioIcon,
+  aspectRatioLock,
+  resizeHandle,
+} from "assets/svgButtons";
+import "./stylesheets/PositionalWrapper.scss";
 
 export interface Position {
   x: number;
@@ -16,6 +21,7 @@ type PropTypes = {
   y: number;
   width: number;
   height: number;
+  aspectRatio: number;
   scale: number;
   setPosition: (id: string, position: Position) => void;
   children: ReactNode;
@@ -27,6 +33,7 @@ const PositionalWrapper = ({
   y,
   width,
   height,
+  aspectRatio,
   scale,
   setPosition,
   children,
@@ -44,6 +51,7 @@ const PositionalWrapper = ({
   const [dragTop, setDragTop] = useState<number>(0);
   const dragImg = useRef<HTMLImageElement>();
   const [lockAspectRatio, setLockAspectRatio] = useState(true);
+  const [menu, setMenu] = useState(false);
 
   useEffect(() => {
     dragImg.current = new Image();
@@ -124,6 +132,46 @@ const PositionalWrapper = ({
     active: lockAspectRatio,
   });
 
+  const setAspectRatio = (ratio: number) => {
+    const position: Position = {
+      width,
+      x,
+      y,
+      height: width / ratio,
+    };
+    setPosition(id, position);
+    setLockAspectRatio(true);
+    setMenu(false);
+  };
+
+  const menuObj: MenuType = [
+    {
+      title: lockAspectRatio ? "Unlock Aspect Ratio" : "Lock Aspect Ratio",
+      content: () => setLockAspectRatio(!lockAspectRatio),
+    },
+    {
+      title: "Set Aspect Ratio",
+      content: [
+        {
+          title: "Original",
+          content: () => setAspectRatio(aspectRatio),
+        },
+        {
+          title: "16 : 9",
+          content: () => setAspectRatio(16 / 9),
+        },
+        {
+          title: "4 : 3",
+          content: () => setAspectRatio(4 / 3),
+        },
+        {
+          title: "Square",
+          content: () => setAspectRatio(1),
+        },
+      ],
+    },
+  ];
+
   return (
     <div
       className="position"
@@ -135,14 +183,12 @@ const PositionalWrapper = ({
     >
       <div className="relative-container" draggable={false}>
         <div className="canvas-image-controls hover">
-          <div
-            onClick={() => setLockAspectRatio(!lockAspectRatio)}
-            className={aspectRatioClass}
-          >
+          <div onClick={() => setMenu(!menu)} className={aspectRatioClass}>
             <div className="relative-container">
-              {aspectRatio(38)}
+              {aspectRatioIcon(38)}
               {lockAspectRatio && aspectRatioLock(17)}
             </div>
+            {menu && <Menu menu={menuObj} />}
           </div>
           <div className="lock-ratio"></div>
           <div className="set-ratio"></div>

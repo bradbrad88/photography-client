@@ -1,0 +1,23 @@
+.menu {
+  position: relative;
+  display: grid;
+  grid-auto-rows: min-content;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.211);
+  .menu-item {
+    position: relative;
+    padding: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.962);
+    cursor: pointer;
+    p {
+      margin: 0;
+    }
+    &:hover {
+      background-color: rgb(220, 220, 220);
+    }
+  }
+  &.sub-menu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+  }
+}

@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect, useRef, useCallback } from "react"
 import PositionalWrapper, { Position } from "components/wrappers/PositionalWrapper";
 import CanvasImage from "./CanvasImage";
 import "./stylesheets/Canvas.scss";
+// import { aspectRatio } from "assets/svgButtons";
 
 const SCALE_WIDTH = 12000;
 const BUFFER_HEIGHT = 6000;
@@ -51,6 +52,7 @@ const Canvas = ({ canvasItems, maxWidth, setPosition, addImageToDisplay }: PropT
         id={item.id}
         {...item.position}
         scale={scale}
+        aspectRatio={item.content.aspectRatio}
         setPosition={setPosition}
       >
         {getComponent(item)}
