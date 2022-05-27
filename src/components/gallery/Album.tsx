@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { v4 as uuidV4 } from "uuid";
 import { Ouroboro } from "react-spinners-css";
@@ -60,6 +60,13 @@ const Album = () => {
   const { fetchJSON, deleteData, postRequest, working } = useFetch();
   const [size, workspaceRef] = useSize();
   const imageIdRef = useRef<ImageIdRef>({});
+
+  const canvasItems = useMemo(() => {
+    return (
+      displays.find(display => display.breakpoint === breakpoint)?.canvasItems ||
+      ([] as CanvasItem[])
+    );
+  }, [breakpoint, displays]);
 
   useEffect(() => {
     const fetchAlbum = async () => {
@@ -176,9 +183,6 @@ const Album = () => {
     setImagesState(images);
     sendImages(filesWithId);
   };
-
-  const canvasItems =
-    displays.find(display => display.breakpoint === breakpoint)?.canvasItems || [];
 
   const saveLayout = async () => {
     if (!album) return;

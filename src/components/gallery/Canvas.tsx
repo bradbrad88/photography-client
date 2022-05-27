@@ -67,12 +67,9 @@ const Canvas = ({ canvasItems, maxWidth, setPosition, addImageToDisplay }: PropT
   }, [canvasWidth]);
 
   const onDrop = (e: React.DragEvent) => {
-    // console.log("drop");
-    // console.log(e.dataTransfer.getData("text/plain"));
     const data = e.dataTransfer.getData("text/plain");
     try {
       const { imageId, aspectRatio } = JSON.parse(data);
-
       const width = canvasWidth / 3 / scale;
       const height = width / aspectRatio;
       const parentRect = e.currentTarget.getBoundingClientRect();
@@ -84,19 +81,13 @@ const Canvas = ({ canvasItems, maxWidth, setPosition, addImageToDisplay }: PropT
         x: (e.clientX - left) / scale,
         y: (e.clientY - top) / scale,
       };
-      // console.log("client x", e.clientX);
-      // console.log("rect left", left);
-      // console.log("");
       addImageToDisplay(imageId, display);
     } catch (error) {}
   };
 
-  const onDrag = () => {
-    console.log("dragging");
-  };
-
   const onDragOver = (e: React.DragEvent) => {
     e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
   };
 
   return (
@@ -105,7 +96,6 @@ const Canvas = ({ canvasItems, maxWidth, setPosition, addImageToDisplay }: PropT
       style={{ width: `${canvasWidth}px`, height: `${height}px` }}
       className="canvas"
       onDrop={onDrop}
-      onDrag={onDrag}
       onDragOver={onDragOver}
     >
       {items}
